@@ -1,0 +1,14 @@
+/* src/components/Layout/MainLayout.module.css */
+.layoutContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainContent {
+  flex-grow: 1; /* Agar konten mengisi sisa ruang */
+  padding: 2rem;
+  max-width: 1200px; /* Batasi lebar konten */
+  margin: 0 auto; /* Tengahkann konten */
+  width: 100%;
+}

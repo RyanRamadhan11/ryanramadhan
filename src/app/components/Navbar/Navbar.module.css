@@ -1,0 +1,242 @@
+/* src/components/Navbar/Navbar.module.css */
+
+/* HAPUS BLOK :root INI JIKA SUDAH ADA DI src/app/globals.css */
+/*
+:root {
+  --content-max-width: 1200px;
+  --content-padding-x: 2rem;
+}
+*/
+
+.navbar {
+  width: 100%;
+  padding-block: 1rem;
+  background-color: #0d0d1a; /* Sudah tidak transparan, bagus */
+  /* backdrop-filter dan -webkit-backdrop-filter bisa dihapus jika tidak transparan */
+  display: flex;
+  justify-content: center; /* Memusatkan .navbarContentWrapper */
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.navbarContentWrapper {
+  width: 100%; /* Memastikan wrapper mengisi lebar navbar */
+  max-width: var(--content-max-width); /* Batasi lebar konten navbar */
+  display: flex;
+  justify-content: space-between; /* Untuk memisahkan brand dan navList */
+  align-items: center;
+}
+
+.brand a {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #03dac6;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.brand a:hover {
+  color: #bb86fc;
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2.5rem;
+}
+
+.navItem a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navItem a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #bb86fc;
+  transition: width 0.3s ease;
+}
+
+.navItem a:hover::after {
+  width: 100%;
+}
+
+.navItem a.active {
+  color: #bb86fc;
+  font-weight: 600;
+}
+
+.navItem a.active::after {
+  width: 100%;
+  background-color: #03dac6;
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #e0e0e0;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding-inline: 0;
+    justify-content: space-between;
+  }
+
+  .navbarContentWrapper {
+    padding-inline: 1rem;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .navList {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: #0d0d1a;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    transition: right 0.4s ease;
+    z-index: 1000;
+  }
+
+  .navList.menuOpen {
+    right: 0;
+  }
+
+  .navItem {
+    margin: 1rem 0;
+  }
+
+  .navItem a {
+    font-size: 1.5rem;
+    display: block;
+    padding: 10px 0;
+  }
+
+  .overlay {
+    display: block;
+  }
+}
+
+/* TAMBAHKAN KODE DI BAWAH INI DI AKHIR FILE */
+
+/* Wrapper baru untuk nav list dan tombol tema di desktop */
+.navContainer {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Jarak antara nav list dan tombol tema */
+}
+
+/* Pengaturan untuk tombol tema di desktop */
+.themeToggleDesktop {
+  display: flex; /* Defaultnya terlihat di desktop */
+  align-items: center;
+}
+
+/* Pengaturan untuk tombol tema di mobile */
+.themeToggleMobile {
+  display: none; /* Defaultnya tersembunyi */
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  text-align: center;
+}
+
+.themeToggleMobile p {
+  color: #a0a0a0;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Penyesuaian untuk Media Query (Mobile) */
+@media (max-width: 768px) {
+  .navContainer {
+    gap: 1rem; /* Kurangi gap di mobile jika perlu */
+  }
+
+  /* Sembunyikan tombol versi desktop di layar kecil */
+  .themeToggleDesktop {
+    display: none;
+  }
+
+  /* Tampilkan tombol versi mobile di dalam menu hamburger */
+  .themeToggleMobile {
+    display: flex; /* Tampilkan sebagai flex item di dalam menu */
+  }
+
+  /* Pindahkan hamburger ke dalam .navContainer agar posisinya benar */
+  .hamburger {
+    order: 2; /* Pastikan hamburger selalu di paling kanan dalam container */
+  }
+
+  .navList.menuOpen {
+    display: flex; /* Pastikan display flex aktif saat menu terbuka */
+  }
+}

@@ -1,0 +1,233 @@
+/* AboutSection.module.css */
+
+/* ... (Style General & Layout, About Me Section, Tombol CV, tidak berubah) ... */
+.main {
+  width: 100%;
+}
+.aboutSection,
+.techStackSection,
+.skillsSection {
+  padding-block: 80px;
+  overflow: hidden;
+}
+.techStackSection {
+  background-color: var(--surface-color);
+}
+.sectionTitle {
+  text-align: center;
+  padding-bottom: 50px;
+}
+.sectionTitle h2 {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--heading-color);
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  font-family: var(--font-jetbrains, sans-serif);
+}
+.sectionTitle h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent-color);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+.sectionTitle p {
+  color: var(--default-color);
+  max-width: 600px;
+  margin-inline: auto;
+  opacity: 0.8;
+}
+.imageContainer {
+  position: relative;
+  padding: 10px;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.profileImg {
+  border-radius: 8px;
+  width: 100%;
+  height: auto;
+}
+.aboutContent h3 {
+  font-size: clamp(1.5rem, 4vw, 1.8rem);
+  font-weight: 600;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+.aboutContent p {
+  line-height: 1.7;
+  color: var(--default-color);
+  opacity: 0.9;
+  margin-bottom: 1rem;
+}
+.cvButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    to right,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 51%,
+    var(--hero-accent-color) 100%
+  );
+  background-size: 200% auto;
+  color: var(--hero-background-dark);
+  transition: all 0.5s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.cvButton:hover {
+  background-position: right center;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--hero-accent-color), transparent 60%);
+}
+.cvButton i {
+  font-size: 1.2rem;
+}
+
+/* ... (Style Tech Stack Section, Card, tidak berubah) ... */
+.techStackGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+.techCard {
+  background-color: var(--background-color);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.techCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px
+    color-mix(in srgb, var(--accent-color), transparent 80%);
+}
+.cardIcon {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+.techCard h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--heading-color);
+}
+
+/* --- PERUBAHAN PENTING PADA GRID IKON --- */
+.techIconGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem; /* Sedikit lebih lega */
+  margin-top: 1rem;
+  min-height: 50px;
+}
+
+.techIconItem {
+  /* Ukuran ikon diatur dari sini, karena ini adalah SVG */
+  font-size: 2.5rem;
+  transition: all 0.3s ease;
+  cursor: help;
+  /* TIDAK ADA 'color' DI SINI, agar warna asli SVG tampil */
+}
+
+.techIconItem:hover {
+  transform: scale(1.2) translateY(-3px); /* Efek hover lebih menarik */
+}
+
+/* --- (Style Accordion tidak berubah) --- */
+.accordionContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.accordionItem {
+  background: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  width: 100%;
+}
+.accordionContent {
+  overflow: hidden;
+}
+.accordionContent p {
+  padding: 0 20px 20px 20px;
+  line-height: 1.6;
+  color: var(--default-color);
+  opacity: 0.9;
+}
+.stackContainer {
+  padding: 0 20px 20px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* --- PERUBAHAN PENTING PADA TAG SKILL --- */
+/* src/components/AboutSection/AboutSection.module.css */
+
+.stackTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+/* Warnai teksnya saja, jangan seluruh tag */
+.stackTag span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--default-color);
+  transition: color 0.3s ease;
+}
+
+/* Atur ukuran ikon SVGnya saja */
+.stackTag svg {
+  font-size: 1.3rem;
+  /* Tidak ada properti color, agar warna aslinya keluar */
+}
+
+.stackTag:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* Saat di-hover, teksnya yang berubah warna, bukan ikonnya */
+.stackTag:hover span {
+  color: var(--accent-color);
+}

@@ -1,0 +1,463 @@
+/* src/components/HeroSection/HeroSection.module.css */
+
+:root {
+  --content-max-width: 1200px;
+  --content-padding-x: 2rem;
+  --navbar-height: 5rem;
+  --hero-highlight-color: #03dac6;
+  --hero-accent-color: #bb86fc;
+  --hero-text-color-primary: #e0e0e0;
+  --hero-text-color-secondary: #a0a0a0;
+  --hero-background-dark: #1a1a2e;
+  --hero-surface-dark: #1f1f3a;
+}
+
+/* Keyframes untuk Kursor Mengetik */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--hero-highlight-color);
+  }
+}
+
+/*--------------------------------------------------------------
+# Hero Section Base Styles
+--------------------------------------------------------------*/
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  /* --- PERUBAHAN: Padding bawah dihapus --- */
+  padding-top: 6rem;
+  padding-bottom: 0;
+
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  color: var(--hero-text-color-primary);
+  margin-inline: auto;
+  max-width: var(--content-max-width);
+  box-sizing: border-box;
+}
+
+/* Kode untuk background animasi (.hero::before, .hero::after, @keyframes background-glow) telah dihapus */
+
+/*--------------------------------------------------------------
+# Hero Content
+--------------------------------------------------------------*/
+.heroContent {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+}
+
+.heroContent h1 {
+  font-size: clamp(3rem, 7vw, 2rem);
+  margin-bottom: 0.5rem;
+  color: var(--hero-accent-color);
+  line-height: 1.2;
+  /* Jika Anda sudah mengatur font di globals.css atau layout, baris di bawah ini bisa opsional */
+  font-family: var(--font-jetbrains, sans-serif);
+}
+
+.heroContent p {
+  font-size: clamp(1rem, 3.5vw, 1.5rem);
+  color: var(--hero-text-color-secondary);
+  max-width: 700px;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.highlight {
+  color: var(--hero-highlight-color);
+  font-weight: 700;
+}
+
+/*--------------------------------------------------------------
+# Typing Animation
+--------------------------------------------------------------*/
+.fixedRoleIntro {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 500;
+  color: var(--hero-text-color-primary);
+  line-height: 1.2;
+  margin-bottom: 0rem;
+}
+
+.animatedRoleLine {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 500;
+  color: var(--hero-text-color-primary);
+  line-height: 1.2;
+  min-height: 2.5rem;
+  margin-top: 0rem;
+  margin-bottom: 0.5rem;
+}
+
+.animatedRole {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: inherit;
+}
+
+.cursor {
+  display: inline-block;
+  background-color: var(--hero-highlight-color);
+  width: 3px;
+  height: 1.2em;
+  vertical-align: middle;
+  animation: blink-caret 0.75s step-end infinite;
+  margin-left: 3px;
+}
+
+.tagline {
+  font-size: 1.2rem;
+  color: var(--hero-text-color-secondary);
+  margin-bottom: 1.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*--------------------------------------------------------------
+# Experience and Projects Stats
+--------------------------------------------------------------*/
+.experienceStats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+  color: var(--hero-text-color-primary);
+  font-weight: 400;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.statItem:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.experienceStats .statDescription {
+  font-size: clamp(1rem, 3.5vw, 1rem);
+}
+
+.statDescription {
+  color: var(--hero-text-color-secondary);
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.statNumber {
+  display: block;
+  font-weight: 700;
+  color: var(--hero-highlight-color);
+  line-height: 1;
+  margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Call to Action Buttons
+--------------------------------------------------------------*/
+.callToAction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  justify-content: center;
+}
+
+.button,
+.buttonSecondary {
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button {
+  background-image: linear-gradient(
+    to right,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 51%,
+    var(--hero-accent-color) 100%
+  );
+  background-size: 200% auto;
+  color: var(--hero-background-dark);
+  transition: all 0.5s ease;
+}
+
+.button:hover {
+  background-position: right center;
+  transform: translateY(-3px);
+  color: var(--hero-background-dark);
+  box-shadow: 0 6px 20px
+    color-mix(in srgb, var(--hero-accent-color), transparent 60%);
+}
+
+.buttonSecondary {
+  background-color: transparent;
+  color: var(--hero-highlight-color);
+  border: 2px solid;
+  border-image: linear-gradient(
+      to right,
+      var(--hero-accent-color),
+      var(--hero-highlight-color)
+    )
+    1;
+  transition: all 0.5s ease;
+}
+
+.buttonSecondary:hover {
+  background-image: linear-gradient(
+    to right,
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
+  );
+  background-size: 100% auto;
+  color: var(--hero-background-dark);
+  border-image: none;
+  border-color: transparent;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 60%);
+}
+
+/*--------------------------------------------------------------
+# Social Media Icons
+--------------------------------------------------------------*/
+.socialIcons {
+  margin-top: 3.5rem;
+  display: flex;
+  gap: 1.8rem;
+  justify-content: center;
+}
+
+.socialIcons a {
+  color: var(--hero-text-color-primary);
+  font-size: 1.5rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.socialIcons a:hover {
+  color: var(--hero-highlight-color);
+  transform: translateY(-6px) rotate(5deg);
+}
+
+/*--------------------------------------------------------------
+# Profile Image Wrapper (IDE/MacBook Style)
+--------------------------------------------------------------*/
+.profileImageWrapper {
+  position: relative;
+  z-index: 1;
+  margin-top: 4rem;
+  background-color: var(--hero-surface-dark);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 5px rgba(0, 218, 198, 0.2);
+  overflow: hidden;
+  max-width: 450px;
+  width: 90%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+/* ... (sisa style untuk profile image, dots, logo, dll tetap sama) ... */
+
+.windowControls {
+  position: absolute;
+  top: 8px;
+  left: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+  cursor: default;
+}
+
+.dot:hover {
+  opacity: 1;
+}
+
+.red {
+  background-color: #ff5f56;
+}
+.yellow {
+  background-color: #ffbd2e;
+}
+.green {
+  background-color: #27c93f;
+}
+
+.profileImage {
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.macbookLogo {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.macbookLogo:hover {
+  transform: scale(1.1) rotate(10deg);
+  background-color: rgba(3, 218, 198, 0.7);
+}
+
+.logoIcon {
+  font-size: 1.8rem;
+  color: var(--hero-highlight-color);
+}
+
+/*--------------------------------------------------------------
+# Responsive Styles
+--------------------------------------------------------------*/
+@media (max-width: 767px) {
+  .hero {
+    /* Padding bawah di mobile juga diatur ulang */
+    padding-top: 4rem;
+    padding-bottom: 4rem; /* Beri sedikit padding bawah di mobile agar tidak terlalu mepet */
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* ... (sisa media query untuk mobile) ... */
+  .heroContent h1 {
+    font-size: 2.5rem;
+  }
+  .heroContent p {
+    font-size: 1.2rem;
+  }
+  .fixedRoleIntro,
+  .animatedRoleLine {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+  .profileImageWrapper {
+    width: 300px;
+    height: 300px;
+    margin-top: 2rem;
+  }
+  .profileImage {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+  }
+  .callToAction {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .button,
+  .buttonSecondary {
+    width: 100%;
+    text-align: center;
+  }
+  .socialIcons {
+    gap: 1.5rem;
+  }
+  .socialIcons a {
+    font-size: 2rem;
+  }
+  .experienceStats {
+    flex-direction: row;
+    gap: 1rem;
+    font-size: 0.9rem;
+    padding: 0 1rem;
+    justify-content: center;
+  }
+  .statItem {
+    padding: 0 0.5rem;
+    text-align: center;
+  }
+  .statItem:not(:last-child)::after {
+    right: -0.5rem;
+    height: 80%;
+  }
+  .statDescription {
+    font-size: 0.8rem;
+  }
+  .statNumber {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero {
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+    padding-top: calc(var(--navbar-height) + 2rem);
+    padding-bottom: 0; /* --- PERUBAHAN: Padding bawah dihapus --- */
+  }
+  .heroContent {
+    flex: 1;
+    max-width: 50%;
+    padding-right: 4rem;
+  }
+  .callToAction,
+  .socialIcons,
+  .experienceStats {
+    justify-content: flex-start;
+  }
+  .profileImageWrapper {
+    margin-top: 0;
+    margin-left: 4rem;
+    width: 400px;
+    height: 400px;
+  }
+  .profileImage {
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+  }
+}

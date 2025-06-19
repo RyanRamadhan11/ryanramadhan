@@ -1,0 +1,99 @@
+/* src/components/Footer/Footer.module.css */
+.footer {
+  width: 100%;
+  padding: 3rem 1rem; /* Padding lebih besar untuk konten */
+
+  background-color: #0d0d1a; /* Warna background sangat gelap */
+  color: #e0e0e0; /* Warna teks dasar terang */
+  text-align: center;
+
+  margin-top: 6rem; /* Jarak dari konten di atasnya */
+
+  /* Efek visual yang lebih kuat */
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.6); /* Shadow lebih tebal di bagian atas */
+  border-top: 2px solid rgba(3, 218, 198, 0.2); /* Garis teal yang lebih tebal */
+  position: relative; /* Untuk efek tambahan di masa depan jika ada */
+}
+
+.footerContent {
+  max-width: 1200px; /* Batasi lebar konten footer */
+  margin: 0 auto; /* Tengahkan konten footer */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Social Links Styling */
+.socialLinks {
+  margin-bottom: 1.5rem; /* Jarak dari motto */
+  display: flex;
+  gap: 1.5rem; /* Jarak antar ikon */
+}
+
+.socialLinks a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px; /* Ukuran icon */
+  height: 45px; /* Ukuran icon */
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2); /* Border transparan */
+  color: #e0e0e0; /* Warna ikon */
+  font-size: 1.5rem; /* Ukuran font ikon */
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.socialLinks a:hover {
+  background-color: rgba(3, 218, 198, 0.7); /* Background teal saat hover */
+  color: #1a1a2e; /* Teks gelap saat hover */
+  border-color: #03dac6; /* Border teal saat hover */
+  transform: translateY(-5px); /* Efek naik saat hover */
+  box-shadow: 0 5px 15px rgba(3, 218, 198, 0.4); /* Shadow saat hover */
+}
+
+/* Motto/Slogan Styling */
+.motto {
+  margin-bottom: 1rem; /* Jarak dari copyright */
+  font-size: 1.1rem;
+  color: #bb86fc; /* Warna ungu untuk motto */
+  font-weight: 500;
+  line-height: 1.5;
+  text-shadow: 0 0 5px rgba(187, 134, 252, 0.3); /* Sedikit glow pada motto */
+}
+
+/* Copyright Styling */
+.copyright {
+  margin: 0; /* Hapus margin default pada paragraf */
+  font-size: 0.9rem; /* Ukuran font sedikit lebih kecil */
+  color: #a0a0a0; /* Sedikit lebih abu-abu untuk teks copyright */
+  line-height: 1.5;
+}
+
+/* Responsivitas */
+@media (min-width: 768px) {
+  .footer {
+    padding: 3rem 2rem; /* Padding samping desktop */
+  }
+  .socialLinks {
+    margin-bottom: 2rem; /* Jarak lebih besar di desktop */
+  }
+}
+
+@media (max-width: 480px) {
+  .socialLinks {
+    gap: 1rem; /* Kurangi jarak antar ikon di layar sangat kecil */
+  }
+  .socialLinks a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+  .motto {
+    font-size: 1rem;
+  }
+  .copyright {
+    font-size: 0.8rem;
+  }
+}
