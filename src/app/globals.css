@@ -37,8 +37,11 @@
   --nav-dropdown-hover-color: #34b7a7;
 
   /* Hero Section Colors */
+  --content-max-width: 1200px;
+  --content-padding-x: 2rem;
+  --navbar-height: 5rem;
   --hero-highlight-color: #03dac6;
-  --hero-accent-color: #6200ee;
+  --hero-accent-color: #bb86fc;
   --hero-text-color-primary: #e0e0e0;
   --hero-text-color-secondary: #a0a0a0;
   --hero-background-dark: #1a1a2e;

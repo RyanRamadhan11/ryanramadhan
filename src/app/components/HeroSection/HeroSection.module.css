@@ -1,17 +1,5 @@
 /* src/components/HeroSection/HeroSection.module.css */
 
-:root {
-  --content-max-width: 1200px;
-  --content-padding-x: 2rem;
-  --navbar-height: 5rem;
-  --hero-highlight-color: #03dac6;
-  --hero-accent-color: #bb86fc;
-  --hero-text-color-primary: #e0e0e0;
-  --hero-text-color-secondary: #a0a0a0;
-  --hero-background-dark: #1a1a2e;
-  --hero-surface-dark: #1f1f3a;
-}
-
 /* Keyframes untuk Kursor Mengetik */
 @keyframes blink-caret {
   from,
