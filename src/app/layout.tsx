@@ -8,6 +8,7 @@ import "./globals.css";
 
 // Import Font & Komponen
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import Navbar from "./components/Navbar/Navbar"; // Pastikan path ini benar
 import Footer from "./components/Footer/Footer"; // Pastikan path ini benar
 import { usePathname } from "next/navigation";
@@ -40,6 +41,8 @@ export default function RootLayout({
 
           {!hideNavAndFooter && <Footer />}
         </ThemeProvider>
+        {/* [INI POSISI YANG BENAR] */}
+        <Script src="https://www.google.com/recaptcha/api.js" async defer />
       </body>
     </html>
   );

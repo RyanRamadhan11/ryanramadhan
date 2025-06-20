@@ -7,12 +7,13 @@ import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
 const ContactSection: FC = () => {
+  // State tidak berubah
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState(""); // '' | 'submitting' | 'success' | 'error'
+  const [status, setStatus] = useState("");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -20,21 +21,28 @@ const ContactSection: FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // [DIUBAH] Fungsi handleSubmit untuk mengirim data form termasuk token reCAPTCHA
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
 
+    const form = e.currentTarget;
+    const data = new FormData(form); // Cara pintar untuk mengambil semua data form, termasuk g-recaptcha-response
+
     try {
       const response = await fetch("https://formspree.io/f/mjkregdo", {
-        // <-- GANTI DENGAN ID FORMSPREE KAMU
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: data, // Kirim sebagai FormData
+        headers: {
+          Accept: "application/json", // Header Accept tetap diperlukan
+        },
       });
 
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
+        // Reset reCAPTCHA jika ada (opsional, tapi bagus)
+        (window as any).grecaptcha.reset();
       } else {
         setStatus("error");
       }
@@ -47,6 +55,7 @@ const ContactSection: FC = () => {
   return (
     <section id="contact" className={styles.contactSection}>
       <div className="page-container">
+        {/* ... Judul Section tidak berubah ... */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -63,7 +72,7 @@ const ContactSection: FC = () => {
         </motion.div>
 
         <div className={styles.contactGrid}>
-          {/* --- Kolom Informasi Kontak --- */}
+          {/* ... Kolom Informasi Kontak tidak berubah ... */}
           <motion.div
             className={styles.contactInfo}
             initial={{ opacity: 0, x: -50 }}
@@ -100,7 +109,7 @@ const ContactSection: FC = () => {
                 <FaGithub />
               </a>
               <a
-                href="https://twitter.com/ryznox"
+                href="https://instagram.com/ryznox"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -110,7 +119,6 @@ const ContactSection: FC = () => {
             </div>
           </motion.div>
 
-          {/* --- Kolom Form --- */}
           <motion.form
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: 50 }}
@@ -119,6 +127,7 @@ const ContactSection: FC = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className={styles.contactForm}
           >
+            {/* ... Input group Name, Email, Message tidak berubah ... */}
             <div className={styles.inputGroup}>
               <input
                 type="text"
@@ -152,6 +161,12 @@ const ContactSection: FC = () => {
               ></textarea>
               <label htmlFor="message">Your Message</label>
             </div>
+
+            {/* --- [BARU] Tambahkan div ini untuk placeholder reCAPTCHA --- */}
+            <div
+              className="g-recaptcha"
+              data-sitekey="6Le0R2crAAAAAOhdcFs6zL_lRoyJDO5dC6kRm5VR" // <-- GANTI DENGAN SITE KEY YANG KAMU SALIN
+            ></div>
 
             <button
               type="submit"
