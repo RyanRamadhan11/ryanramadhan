@@ -41,9 +41,7 @@ export default function RootLayout({
 
           {!hideNavAndFooter && <Footer />}
         </ThemeProvider>
-        {/* [INI POSISI YANG BENAR] */}
-        {/* <Script src="https://www.google.com/recaptcha/api.js" async defer /> */}
-        {/* [DIUBAH] Ganti script reCAPTCHA menjadi versi 3 */}
+        {/* [DIUBAH KEMBALI] Script reCAPTCHA v2 yang umum */}
         <Script
           src="https://www.google.com/recaptcha/api.js"
           strategy="afterInteractive"

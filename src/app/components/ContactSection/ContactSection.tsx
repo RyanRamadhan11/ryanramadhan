@@ -6,18 +6,8 @@ import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
-// Deklarasi tipe global untuk window.grecaptcha versi 3
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (
-        siteKey: string,
-        options: { action: string }
-      ) => Promise<string>;
-    };
-  }
-}
+// [DIHAPUS] Deklarasi global tidak diperlukan untuk v2 dengan cara ini
+// declare global { ... }
 
 const ContactSection: FC = () => {
   const [formData, setFormData] = useState({
@@ -33,47 +23,37 @@ const ContactSection: FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // [DIUBAH KEMBALI] Logika handleSubmit untuk v2 lebih sederhana
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
 
-    if (!window.grecaptcha) {
-      console.error("reCAPTCHA script not loaded");
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mjkregdo", {
+        method: "POST",
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+        // Reset reCAPTCHA v2 setelah sukses
+        if (typeof (window as any).grecaptcha !== "undefined") {
+          (window as any).grecaptcha.reset();
+        }
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
       setStatus("error");
-      return;
     }
-
-    window.grecaptcha.ready(() => {
-      // Di sini, kita secara eksplisit memanggil execute dengan Site Key
-      window.grecaptcha
-        .execute("6Le0R2crAAAAAChdcFs6zL_lRoyJDO5dC6kRm5VR", {
-          // INI SITE KEY KAMU
-          action: "submit",
-        })
-        .then(async (token) => {
-          const dataWithRecaptcha = {
-            ...formData,
-            "g-recaptcha-response": token,
-          };
-          try {
-            const response = await fetch("https://formspree.io/f/mjkregdo", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(dataWithRecaptcha),
-            });
-
-            if (response.ok) {
-              setStatus("success");
-              setFormData({ name: "", email: "", message: "" });
-            } else {
-              setStatus("error");
-            }
-          } catch (error) {
-            console.error("Form submission error:", error);
-            setStatus("error");
-          }
-        });
-    });
   };
 
   return (
@@ -189,6 +169,12 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
+            {/* [DIUBAH KEMBALI] Placeholder untuk widget reCAPTCHA v2 */}
+            <div
+              className="g-recaptcha"
+              data-sitekey="6Lcza2crAAAAAGebnSVAvOyUtff_Y4e2GyoG3InP" // <-- GANTI DENGAN SITE KEY V2 BARU DARI GOOGLE
+            ></div>
+
             <button
               type="submit"
               className={styles.submitButton}
@@ -197,26 +183,6 @@ const ContactSection: FC = () => {
               {status === "submitting" ? "Sending..." : "Send Message"}
               <FiSend className={styles.sendIcon} />
             </button>
-
-            <p className={styles.recaptchaNotice}>
-              This site is protected by reCAPTCHA and the Google{" "}
-              <a
-                href="https://policies.google.com/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Privacy Policy
-              </a>{" "}
-              and{" "}
-              <a
-                href="https://policies.google.com/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Terms of Service
-              </a>{" "}
-              apply.
-            </p>
 
             {status === "success" && (
               <p className={styles.successMessage}>
