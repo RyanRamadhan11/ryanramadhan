@@ -6,8 +6,15 @@ import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
-// [DIHAPUS] Deklarasi global tidak diperlukan untuk v2 dengan cara ini
-// declare global { ... }
+// [FIX] Deklarasi tipe global untuk window.grecaptcha (versi 2)
+declare global {
+  interface Window {
+    grecaptcha: {
+      reset: () => void;
+      // Properti lain untuk v2 bisa ditambahkan di sini jika perlu
+    };
+  }
+}
 
 const ContactSection: FC = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +30,6 @@ const ContactSection: FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // [DIUBAH KEMBALI] Logika handleSubmit untuk v2 lebih sederhana
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
@@ -43,9 +49,10 @@ const ContactSection: FC = () => {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
-        // Reset reCAPTCHA v2 setelah sukses
-        if (typeof (window as any).grecaptcha !== "undefined") {
-          (window as any).grecaptcha.reset();
+
+        // [FIX] Reset reCAPTCHA v2 dengan cara yang aman bagi TypeScript
+        if (window.grecaptcha) {
+          window.grecaptcha.reset();
         }
       } else {
         setStatus("error");
@@ -59,7 +66,6 @@ const ContactSection: FC = () => {
   return (
     <section id="contact" className={styles.contactSection}>
       <div className="page-container">
-        {/* ... Judul dan Info Kontak tidak berubah ... */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,15 +73,14 @@ const ContactSection: FC = () => {
           transition={{ duration: 0.6 }}
           className={styles.sectionTitle}
         >
-          {" "}
-          <h2>Get In Touch</h2>{" "}
+          <h2>Get In Touch</h2>
           <p>
-            {" "}
             Interested in collaborating or just want to say hi? Feel free to
             reach out. I&apos;m always open to discussing new projects and
-            creative ideas.{" "}
-          </p>{" "}
+            creative ideas.
+          </p>
         </motion.div>
+
         <div className={styles.contactGrid}>
           <motion.div
             className={styles.contactInfo}
@@ -84,22 +89,18 @@ const ContactSection: FC = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            {" "}
-            <h3>Contact Information</h3>{" "}
-            <p>Fill up the form and I will get back to you within 24 hours.</p>{" "}
+            <h3>Contact Information</h3>
+            <p>Fill up the form and I will get back to you within 24 hours.</p>
             <a
               href="mailto:ramadhanryan676@gmail.com"
               className={styles.infoItem}
             >
-              {" "}
-              <FiMail /> <span>ramadhanryan676@gmail.com</span>{" "}
-            </a>{" "}
+              <FiMail /> <span>ramadhanryan676@gmail.com</span>
+            </a>
             <div className={styles.infoItem}>
-              {" "}
-              <FiMapPin /> <span>Jakarta, Indonesia</span>{" "}
-            </div>{" "}
+              <FiMapPin /> <span>Jakarta, Indonesia</span>
+            </div>
             <div className={styles.socialLinks}>
-              {" "}
               <a
                 href="https://linkedin.com/in/ryan-ramadhan-8a49662a2"
                 target="_blank"
@@ -107,7 +108,7 @@ const ContactSection: FC = () => {
                 aria-label="LinkedIn"
               >
                 <FaLinkedin />
-              </a>{" "}
+              </a>
               <a
                 href="https://github.com/ryznox"
                 target="_blank"
@@ -115,7 +116,7 @@ const ContactSection: FC = () => {
                 aria-label="GitHub"
               >
                 <FaGithub />
-              </a>{" "}
+              </a>
               <a
                 href="https://instagram.com/ryznox"
                 target="_blank"
@@ -123,8 +124,8 @@ const ContactSection: FC = () => {
                 aria-label="Instagram"
               >
                 <FaInstagram />
-              </a>{" "}
-            </div>{" "}
+              </a>
+            </div>
           </motion.div>
 
           <motion.form
@@ -169,10 +170,9 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
-            {/* [DIUBAH KEMBALI] Placeholder untuk widget reCAPTCHA v2 */}
             <div
               className="g-recaptcha"
-              data-sitekey="6Lcza2crAAAAAGebnSVAvOyUtff_Y4e2GyoG3InP" // <-- GANTI DENGAN SITE KEY V2 BARU DARI GOOGLE
+              data-sitekey="GANTI_DENGAN_SITE_KEY_V2_BARU_ANDA" // <-- JANGAN LUPA GANTI DENGAN SITE KEY V2 BARU DARI GOOGLE
             ></div>
 
             <button
