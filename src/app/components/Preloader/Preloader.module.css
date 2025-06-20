@@ -1,0 +1,72 @@
+/* src/components/Preloader/Preloader.module.css */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  background-color: #0d0d1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.typingContainer {
+  position: relative;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.2rem;
+  color: var(--hero-highlight-color, #03dac6);
+  height: 2rem; /* Beri tinggi agar layout tidak bergeser */
+}
+
+/* Kursor yang berkedip */
+.typingText::after {
+  content: "_";
+  opacity: 1;
+  animation: blink 1s infinite;
+}
+
+/* Animasi untuk teks "mengetik" */
+.typingText {
+  --steps: 18; /* Jumlah karakter pada teks terpanjang + 1 */
+  animation: typing 3s steps(var(--steps), end) infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid transparent; /* Untuk ilusi kursor yang bergerak */
+  width: 0;
+}
+
+@keyframes typing {
+  0% {
+    width: 0;
+  }
+  40% {
+    width: 10.5ch;
+    content: "Compiling...";
+  } /* "Compiling..." memiliki 10.5 karakter (ch) */
+  60% {
+    width: 10.5ch;
+  }
+  80% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

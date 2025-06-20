@@ -2,17 +2,17 @@
 "use client";
 
 // Import CSS
-
 import "../css/main.css";
 import "./globals.css";
 
 // Import Font & Komponen
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import Navbar from "./components/Navbar/Navbar"; // Pastikan path ini benar
-import Footer from "./components/Footer/Footer"; // Pastikan path ini benar
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+import Preloader from "./components/Preloader/Preloader"; // <-- [BARU] Impor Preloader
 import { usePathname } from "next/navigation";
-import { ThemeProvider } from "./components/ThemeProvider"; // Import Provider Tema
+import { ThemeProvider } from "./components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,23 +25,20 @@ export default function RootLayout({
   const hideNavAndFooter = pathname === "/login" || pathname === "/register";
 
   return (
-    // Tambahkan `suppressHydrationWarning` untuk next-themes
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        {/* Bungkus semua dengan ThemeProvider */}
         <ThemeProvider
           attribute="data-theme"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Preloader /> {/* <-- [BARU] Panggil Preloader di sini */}
           {!hideNavAndFooter && <Navbar />}
-
           <main style={{ minHeight: "80vh" }}>{children}</main>
-
           {!hideNavAndFooter && <Footer />}
         </ThemeProvider>
-        {/* [DIUBAH KEMBALI] Script reCAPTCHA v2 yang umum */}
+
         <Script
           src="https://www.google.com/recaptcha/api.js"
           strategy="afterInteractive"
