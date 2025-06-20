@@ -1,92 +1,264 @@
 /* src/components/ContactSection/ContactSection.module.css */
+
 .contactSection {
-  padding: 4rem 0;
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 5rem 0;
+  background-color: var(--background-color, #121212);
+  position: relative;
+  overflow: hidden;
 }
 
-.contactSection h2 {
-  font-size: 2.5rem;
-  color: #03dac6;
+/* Efek gradasi background yang halus */
+.contactSection::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(187, 134, 252, 0.05),
+    transparent 40%
+  );
+  animation: backgroundGlow 15s linear infinite;
+}
+
+@keyframes backgroundGlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle h2 {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color, #bb86fc),
+    var(--hero-highlight-color, #03dac6)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionTitle p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  color: var(--default-color);
+  opacity: 0.8;
+}
+
+/* --- [BARU] Layout Grid --- */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; /* Dua kolom dengan rasio berbeda */
+  gap: 3rem;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Kolom Informasi Kontak --- */
+.contactInfo {
+  color: var(--default-color);
+}
+.contactInfo h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin-bottom: 1rem;
+}
+.contactInfo p {
+  opacity: 0.8;
+  line-height: 1.6;
   margin-bottom: 2rem;
 }
-
-.description {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 3rem;
-  color: #e0e0e0;
-}
-
-.contactLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.contactLink {
+.infoItem {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  color: #bb86fc;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: var(--default-color);
   text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
   transition: color 0.3s ease;
 }
-
-.contactLink svg {
+.infoItem:hover {
+  color: var(--hero-highlight-color);
+}
+.infoItem svg {
   font-size: 1.5rem;
+  color: var(--hero-accent-color);
+}
+.socialLinks {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1.5rem;
 }
 
-.contactLink:hover {
-  color: #03dac6;
+.socialLinks a {
+  font-size: 1.8rem;
+  color: #a0a0a0;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.socialLinks a:hover {
+  color: var(--hero-highlight-color);
+  transform: translateY(-3px);
 }
 
-/* Jika Anda ingin menambahkan form, tambahkan gaya ini */
-
+/* --- [DIUBAH] Form Kontak Modern --- */
 .contactForm {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-top: 3rem;
-  background-color: #2e0c0c;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  gap: 1.5rem;
+  background-color: rgba(30, 30, 30, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.contactForm input,
-.contactForm textarea {
-  padding: 0.8rem;
-  border-radius: 5px;
-  border: 1px solid #4a4a4a;
-  background-color: #1a1a2e;
-  color: #e0e0e0;
+.inputGroup {
+  position: relative;
+}
+.inputGroup input,
+.inputGroup textarea {
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
   font-size: 1rem;
+  font-family: var(--default-font);
+  transition: border-color 0.3s ease;
+}
+.inputGroup textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+.inputGroup label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  color: #aaa;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+/* Efek label melayang ke atas */
+.inputGroup input:focus + label,
+.inputGroup input:valid + label,
+.inputGroup textarea:focus + label,
+.inputGroup textarea:valid + label {
+  top: -0.6rem;
+  left: 0.8rem;
+  font-size: 0.8rem;
+  background-color: #25252a; /* Warna background form */
+  padding: 0 0.3rem;
+  color: var(--hero-accent-color);
 }
 
-.contactForm input:focus,
-.contactForm textarea:focus {
+.inputGroup input:focus,
+.inputGroup textarea:focus {
   outline: none;
-  border-color: #03dac6;
-  box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.3);
+  border-color: var(--hero-accent-color);
 }
 
-.contactForm button {
-  background-color: #03dac6;
-  color: #1a1a2e;
-  padding: 0.9rem 1.5rem;
+/* --- [DIUBAH] Tombol Submit dengan Gradasi & Animasi --- */
+.submitButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--hero-background-dark, #121212);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-image: linear-gradient(
+    to right,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 51%,
+    var(--hero-accent-color) 100%
+  );
+  background-size: 200% auto;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
 }
 
-.contactForm button:hover {
-  background-color: #018786;
+.submitButton:hover:not(:disabled) {
+  background-position: right center;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.sendIcon {
+  transition: transform 0.4s ease;
+}
+.submitButton:hover:not(:disabled) .sendIcon {
+  transform: translateX(5px) rotate(-45deg);
+}
+
+.successMessage,
+.errorMessage {
+  text-align: center;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+.successMessage {
+  background-color: rgba(3, 218, 198, 0.15);
+  color: var(--hero-highlight-color);
+}
+.errorMessage {
+  background-color: rgba(255, 82, 82, 0.15);
+  color: #ff5252;
+}
+
+/* --- [BARU] Aturan Responsif --- */
+@media (max-width: 992px) {
+  .contactGrid {
+    grid-template-columns: 1fr; /* Stack jadi satu kolom */
+  }
+  .contactInfo {
+    text-align: center;
+  }
+  .infoItem,
+  .socialLinks {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .contactSection {
+    padding: 4rem 0;
+  }
+  .contactForm {
+    padding: 1.5rem;
+  }
 }

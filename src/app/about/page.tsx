@@ -9,6 +9,7 @@ export default function AboutPage() {
 
 // Opsional: Untuk metadata SEO di App Router
 export const metadata = {
-  title: "About Me - Your Name",
-  description: "Learn more about Your Name, a passionate software developer.",
+  title: "About Me - Ryan Ramadhan",
+  description:
+    "Learn more about Ryan Ramadhan, a passionate software developer.",
 };

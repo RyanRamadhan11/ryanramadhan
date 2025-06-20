@@ -1,4 +1,3 @@
-// src/components/Navbar/Navbar.tsx
 "use client";
 
 import React, { FC, useState, useEffect } from "react";
@@ -6,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
-import { ThemeToggleButton } from "../ThemeToggleButton"; // <-- PERUBAHAN 1: Import tombol tema
+import { ThemeToggleButton } from "../ThemeToggleButton";
 
 const Navbar: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,7 +17,8 @@ const Navbar: FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 992) {
+        // Breakpoint disamakan dengan CSS
         setIsMenuOpen(false);
       }
     };
@@ -35,24 +35,22 @@ const Navbar: FC = () => {
             className={`${styles.logo} logo d-flex align-items-center me-auto me-xl-0`}
             onClick={handleNavLinkClick}
           >
+            {/* [DIUBAH] Ukuran logo diperbesar menjadi 60x60px */}
             <Image
-              src="/images/logo-rr.png"
+              src="/images/logo-ryns.png"
               alt="Ryan Ramadhan Logo"
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               priority
               className={styles.brandLogoImage}
             />
           </Link>
         </div>
 
-        {/* --- PERUBAHAN 2: Buat wrapper untuk navigasi dan tombol tema desktop --- */}
         <div className={styles.navContainer}>
-          {/* Navigasi utama */}
           <ul
             className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ""}`}
           >
-            {/* ... link-link navigasi Anda ... */}
             <li className={styles.navItem}>
               <Link
                 href="/"
@@ -84,20 +82,14 @@ const Navbar: FC = () => {
               <Link
                 href="/portofolio"
                 onClick={handleNavLinkClick}
-                className={pathname === "/projects" ? styles.active : ""}
+                className={pathname === "/portofolio" ? styles.active : ""}
               >
                 Portofolio
               </Link>
             </li>
-            <li className={styles.navItem}>
-              <Link
-                href="/service"
-                onClick={handleNavLinkClick}
-                className={pathname === "/service" ? styles.active : ""}
-              >
-                Service
-              </Link>
-            </li>
+
+            {/* [DIHAPUS] Menu "Service" dihilangkan dari daftar */}
+
             <li className={styles.navItem}>
               <Link
                 href="/certification"
@@ -117,19 +109,16 @@ const Navbar: FC = () => {
               </Link>
             </li>
 
-            {/* --- PERUBAHAN 3: Tambahkan tombol tema KHUSUS untuk tampilan mobile di dalam menu --- */}
             <li className={`${styles.navItem} ${styles.themeToggleMobile}`}>
               <p>Switch Theme</p>
               <ThemeToggleButton />
             </li>
           </ul>
 
-          {/* --- PERUBAHAN 4: Tambahkan tombol tema KHUSUS untuk tampilan desktop --- */}
           <div className={styles.themeToggleDesktop}>
             <ThemeToggleButton />
           </div>
 
-          {/* Hamburger icon untuk mobile */}
           <button
             className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -141,13 +130,6 @@ const Navbar: FC = () => {
           </button>
         </div>
       </div>
-
-      {isMenuOpen && (
-        <div
-          className={styles.overlay}
-          onClick={() => setIsMenuOpen(false)}
-        ></div>
-      )}
     </nav>
   );
 };

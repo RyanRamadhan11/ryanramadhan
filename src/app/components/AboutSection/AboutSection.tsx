@@ -1,4 +1,3 @@
-// src/components/AboutSection/AboutSection.tsx
 "use client";
 
 import React, { FC, useState } from "react";
@@ -7,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./AboutSection.module.css";
 
-// Icon imports
+// Icon imports (tidak ada perubahan)
 import {
   DiPhp,
   DiJava,
@@ -38,7 +37,9 @@ import { VscPackage, VscSourceControl } from "react-icons/vsc";
 import { AiOutlineSync } from "react-icons/ai";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { FaQuestionCircle } from "react-icons/fa";
+import { BsDownload } from "react-icons/bs";
 
+// Data (tidak ada perubahan struktur, hanya konten teks diubah)
 const masterTechData: { [key: string]: { icon: React.ElementType } } = {
   PHP: { icon: DiPhp },
   Javascript: { icon: DiJavascript1 },
@@ -145,11 +146,12 @@ const techStack = [
   },
 ];
 
+// [DITERJEMAHKAN] Konten accordion diubah ke Bahasa Inggris
 const accordionSkills = [
   {
     title: "Backend Development",
     content:
-      "Keahlian mendalam dalam membangun sisi server yang kuat dan skalabel...",
+      "Deep expertise in building robust and scalable server-side applications, ensuring high performance and security.",
     stack: [
       "PHP",
       "Laravel",
@@ -165,7 +167,7 @@ const accordionSkills = [
   {
     title: "Frontend Development",
     content:
-      "Mampu menciptakan antarmuka pengguna yang responsif, interaktif, dan intuitif...",
+      "Capable of creating responsive, interactive, and intuitive user interfaces with a focus on user experience.",
     stack: [
       "HTML5",
       "CSS",
@@ -178,7 +180,8 @@ const accordionSkills = [
   },
   {
     title: "Mobile & DevOps",
-    content: "Berpengalaman dalam aplikasi mobile cross-platform dan DevOps...",
+    content:
+      "Experienced in cross-platform mobile application development and implementing DevOps practices for efficient workflows.",
     stack: [
       "React Native",
       "Git",
@@ -196,14 +199,17 @@ const AccordionItem: FC<{
   isOpen: boolean;
   onClick: () => void;
 }> = ({ item, isOpen, onClick }) => (
-  <div className={styles.accordionItem}>
+  <motion.div className={styles.accordionItem} whileHover={{ y: -5 }}>
     <motion.header
       className={styles.accordionHeader}
       onClick={onClick}
       initial={false}
     >
       <div className={styles.accordionTitle}>{item.title}</div>
-      <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
+      <motion.div
+        animate={{ rotate: isOpen ? 180 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <i className="bi bi-chevron-down"></i>
       </motion.div>
     </motion.header>
@@ -239,16 +245,18 @@ const AccordionItem: FC<{
         </motion.section>
       )}
     </AnimatePresence>
-  </div>
+  </motion.div>
 );
+
 const AboutSection: FC = () => {
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const handleAccordionClick = (index: number) =>
     setOpenAccordion(openAccordion === index ? null : index);
+
   return (
     <main className={styles.main}>
       <section id="about" className={styles.aboutSection}>
-        <div className="container">
+        <div className="page-container">
           <motion.div
             className={`section-title ${styles.sectionTitle}`}
             initial={{ opacity: 0 }}
@@ -258,9 +266,10 @@ const AboutSection: FC = () => {
           >
             <h2>About Me</h2>
           </motion.div>
-          <div className="row gy-4 align-items-center">
+
+          <div className={styles.aboutLayout}>
             <motion.div
-              className="col-lg-5"
+              className={styles.aboutImageWrapper}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -270,15 +279,16 @@ const AboutSection: FC = () => {
                 <Image
                   src="/images/profile.jpg"
                   className={styles.profileImg}
-                  alt="Foto Profil Ryan Ramadhan"
+                  alt="Ryan Ramadhan's Profile Photo" // [DITERJEMAHKAN]
                   width={500}
                   height={500}
                   priority
                 />
               </div>
             </motion.div>
+
             <motion.div
-              className="col-lg-7"
+              className={styles.aboutContentWrapper}
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -286,27 +296,27 @@ const AboutSection: FC = () => {
             >
               <div className={styles.aboutContent}>
                 <h3>Software Engineer with a Passion for Problem Solving.</h3>
+                {/* [DITERJEMAHKAN] */}
                 <p>
-                  Saya adalah lulusan Teknik Informatika dari Universitas
-                  Singaperbangsa Karawang dengan pengalaman dua tahun lebih
-                  sebagai Software Engineer...
+                  I am an Informatics Engineering graduate from Singaperbangsa
+                  Karawang University with over two years of experience as a
+                  Software Engineer.
                 </p>
                 <p>
-                  Berpengalaman dalam keseluruhan siklus hidup pengembangan
-                  perangkat lunak, termasuk penggunaan Docker, Git, dan CI/CD...
+                  I have hands-on experience in the entire software development
+                  lifecycle, including the use of Docker, Git, and CI/CD for
+                  streamlined and efficient deployment.
                 </p>
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.5 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Link
-                    href="/Ryan-Ramadhan-CV.pdf"
+                    href="/pdf/CV_RyanRamadhan_SoftwareEnginner.pdf"
                     download
                     className={styles.cvButton}
                   >
-                    <i className="bi bi-download"></i>Download My CV
+                    <BsDownload size={20} /> Download My CV
                   </Link>
                 </motion.div>
               </div>
@@ -314,9 +324,9 @@ const AboutSection: FC = () => {
           </div>
         </div>
       </section>
-      {/* TECH STACK */}
+
       <section id="tech-stack" className={styles.techStackSection}>
-        <div className="container">
+        <div className="page-container">
           <motion.div
             className={`section-title ${styles.sectionTitle}`}
             initial={{ opacity: 0 }}
@@ -325,7 +335,8 @@ const AboutSection: FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h2>Technical Stack</h2>
-            <p>Teknologi dan tools yang saya gunakan...</p>
+            {/* [DITERJEMAHKAN] */}
+            <p>The technologies and tools I use to bring ideas to life.</p>
           </motion.div>
           <div className={styles.techStackGrid}>
             {techStack.map((category, index) => (
@@ -337,24 +348,26 @@ const AboutSection: FC = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className={styles.cardIcon}>
-                  <i className={`bi ${category.icon}`}></i>
+                <div className={styles.cardHeader}>
+                  <i className={`bi ${category.icon} ${styles.cardIcon}`}></i>
+                  <h4>{category.category}</h4>
                 </div>
-                <h4>{category.category}</h4>
                 <div className={styles.techIconGrid}>
                   {category.skills.map((techKey) => {
                     const IconComponent =
                       masterTechData[techKey]?.icon || FaQuestionCircle;
                     return (
-                      <div
+                      <motion.div
                         key={techKey}
                         className={styles.techIconItem}
                         title={techKey}
+                        whileHover={{ scale: 1.25, y: -4 }}
+                        transition={{ type: "spring", stiffness: 400 }}
                       >
                         <IconComponent
                           style={{ color: iconColors[techKey] || "#bbb" }}
                         />
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -364,9 +377,8 @@ const AboutSection: FC = () => {
         </div>
       </section>
 
-      {/* SKILLS ACCORDION */}
       <section id="skills" className={styles.skillsSection}>
-        <div className="container">
+        <div className="page-container">
           <motion.div
             className={`section-title ${styles.sectionTitle}`}
             initial={{ opacity: 0 }}
@@ -375,7 +387,8 @@ const AboutSection: FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h2>Core Competencies</h2>
-            <p>Tiga pilar utama keahlian yang saya tawarkan...</p>
+            {/* [DITERJEMAHKAN] */}
+            <p>Three main pillars of my expertise.</p>
           </motion.div>
           <div className={styles.accordionContainer}>
             {accordionSkills.map((item, index) => (

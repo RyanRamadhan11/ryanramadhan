@@ -2,11 +2,7 @@
 "use client";
 
 // Import CSS
-import "../vendor/bootstrap/css/bootstrap.min.css";
-import "../vendor/bootstrap-icons/bootstrap-icons.css";
-import "../vendor/aos/aos.css";
-import "../vendor/swiper/swiper-bundle.min.css";
-import "../vendor/glightbox/css/glightbox.min.css";
+
 import "../css/main.css";
 import "./globals.css";
 

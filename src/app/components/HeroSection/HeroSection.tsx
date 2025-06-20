@@ -61,7 +61,6 @@ const HeroSection: FC = () => {
     displayedText,
     isDeleting,
     currentRoleIndex,
-    roles,
     typingSpeed,
     deletingSpeed,
     delayAfterTyping,
@@ -79,7 +78,7 @@ const HeroSection: FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          Hello, I'm
+          Hello, I&apos;m
         </motion.h1>
 
         <motion.h1
@@ -156,7 +155,7 @@ const HeroSection: FC = () => {
             Explore My Projects
           </Link>
           <Link href="/contact" className={styles.buttonSecondary}>
-            Let's Connect
+            Let&apos;s Connect
           </Link>
         </motion.div>
 

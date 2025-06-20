@@ -2,17 +2,13 @@
 .footer {
   width: 100%;
   padding: 3rem 1rem; /* Padding lebih besar untuk konten */
-
   background-color: #0d0d1a; /* Warna background sangat gelap */
   color: #e0e0e0; /* Warna teks dasar terang */
   text-align: center;
-
   margin-top: 6rem; /* Jarak dari konten di atasnya */
-
-  /* Efek visual yang lebih kuat */
   box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.6); /* Shadow lebih tebal di bagian atas */
   border-top: 2px solid rgba(3, 218, 198, 0.2); /* Garis teal yang lebih tebal */
-  position: relative; /* Untuk efek tambahan di masa depan jika ada */
+  position: relative;
 }
 
 .footerContent {
@@ -24,7 +20,7 @@
   justify-content: center;
 }
 
-/* Social Links Styling */
+/* Social Links Styling - SUDAH DIPERBAIKI */
 .socialLinks {
   margin-bottom: 1.5rem; /* Jarak dari motto */
   display: flex;
@@ -35,29 +31,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px; /* Ukuran icon */
-  height: 45px; /* Ukuran icon */
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2); /* Border transparan */
-  color: #e0e0e0; /* Warna ikon */
-  font-size: 1.5rem; /* Ukuran font ikon */
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* 'color' dihapus dari sini agar tidak menimpa warna asli ikon SVG */
+  font-size: 1.5rem; /* Ukuran ini akan diwarisi oleh ikon SVG */
   transition: all 0.3s ease;
   text-decoration: none;
 }
 
 .socialLinks a:hover {
-  background-color: rgba(3, 218, 198, 0.7); /* Background teal saat hover */
-  color: #1a1a2e; /* Teks gelap saat hover */
-  border-color: #03dac6; /* Border teal saat hover */
-  transform: translateY(-5px); /* Efek naik saat hover */
-  box-shadow: 0 5px 15px rgba(3, 218, 198, 0.4); /* Shadow saat hover */
+  background-color: var(--hero-highlight-color);
+  border-color: var(--hero-highlight-color);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 60%);
+}
+
+/* KUNCI UTAMA: Atur warna ikon SVG secara terpisah */
+.socialLinks a svg {
+  transition: color 0.3s ease;
+  /* Di keadaan normal, biarkan warna asli dari SVG. */
+  /* `color` tidak di-set di sini. */
+}
+
+.socialLinks a:hover svg {
+  /* Saat hover, barulah kita beri warna sesuai tema hover */
+  color: var(--hero-background-dark, #1a1a2e);
 }
 
 /* Motto/Slogan Styling */
 .motto {
   margin-bottom: 1rem; /* Jarak dari copyright */
   font-size: 1.1rem;
-  color: #bb86fc; /* Warna ungu untuk motto */
+  color: var(--hero-accent-color, #bb86fc); /* Warna ungu untuk motto */
   font-weight: 500;
   line-height: 1.5;
   text-shadow: 0 0 5px rgba(187, 134, 252, 0.3); /* Sedikit glow pada motto */

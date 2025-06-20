@@ -1,0 +1,182 @@
+/* pages/LoginPage.module.css */
+
+.pageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(45deg, #1f2022, #3a3d42);
+  padding: 2rem;
+  font-family: "Poppins", sans-serif; /* Ganti dengan font favoritmu */
+}
+
+.loginContainer {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 600px;
+  background-color: #2c2f33;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+/* --- Bagian Gambar (Kiri) --- */
+.imageSection {
+  flex: 1;
+  position: relative;
+  display: none; /* Sembunyikan di mobile */
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: #fff;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.imageOverlay h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.imageOverlay p {
+  font-size: 1.1rem;
+  max-width: 80%;
+  line-height: 1.6;
+}
+
+/* --- Bagian Form (Kanan) --- */
+.formSection {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.inputGroup {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.inputGroup .icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #8f9296;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem; /* Padding untuk ikon */
+  background-color: #23272a;
+  border: 1px solid #40444b;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.inputGroup input::placeholder {
+  color: #8f9296;
+}
+
+.inputGroup input:focus {
+  outline: none;
+  border-color: #ff6347; /* Tomato color */
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2);
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #b9bbbe;
+}
+
+.link {
+  color: #ff6347;
+  text-decoration: none;
+  transition: text-decoration 0.3s;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ff6347, #ff4500);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.separator {
+  text-align: center;
+  margin: 2rem 0;
+  color: #8f9296;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex-grow: 1;
+  height: 1px;
+  background-color: #40444b;
+}
+
+.signupText {
+  text-align: center;
+  color: #b9bbbe;
+}
+
+/* --- Tampilan Responsif --- */
+@media (min-width: 768px) {
+  .imageSection {
+    display: block; /* Tampilkan gambar di layar tablet ke atas */
+  }
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .formSection {
+    padding: 2rem;
+  }
+}

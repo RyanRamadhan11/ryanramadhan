@@ -1,82 +1,144 @@
-/* AboutSection.module.css */
+/* src/components/AboutSection/AboutSection.module.css */
 
-/* ... (Style General & Layout, About Me Section, Tombol CV, tidak berubah) ... */
+/* General & Layout */
 .main {
   width: 100%;
 }
+
 .aboutSection,
 .techStackSection,
 .skillsSection {
   padding-block: 80px;
-  overflow: hidden;
+  overflow-x: hidden;
 }
+
 .techStackSection {
   background-color: var(--surface-color);
 }
+
 .sectionTitle {
   text-align: center;
   padding-bottom: 50px;
 }
+
 .sectionTitle h2 {
-  font-size: clamp(2rem, 5vw, 2.5rem);
-  font-weight: 700;
-  color: var(--heading-color);
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
+  font-weight: 800;
   position: relative;
   padding-bottom: 20px;
   margin-bottom: 15px;
   font-family: var(--font-jetbrains, sans-serif);
+  background: linear-gradient(
+    90deg,
+    var(--accent-color) 0%,
+    var(--hero-highlight-color) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
 .sectionTitle h2::after {
   content: "";
   position: absolute;
   display: block;
-  width: 60px;
-  height: 4px;
+  width: 80px;
+  height: 5px;
   background: var(--accent-color);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 2px;
+  border-radius: 3px;
+  opacity: 0.8;
 }
+
 .sectionTitle p {
   color: var(--default-color);
   max-width: 600px;
   margin-inline: auto;
   opacity: 0.8;
+  font-size: 1.1rem;
 }
+
+/* --- About Me Section --- */
+.aboutLayout {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.aboutImageWrapper {
+  flex: 1 1 40%;
+  min-width: 320px;
+  overflow: hidden; /* [PERBAIKAN UTAMA] Mengurung animasi agar tidak menyebabkan scroll */
+  border-radius: 12px; /* Tambahkan radius di sini agar cocok dengan container */
+}
+
+.aboutContentWrapper {
+  flex: 1 1 55%;
+}
+
 .imageContainer {
   position: relative;
-  padding: 10px;
-  background-color: var(--surface-color);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 4px;
+  background-color: transparent;
 }
+
+.imageContainer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  background: linear-gradient(45deg, #d400ff, #ff0080, #ff8c00, #4affff);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradientSpin 4s linear infinite;
+}
+
+@keyframes gradientSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .profileImg {
-  border-radius: 8px;
+  border-radius: 12px; /* [PERBAIKAN] Dibuat statis */
   width: 100%;
   height: auto;
+  display: block;
+  /* [PERBAIKAN] Animasi border-radius dihapus dari sini */
 }
+
+/* [PERBAIKAN] Keyframes untuk animasi border-radius dihapus */
+
 .aboutContent h3 {
-  font-size: clamp(1.5rem, 4vw, 1.8rem);
-  font-weight: 600;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 700;
   color: var(--heading-color);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
 }
+
 .aboutContent p {
-  line-height: 1.7;
+  line-height: 1.8;
   color: var(--default-color);
   opacity: 0.9;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
+
 .cvButton {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   margin-top: 1.5rem;
-  padding: 0.8rem 1.8rem;
+  padding: 1rem 2rem;
   font-weight: 600;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 50px;
   background-image: linear-gradient(
     to right,
     var(--hero-accent-color) 0%,
@@ -84,76 +146,104 @@
     var(--hero-accent-color) 100%
   );
   background-size: 200% auto;
-  color: var(--hero-background-dark);
-  transition: all 0.5s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  color: var(--hero-background-dark); /* Warna teks sesuai permintaan */
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: none;
 }
+
 .cvButton:hover {
   background-position: right center;
-  transform: translateY(-3px);
   box-shadow: 0 8px 25px
-    color-mix(in srgb, var(--hero-accent-color), transparent 60%);
+    color-mix(in srgb, var(--accent-color), transparent 70%);
+  color: var(
+    --hero-background-dark
+  ); /* Pastikan warna teks tetap sama saat hover */
 }
+
 .cvButton i {
   font-size: 1.2rem;
 }
 
-/* ... (Style Tech Stack Section, Card, tidak berubah) ... */
+/* --- Tech Stack Section --- */
 .techStackGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
+
 .techCard {
   background-color: var(--background-color);
-  padding: 30px;
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.techCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px
-    color-mix(in srgb, var(--accent-color), transparent 80%);
-}
-.cardIcon {
-  font-size: 2.5rem;
-  color: var(--accent-color);
-  margin-bottom: 1rem;
-  display: inline-block;
-}
-.techCard h4 {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--heading-color);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+  position: relative;
 }
 
-/* --- PERUBAHAN PENTING PADA GRID IKON --- */
+.techCard::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    var(--accent-color),
+    var(--hero-highlight-color)
+  );
+  z-index: -1;
+  filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.techCard:hover {
+  transform: translateY(-8px);
+}
+.techCard:hover::after {
+  opacity: 0.25;
+}
+
+.cardHeader {
+  padding: 20px;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 85%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+}
+
+.cardIcon {
+  font-size: 1.8rem;
+  color: var(--accent-color);
+  margin: 0;
+  display: inline-block;
+}
+
+.cardHeader h4 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--heading-color);
+  margin: 0;
+}
+
 .techIconGrid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 1.2rem; /* Sedikit lebih lega */
-  margin-top: 1rem;
+  gap: 1.5rem;
+  padding: 25px;
   min-height: 50px;
 }
 
 .techIconItem {
-  /* Ukuran ikon diatur dari sini, karena ini adalah SVG */
-  font-size: 2.5rem;
-  transition: all 0.3s ease;
+  font-size: 2.8rem;
   cursor: help;
-  /* TIDAK ADA 'color' DI SINI, agar warna asli SVG tampil */
 }
 
-.techIconItem:hover {
-  transform: scale(1.2) translateY(-3px); /* Efek hover lebih menarik */
-}
-
-/* --- (Style Accordion tidak berubah) --- */
+/* --- Skills Accordion Section --- */
 .accordionContainer {
   max-width: 800px;
   margin: 0 auto;
@@ -161,41 +251,50 @@
   flex-direction: column;
   gap: 1rem;
 }
+
 .accordionItem {
   background: var(--surface-color);
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border: 2px solid color-mix(in srgb, var(--default-color), transparent 85%);
   border-radius: 8px;
   overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.accordionItem:hover {
+  transform: scale(1.02);
+  border-color: var(--accent-color);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
 .accordionHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
   color: var(--heading-color);
   width: 100%;
 }
+
 .accordionContent {
   overflow: hidden;
 }
+
 .accordionContent p {
   padding: 0 20px 20px 20px;
   line-height: 1.6;
   color: var(--default-color);
   opacity: 0.9;
 }
+
 .stackContainer {
   padding: 0 20px 20px 20px;
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
 }
-
-/* --- PERUBAHAN PENTING PADA TAG SKILL --- */
-/* src/components/AboutSection/AboutSection.module.css */
 
 .stackTag {
   display: inline-flex;
@@ -208,7 +307,6 @@
   transition: all 0.3s ease;
 }
 
-/* Warnai teksnya saja, jangan seluruh tag */
 .stackTag span {
   font-size: 0.9rem;
   font-weight: 500;
@@ -216,18 +314,88 @@
   transition: color 0.3s ease;
 }
 
-/* Atur ukuran ikon SVGnya saja */
 .stackTag svg {
   font-size: 1.3rem;
-  /* Tidak ada properti color, agar warna aslinya keluar */
 }
 
 .stackTag:hover {
   border-color: var(--accent-color);
   transform: translateY(-2px);
 }
-
-/* Saat di-hover, teksnya yang berubah warna, bukan ikonnya */
 .stackTag:hover span {
   color: var(--accent-color);
+}
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-width: 991px) {
+  .aboutLayout {
+    gap: 2rem;
+  }
+  .aboutImageWrapper,
+  .aboutContentWrapper {
+    flex-basis: 100%;
+    min-width: 0;
+  }
+  .aboutContent {
+    text-align: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .aboutSection,
+  .techStackSection,
+  .skillsSection {
+    padding-block: 60px;
+  }
+  .sectionTitle {
+    padding-bottom: 40px;
+  }
+  .sectionTitle h2 {
+    font-size: 2rem;
+  }
+  .sectionTitle p {
+    font-size: 1rem;
+  }
+
+  .aboutContent {
+    text-align: left;
+  }
+  .cvButton {
+    /* width: 100%; */
+    justify-content: center;
+  }
+
+  .techStackGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .techCard {
+    padding: 0;
+  }
+  .cardHeader {
+    padding: 15px;
+  }
+  .cardHeader h4 {
+    font-size: 1.1rem;
+  }
+  .cardIcon {
+    font-size: 1.5rem;
+  }
+  .techIconGrid {
+    gap: 1rem;
+    padding: 20px;
+  }
+  .techIconItem {
+    font-size: 2.2rem;
+  }
+
+  .accordionHeader {
+    font-size: 1.1rem;
+    padding: 15px;
+  }
+  .accordionContent p {
+    font-size: 0.95rem;
+    padding: 0 15px 15px 15px;
+  }
 }

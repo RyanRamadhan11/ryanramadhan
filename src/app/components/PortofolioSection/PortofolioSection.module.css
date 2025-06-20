@@ -1,0 +1,349 @@
+/* src/components/PortofolioSection/PortofolioSection.module.css */
+
+.portofolioSection {
+  padding: 5rem 0;
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 3rem;
+  background: linear-gradient(
+    to right,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 51%,
+    var(--hero-accent-color) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+/* --- Filter --- */
+/* Container untuk filter diberi background */
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Tombol filter dengan style baru */
+.filterButton {
+  padding: 0.75rem 1.75rem;
+  border: none;
+  background-color: rgb(51, 51, 51);
+  color: #ccc;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Efek hover dan active dengan gradasi dan shadow */
+.filterButton:hover,
+.filterButton.active {
+  color: var(--hero-background-dark, #121212);
+  background-image: linear-gradient(
+    to right,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 51%,
+    var(--hero-accent-color) 100%
+  );
+  box-shadow: 0 7px 20px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
+}
+
+/* --- Grid --- */
+.portofolioGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 3rem;
+}
+
+/* --- Card --- */
+.cardWrapper {
+  position: relative;
+  border-radius: 16px;
+  transition: all 0.4s ease-in-out;
+}
+
+.cardWrapper::after,
+.cardWrapper::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    var(--hero-accent-color, #03dac6),
+    var(--hero-highlight-color, #bb86fc)
+  );
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.cardWrapper::after {
+  filter: blur(15px);
+}
+
+.cardWrapper:hover::before,
+.cardWrapper:hover::after {
+  opacity: 1;
+}
+
+.portofolioCard {
+  background-color: #25252a;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.4s ease-in-out;
+}
+
+.cardWrapper:hover .portofolioCard {
+  transform: translateY(-5px);
+}
+
+/* --- Carousel & Navigasi --- */
+.carouselContainer {
+  width: 100%;
+  aspect-ratio: 16 / 10; /* Menjaga rasio gambar agar konsisten */
+  position: relative;
+  overflow: hidden;
+}
+
+.carouselImage {
+  transition: transform 0.5s ease-in-out;
+}
+
+.cardWrapper:hover .carouselImage {
+  transform: scale(1.05); /* Efek zoom pada gambar saat hover */
+}
+
+.customDotsContainer {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  display: flex !important;
+  justify-content: center;
+  gap: 8px;
+}
+
+.customDotsContainer li {
+  /* ... */
+  cursor: pointer;
+}
+
+.customPagingDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.customDotsContainer li.slick-active .customPagingDot {
+  background-color: var(--hero-highlight-color);
+  transform: scale(1.2);
+}
+
+.carousel {
+  width: 100%;
+  height: 220px;
+  position: relative;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 220px;
+  position: relative;
+}
+
+.slickArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.carousel:hover .slickArrow {
+  opacity: 1;
+}
+
+.slickPrev {
+  left: 10px;
+}
+
+.slickNext {
+  right: 10px;
+}
+
+.slickArrow:hover {
+  background-color: var(--hero-accent-color, #03dac6);
+  color: #121212;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel .slick-dots {
+  bottom: 10px;
+}
+.carousel .slick-dots li button:before {
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+.carousel .slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: var(--hero-accent-color, #03dac6);
+}
+
+/* --- Konten Card --- */
+.portofolioContent {
+  padding: 1.5rem;
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 0.8rem;
+}
+
+.categoryTag {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--hero-accent-color, #03dac6);
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 0.8rem;
+}
+
+.header h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.portofolioContent p {
+  font-size: 0.95rem;
+  color: #c5c5c5;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.techIcon {
+  font-size: 1.8rem;
+  cursor: help;
+  transition: all 0.3s ease;
+}
+
+.techIcon:hover {
+  transform: scale(1.2) translateY(-2px);
+}
+
+.portofolioLinks {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: auto;
+}
+
+.portofolioLinks a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--hero-accent-color, #03dac6);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.portofolioLinks a:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* --- Pagination --- */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  color: #ccc;
+}
+
+.paginationContainer button {
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background-color: #25252a;
+  color: #ccc;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paginationContainer button:hover:not(:disabled) {
+  background-color: var(--hero-accent-color, #03dac6);
+  border-color: var(--hero-accent-color, #03dac6);
+  color: #121212;
+}
+
+.paginationContainer button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

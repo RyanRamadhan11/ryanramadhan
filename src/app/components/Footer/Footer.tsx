@@ -2,44 +2,54 @@
 import React, { FC } from "react";
 import styles from "./Footer.module.css";
 
+// 1. Import ikon yang dibutuhkan dari react-icons
+import { SiGithub, SiLinkedin, SiInstagram, SiMedium } from "react-icons/si";
+
+// 2. Buat array untuk data sosial media agar lebih rapi
+const socialLinksData = [
+  {
+    name: "GitHub",
+    href: "https://github.com/ryanmaramdh",
+    icon: SiGithub,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com/in/ryanramadhan",
+    icon: SiLinkedin,
+  },
+  {
+    name: "Instagram",
+    href: "https://instagram.com/ryanramadhan",
+    icon: SiInstagram,
+  },
+  {
+    name: "Medium",
+    href: "https://medium.com/@ryanramadhan",
+    icon: SiMedium,
+  },
+];
+
 const Footer: FC = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
-        {/* Social Media Icons */}
+        {/* 3. Render ikon secara dinamis menggunakan map */}
         <div className={styles.socialLinks}>
-          <a
-            href="https://github.com/ryanmaramdh"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <i className="bi bi-github"></i>
-          </a>
-          <a
-            href="https://linkedin.com/in/ryanramadhan"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-          >
-            <i className="bi bi-linkedin"></i>
-          </a>
-          <a
-            href="https://instagram.com/ryanramadhan"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-          >
-            <i className="bi bi-instagram"></i>
-          </a>
-          <a
-            href="https://medium.com/@ryanramadhan"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Medium"
-          >
-            <i className="bi bi-medium"></i>
-          </a>
+          {socialLinksData.map((link) => {
+            const Icon = link.icon; // Ambil komponen ikon dari data
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.name}
+                title={link.name} // Tambahkan title untuk tooltip
+              >
+                <Icon /> {/* Render komponen ikon di sini */}
+              </a>
+            );
+          })}
         </div>
 
         {/* Motto/Slogan */}
