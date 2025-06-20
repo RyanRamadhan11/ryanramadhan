@@ -6,7 +6,7 @@ import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
-// [DIUBAH] Deklarasi tipe global untuk window.grecaptcha versi 3
+// Deklarasi tipe global untuk window.grecaptcha versi 3
 declare global {
   interface Window {
     grecaptcha: {
@@ -33,7 +33,6 @@ const ContactSection: FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // [DIUBAH TOTAL] Fungsi handleSubmit untuk reCAPTCHA v3
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
@@ -44,20 +43,18 @@ const ContactSection: FC = () => {
       return;
     }
 
-    // Menunggu reCAPTCHA siap
     window.grecaptcha.ready(() => {
-      // Meminta token dari Google
+      // Di sini, kita secara eksplisit memanggil execute dengan Site Key
       window.grecaptcha
         .execute("6Le0R2crAAAAAChdcFs6zL_lRoyJDO5dC6kRm5VR", {
+          // INI SITE KEY KAMU
           action: "submit",
-        }) // <-- GANTI DENGAN SITE KEY V3 KAMU
+        })
         .then(async (token) => {
-          // Gabungkan data form dengan token
           const dataWithRecaptcha = {
             ...formData,
             "g-recaptcha-response": token,
           };
-
           try {
             const response = await fetch("https://formspree.io/f/mjkregdo", {
               method: "POST",
@@ -192,8 +189,6 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
-            {/* [DIHAPUS] Div untuk placeholder reCAPTCHA v2 sudah tidak diperlukan lagi */}
-
             <button
               type="submit"
               className={styles.submitButton}
@@ -234,7 +229,6 @@ const ContactSection: FC = () => {
               </p>
             )}
           </motion.form>
-          {/* [TAMBAHKAN INI] Teks pemberitahuan pengganti lencana */}
         </div>
       </div>
     </section>
