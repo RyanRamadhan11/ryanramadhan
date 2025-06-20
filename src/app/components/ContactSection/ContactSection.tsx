@@ -6,11 +6,15 @@ import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
-// [FIX] Deklarasikan tipe global untuk window.grecaptcha
+// [DIUBAH] Deklarasi tipe global untuk window.grecaptcha versi 3
 declare global {
   interface Window {
     grecaptcha: {
-      reset: () => void;
+      ready: (callback: () => void) => void;
+      execute: (
+        siteKey: string,
+        options: { action: string }
+      ) => Promise<string>;
     };
   }
 }
@@ -29,42 +33,56 @@ const ContactSection: FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // [DIUBAH TOTAL] Fungsi handleSubmit untuk reCAPTCHA v3
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
 
-    const form = e.currentTarget;
-    const data = new FormData(form);
-
-    try {
-      const response = await fetch("https://formspree.io/f/mjkregdo", {
-        method: "POST",
-        body: data,
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      if (response.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-
-        // [FIX] Reset reCAPTCHA dengan cara yang aman bagi TypeScript
-        if (window.grecaptcha) {
-          window.grecaptcha.reset();
-        }
-      } else {
-        setStatus("error");
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    if (!window.grecaptcha) {
+      console.error("reCAPTCHA script not loaded");
       setStatus("error");
+      return;
     }
+
+    // Menunggu reCAPTCHA siap
+    window.grecaptcha.ready(() => {
+      // Meminta token dari Google
+      window.grecaptcha
+        .execute("6Le0R2crAAAAAChdcFs6zL_lRoyJDO5dC6kRm5VR", {
+          action: "submit",
+        }) // <-- GANTI DENGAN SITE KEY V3 KAMU
+        .then(async (token) => {
+          // Gabungkan data form dengan token
+          const dataWithRecaptcha = {
+            ...formData,
+            "g-recaptcha-response": token,
+          };
+
+          try {
+            const response = await fetch("https://formspree.io/f/mjkregdo", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataWithRecaptcha),
+            });
+
+            if (response.ok) {
+              setStatus("success");
+              setFormData({ name: "", email: "", message: "" });
+            } else {
+              setStatus("error");
+            }
+          } catch (error) {
+            console.error("Form submission error:", error);
+            setStatus("error");
+          }
+        });
+    });
   };
 
   return (
     <section id="contact" className={styles.contactSection}>
       <div className="page-container">
+        {/* ... Judul dan Info Kontak tidak berubah ... */}
         <motion.div
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -72,14 +90,15 @@ const ContactSection: FC = () => {
           transition={{ duration: 0.6 }}
           className={styles.sectionTitle}
         >
-          <h2>Get In Touch</h2>
+          {" "}
+          <h2>Get In Touch</h2>{" "}
           <p>
+            {" "}
             Interested in collaborating or just want to say hi? Feel free to
             reach out. I&apos;m always open to discussing new projects and
-            creative ideas.
-          </p>
+            creative ideas.{" "}
+          </p>{" "}
         </motion.div>
-
         <div className={styles.contactGrid}>
           <motion.div
             className={styles.contactInfo}
@@ -88,18 +107,22 @@ const ContactSection: FC = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3>Contact Information</h3>
-            <p>Fill up the form and I will get back to you within 24 hours.</p>
+            {" "}
+            <h3>Contact Information</h3>{" "}
+            <p>Fill up the form and I will get back to you within 24 hours.</p>{" "}
             <a
               href="mailto:ramadhanryan676@gmail.com"
               className={styles.infoItem}
             >
-              <FiMail /> <span>ramadhanryan676@gmail.com</span>
-            </a>
+              {" "}
+              <FiMail /> <span>ramadhanryan676@gmail.com</span>{" "}
+            </a>{" "}
             <div className={styles.infoItem}>
-              <FiMapPin /> <span>Jakarta, Indonesia</span>
-            </div>
+              {" "}
+              <FiMapPin /> <span>Jakarta, Indonesia</span>{" "}
+            </div>{" "}
             <div className={styles.socialLinks}>
+              {" "}
               <a
                 href="https://linkedin.com/in/ryan-ramadhan-8a49662a2"
                 target="_blank"
@@ -107,7 +130,7 @@ const ContactSection: FC = () => {
                 aria-label="LinkedIn"
               >
                 <FaLinkedin />
-              </a>
+              </a>{" "}
               <a
                 href="https://github.com/ryznox"
                 target="_blank"
@@ -115,7 +138,7 @@ const ContactSection: FC = () => {
                 aria-label="GitHub"
               >
                 <FaGithub />
-              </a>
+              </a>{" "}
               <a
                 href="https://instagram.com/ryznox"
                 target="_blank"
@@ -123,8 +146,8 @@ const ContactSection: FC = () => {
                 aria-label="Instagram"
               >
                 <FaInstagram />
-              </a>
-            </div>
+              </a>{" "}
+            </div>{" "}
           </motion.div>
 
           <motion.form
@@ -169,10 +192,7 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
-            <div
-              className="g-recaptcha"
-              data-sitekey="6LeORzccAAAAAChdcFs6zL_lRoyJDO5dC6kRm5VR"
-            ></div>
+            {/* [DIHAPUS] Div untuk placeholder reCAPTCHA v2 sudah tidak diperlukan lagi */}
 
             <button
               type="submit"
@@ -182,6 +202,26 @@ const ContactSection: FC = () => {
               {status === "submitting" ? "Sending..." : "Send Message"}
               <FiSend className={styles.sendIcon} />
             </button>
+
+            <p className={styles.recaptchaNotice}>
+              This site is protected by reCAPTCHA and the Google{" "}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Privacy Policy
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Terms of Service
+              </a>{" "}
+              apply.
+            </p>
 
             {status === "success" && (
               <p className={styles.successMessage}>
@@ -194,6 +234,7 @@ const ContactSection: FC = () => {
               </p>
             )}
           </motion.form>
+          {/* [TAMBAHKAN INI] Teks pemberitahuan pengganti lencana */}
         </div>
       </div>
     </section>
