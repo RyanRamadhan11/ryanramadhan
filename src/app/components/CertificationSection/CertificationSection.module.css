@@ -1,0 +1,278 @@
+/* src/components/CertificationSection/CertificationSection.module.css */
+
+.certificationSection {
+  padding: 5rem 0;
+  background-color: var(--background-color, #121212);
+  position: relative;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.sectionTitle h2 {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color, #bb86fc),
+    var(--hero-highlight-color, #03dac6)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.sectionTitle p {
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  color: var(--default-color);
+  opacity: 0.8;
+}
+
+.certificationGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.cardWrapper {
+  position: relative;
+  border-radius: 12px;
+  transition: all 0.4s ease-in-out;
+}
+.cardWrapper::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: linear-gradient(
+    45deg,
+    var(--hero-accent-color, #03dac6),
+    var(--hero-highlight-color, #bb86fc)
+  );
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+.cardWrapper:hover::after {
+  opacity: 0.5;
+}
+.certificationCard {
+  background-color: var(--surface-color, #1e1e1e);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.cardWrapper:hover .certificationCard {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  cursor: pointer;
+  overflow: hidden;
+}
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.imageContainer:hover .imageOverlay {
+  opacity: 1;
+}
+
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.issuer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--default-color);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+.issuer svg {
+  color: var(--hero-accent-color);
+}
+.cardContent h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  line-height: 1.4;
+  margin-bottom: 1rem; /* Jarak antara judul dan ikon tech */
+  min-height: 55px; /* Beri tinggi minimum agar layout tidak berantakan */
+}
+
+/* --- [BARU] Styling untuk Ikon Teknologi di dalam Card --- */
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem; /* Jarak antara ikon dan footer */
+  flex-grow: 1; /* Biarkan section ini mengisi ruang jika deskripsi pendek */
+}
+
+.techIcon {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  color: #bbb; /* Warna default jika tidak ada di map */
+}
+
+.techIcon:hover {
+  transform: scale(1.1);
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.date {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--default-color);
+  opacity: 0.7;
+}
+.credentialLink {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+.credentialLink:hover {
+  color: var(--hero-highlight-color);
+}
+
+/* ... Sisa kode CSS dari .controlsContainer sampai akhir tidak berubah ... */
+.controlsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  margin-top: 2rem;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.navButton,
+.pageButton {
+  border: 1px solid #444;
+  background-color: transparent;
+  color: #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navButton {
+  width: 40px;
+  height: 40px;
+}
+.pageButton {
+  min-width: 40px;
+  height: 40px;
+  padding: 0 0.5rem;
+}
+.navButton:hover:not(:disabled),
+.pageButton:hover:not(.activePage) {
+  background-color: var(--accent-color);
+  color: var(--contrast-color, #000);
+  border-color: var(--accent-color);
+}
+.activePage {
+  background-color: var(--hero-highlight-color);
+  color: var(--hero-background-dark, #121212);
+  border-color: var(--hero-highlight-color);
+}
+.navButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.sortContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--default-color);
+}
+.sortSelect {
+  padding: 0.5rem 1rem;
+  background-color: var(--background-color);
+  color: var(--default-color);
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-weight: 500;
+}
+@media (max-width: 767px) {
+  .controlsContainer {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 2rem;
+}
+.modalContent {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.closeButton {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: 0 0;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+}

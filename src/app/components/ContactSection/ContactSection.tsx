@@ -6,12 +6,11 @@ import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
-// [FIX] Deklarasi tipe global untuk window.grecaptcha (versi 2)
+// Deklarasi tipe global untuk window.grecaptcha
 declare global {
   interface Window {
     grecaptcha: {
       reset: () => void;
-      // Properti lain untuk v2 bisa ditambahkan di sini jika perlu
     };
   }
 }
@@ -49,8 +48,6 @@ const ContactSection: FC = () => {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
-
-        // [FIX] Reset reCAPTCHA v2 dengan cara yang aman bagi TypeScript
         if (window.grecaptcha) {
           window.grecaptcha.reset();
         }
@@ -170,10 +167,13 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
-            <div
-              className="g-recaptcha"
-              data-sitekey="GANTI_DENGAN_SITE_KEY_V2_BARU_ANDA" // <-- JANGAN LUPA GANTI DENGAN SITE KEY V2 BARU DARI GOOGLE
-            ></div>
+            {/* [DIUBAH] reCAPTCHA dibungkus dengan div baru */}
+            <div className={styles.recaptchaWrapper}>
+              <div
+                className="g-recaptcha"
+                data-sitekey="6Lcza2crAAAAAGebnSVAvOyUtff_Y4e2GyoG3InP" // GANTI DENGAN SITE KEY V2 BARU ANDA
+              ></div>
+            </div>
 
             <button
               type="submit"

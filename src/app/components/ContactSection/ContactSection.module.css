@@ -7,7 +7,6 @@
   overflow: hidden;
 }
 
-/* Efek gradasi background yang halus */
 .contactSection::before {
   content: "";
   position: absolute;
@@ -53,7 +52,7 @@
 }
 
 .sectionTitle p {
-  font-size: 1.1rem;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
@@ -61,22 +60,20 @@
   opacity: 0.8;
 }
 
-/* --- [BARU] Layout Grid --- */
 .contactGrid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Dua kolom dengan rasio berbeda */
+  grid-template-columns: 1fr 1.5fr;
   gap: 3rem;
   align-items: flex-start;
   position: relative;
   z-index: 1;
 }
 
-/* --- Kolom Informasi Kontak --- */
 .contactInfo {
   color: var(--default-color);
 }
 .contactInfo h3 {
-  font-size: 1.8rem;
+  font-size: clamp(1.6rem, 4vw, 1.8rem);
   font-weight: 700;
   color: var(--heading-color);
   margin-bottom: 1rem;
@@ -102,13 +99,13 @@
 .infoItem svg {
   font-size: 1.5rem;
   color: var(--hero-accent-color);
+  flex-shrink: 0;
 }
 .socialLinks {
   margin-top: 2rem;
   display: flex;
   gap: 1.5rem;
 }
-
 .socialLinks a {
   font-size: 1.8rem;
   color: #a0a0a0;
@@ -119,7 +116,6 @@
   transform: translateY(-3px);
 }
 
-/* --- [DIUBAH] Form Kontak Modern --- */
 .contactForm {
   display: flex;
   flex-direction: column;
@@ -159,8 +155,8 @@
   color: #aaa;
   pointer-events: none;
   transition: all 0.3s ease;
+  background-color: #25252a; /* Sesuaikan dengan warna background form */
 }
-/* Efek label melayang ke atas */
 .inputGroup input:focus + label,
 .inputGroup input:valid + label,
 .inputGroup textarea:focus + label,
@@ -168,18 +164,15 @@
   top: -0.6rem;
   left: 0.8rem;
   font-size: 0.8rem;
-  background-color: #25252a; /* Warna background form */
   padding: 0 0.3rem;
   color: var(--hero-accent-color);
 }
-
 .inputGroup input:focus,
 .inputGroup textarea:focus {
   outline: none;
   border-color: var(--hero-accent-color);
 }
 
-/* --- [DIUBAH] Tombol Submit dengan Gradasi & Animasi --- */
 .submitButton {
   display: flex;
   align-items: center;
@@ -203,48 +196,21 @@
   box-shadow: 0 4px 15px
     color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
 }
-
 .submitButton:hover:not(:disabled) {
   background-position: right center;
   transform: translateY(-3px);
   box-shadow: 0 8px 25px
     color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
-
 .submitButton:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
-
 .sendIcon {
   transition: transform 0.4s ease;
 }
 .submitButton:hover:not(:disabled) .sendIcon {
   transform: translateX(5px) rotate(-45deg);
-}
-/* [BARU] Sembunyikan badge reCAPTCHA v3 */
-.grecaptcha-badge {
-  visibility: hidden !important;
-}
-
-/* [BARU] Style untuk teks pemberitahuan reCAPTCHA */
-.recaptchaNotice {
-  font-size: 0.75rem;
-  color: #888;
-  text-align: center;
-  margin-top: 2rem;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.recaptchaNotice a {
-  color: #aaa;
-  text-decoration: underline;
-}
-
-.recaptchaNotice a:hover {
-  color: var(--hero-highlight-color);
 }
 
 .successMessage,
@@ -264,10 +230,18 @@
   color: #ff5252;
 }
 
-/* --- [BARU] Aturan Responsif --- */
+/* --- [BARU] Wrapper untuk reCAPTCHA agar bisa di-scale --- */
+.recaptchaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- Aturan Responsif --- */
 @media (max-width: 992px) {
   .contactGrid {
-    grid-template-columns: 1fr; /* Stack jadi satu kolom */
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
   }
   .contactInfo {
     text-align: center;
@@ -279,10 +253,47 @@
 }
 
 @media (max-width: 767px) {
+  .inputGroup {
+    width: 90%;
+  }
+
   .contactSection {
-    padding: 4rem 0;
+    padding: 4rem 1rem;
   }
   .contactForm {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+  .socialLinks {
+    gap: 1.5rem; /* Jarak ikon sosial diperbesar sedikit */
+  }
+
+  /* [DIUBAH] Membuat info kontak rata kiri di mobile agar rapi */
+  .contactInfo {
+    text-align: left;
+  }
+  .infoItem,
+  .socialLinks {
+    justify-content: flex-start;
+  }
+}
+
+/* [BARU] Media query khusus untuk layar sangat sempit (di bawah 420px) */
+@media (max-width: 420px) {
+  .contactForm {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Trik untuk scale reCAPTCHA */
+  .recaptchaWrapper {
+    width: 100%;
+    transform: scale(0.9);
+    transform-origin: 0 0;
+    height: 70px; /* Sesuaikan tinggi agar tidak ada space kosong */
+  }
+
+  /* Tombol send tidak lagi full-width */
+  .submitButton {
+    align-self: center;
+    width: fit-content;
   }
 }

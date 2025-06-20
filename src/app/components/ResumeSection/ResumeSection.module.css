@@ -1,0 +1,227 @@
+/* src/components/ResumeSection/ResumeSection.module.css */
+
+.resumeSection {
+  padding: 5rem 0;
+  background-color: var(--background-color, #121212);
+  position: relative;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.sectionTitle h2 {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color, #bb86fc),
+    var(--hero-highlight-color, #03dac6)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sectionTitle p {
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  color: var(--default-color);
+  opacity: 0.8;
+}
+
+/* --- Filter Buttons Keren --- */
+.filterContainer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 4rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.filterButton {
+  padding: 0.75rem 1.75rem;
+  border: none;
+  background-color: transparent;
+  color: #ccc;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.filterButtonText {
+  position: relative;
+  z-index: 2;
+}
+
+.filterButton.active .filterButtonText {
+  color: var(--hero-background-dark, #121212);
+}
+
+.activePill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
+  );
+  border-radius: 50px;
+  z-index: 1;
+}
+
+/* --- Timeline Container & Spine --- */
+.timelineContainer {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.timelineContainer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  background: linear-gradient(
+    to bottom,
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
+  );
+  border-radius: 2px;
+}
+
+/* --- Timeline Item (Card) --- */
+.timelineItem {
+  padding: 10px 40px;
+  position: relative;
+  width: 50%;
+}
+
+/* Posisi item kiri & kanan */
+.timelineItem.left {
+  left: 0;
+  padding-right: 70px;
+  text-align: right;
+}
+
+.timelineItem.right {
+  left: 50%;
+  padding-left: 70px;
+}
+
+/* --- Ikon di Tengah Timeline --- */
+.timelineIcon {
+  position: absolute;
+  top: 25px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--background-color);
+  border: 4px solid var(--hero-highlight-color);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--hero-highlight-color);
+}
+
+.timelineItem.left .timelineIcon {
+  right: -25px; /* (50px / 2) */
+}
+
+.timelineItem.right .timelineIcon {
+  left: -25px; /* (50px / 2) */
+}
+
+/* --- Konten di dalam Card --- */
+.timelineContent {
+  padding: 20px 30px;
+  background: var(--surface-color);
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timelineItem:hover .timelineContent {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.duration {
+  display: inline-block;
+  padding: 5px 15px;
+  background: color-mix(in srgb, var(--accent-color), transparent 85%);
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-bottom: 10px;
+}
+
+.timelineContent h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--heading-color);
+  margin: 10px 0;
+}
+
+.timelineContent h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--default-color);
+  opacity: 0.8;
+  margin-bottom: 10px;
+}
+
+.timelineContent p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--default-color);
+  opacity: 0.9;
+}
+
+/* --- Desain Responsif untuk Mobile --- */
+@media (max-width: 991px) {
+  .timelineContainer::before {
+    left: 30px; /* Garis timeline pindah ke kiri */
+  }
+
+  .timelineItem {
+    width: 100%;
+    padding-left: 80px; /* Semua item diberi padding kiri */
+    padding-right: 15px;
+    text-align: left; /* Semua item rata kiri */
+  }
+
+  .timelineItem.left,
+  .timelineItem.right {
+    left: 0; /* Reset posisi */
+  }
+
+  .timelineIcon {
+    left: 5px; /* Posisi ikon di atas garis */
+  }
+
+  .timelineItem.left .timelineIcon,
+  .timelineItem.right .timelineIcon {
+    left: 5px;
+  }
+}
