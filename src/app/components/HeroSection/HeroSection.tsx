@@ -14,7 +14,7 @@ import {
   SiTailwindcss,
 } from "react-icons/si";
 // Ikon untuk Sosial Media
-import { FaGithub, FaLinkedin, FaInstagram, FaMedium } from "react-icons/fa";
+// import { FaGithub, FaLinkedin, FaInstagram, FaMedium } from "react-icons/fa";
 import styles from "./HeroSection.module.css";
 
 // Data untuk teks animasi
