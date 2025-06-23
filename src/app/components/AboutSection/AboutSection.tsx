@@ -1,12 +1,19 @@
 "use client";
 
-import React, { FC, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { FC, useState, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useTransform,
+  useScroll,
+  Variants,
+} from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./AboutSection.module.css";
 
-// Icon imports (tidak ada perubahan)
+// --- Ikon ---
 import {
   DiPhp,
   DiJava,
@@ -39,7 +46,47 @@ import { BsArrowLeftRight } from "react-icons/bs";
 import { FaQuestionCircle } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
 
-// Data (tidak ada perubahan struktur, hanya konten teks diubah)
+// --- Komponen Judul Animasi ---
+const letterVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
+};
+
+const titleContainerVariants: Variants = {
+  visible: {
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+interface AnimatedTitleProps {
+  text: string;
+}
+
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
+  const letters = Array.from(text);
+  return (
+    <motion.div
+      variants={titleContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.8 }}
+    >
+      <h2 className={styles.animatedGradientTitle}>
+        {letters.map((letter, index) => (
+          <motion.span key={index} variants={letterVariants}>
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        ))}
+      </h2>
+    </motion.div>
+  );
+};
+
+// --- Data ---
 const masterTechData: { [key: string]: { icon: React.ElementType } } = {
   PHP: { icon: DiPhp },
   Javascript: { icon: DiJavascript1 },
@@ -146,7 +193,6 @@ const techStack = [
   },
 ];
 
-// [DITERJEMAHKAN] Konten accordion diubah ke Bahasa Inggris
 const accordionSkills = [
   {
     title: "Backend Development",
@@ -194,6 +240,7 @@ const accordionSkills = [
   },
 ];
 
+// --- Komponen Accordion ---
 const AccordionItem: FC<{
   item: (typeof accordionSkills)[0];
   isOpen: boolean;
@@ -248,55 +295,53 @@ const AccordionItem: FC<{
   </motion.div>
 );
 
+// --- Komponen Utama ---
 const AboutSection: FC = () => {
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const handleAccordionClick = (index: number) =>
     setOpenAccordion(openAccordion === index ? null : index);
+  const aboutRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: aboutRef,
+    offset: ["start end", "center center"],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], [-100, 0]);
+  const imageOpacity = useTransform(scrollYProgress, [0, 0.5], [0.2, 1]);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const contentIsInView = useInView(contentRef, { once: true, amount: 0.3 });
 
   return (
     <main className={styles.main}>
-      <section id="about" className={styles.aboutSection}>
+      <section id="about" className={styles.aboutSection} ref={aboutRef}>
         <div className="page-container">
-          <motion.div
-            className={`section-title ${styles.sectionTitle}`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2>About Me</h2>
-          </motion.div>
-
+          <div className={`section-title ${styles.sectionTitle}`}>
+            <AnimatedTitle text="About Me" />
+          </div>
           <div className={styles.aboutLayout}>
             <motion.div
               className={styles.aboutImageWrapper}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8 }}
+              style={{ y: imageY, opacity: imageOpacity }}
             >
               <div className={styles.imageContainer}>
                 <Image
                   src="/images/profile.jpg"
                   className={styles.profileImg}
-                  alt="Ryan Ramadhan's Profile Photo" // [DITERJEMAHKAN]
+                  alt="Ryan Ramadhan's Profile Photo"
                   width={500}
                   height={500}
                   priority
                 />
               </div>
             </motion.div>
-
             <motion.div
+              ref={contentRef}
               className={styles.aboutContentWrapper}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8 }}
+              initial={{ x: 50, opacity: 0 }}
+              animate={contentIsInView ? { x: 0, opacity: 1 } : {}}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             >
               <div className={styles.aboutContent}>
                 <h3>Software Engineer with a Passion for Problem Solving.</h3>
-                {/* [DITERJEMAHKAN] */}
                 <p>
                   I am an Informatics Engineering graduate from Singaperbangsa
                   Karawang University with over two years of experience as a
@@ -308,7 +353,11 @@ const AboutSection: FC = () => {
                   streamlined and efficient deployment.
                 </p>
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
+                  style={{ display: "inline-block" }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: "0 10px 30px rgba(196, 39, 201, 0.3)",
+                  }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Link
@@ -324,20 +373,12 @@ const AboutSection: FC = () => {
           </div>
         </div>
       </section>
-
       <section id="tech-stack" className={styles.techStackSection}>
         <div className="page-container">
-          <motion.div
-            className={`section-title ${styles.sectionTitle}`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2>Technical Stack</h2>
-            {/* [DITERJEMAHKAN] */}
+          <div className={`section-title ${styles.sectionTitle}`}>
+            <AnimatedTitle text="Technical Stack" />
             <p>The technologies and tools I use to bring ideas to life.</p>
-          </motion.div>
+          </div>
           <div className={styles.techStackGrid}>
             {techStack.map((category, index) => (
               <motion.div
@@ -376,20 +417,12 @@ const AboutSection: FC = () => {
           </div>
         </div>
       </section>
-
       <section id="skills" className={styles.skillsSection}>
         <div className="page-container">
-          <motion.div
-            className={`section-title ${styles.sectionTitle}`}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2>Core Competencies</h2>
-            {/* [DITERJEMAHKAN] */}
+          <div className={`section-title ${styles.sectionTitle}`}>
+            <AnimatedTitle text="Core Competencies" />
             <p>Three main pillars of my expertise.</p>
-          </motion.div>
+          </div>
           <div className={styles.accordionContainer}>
             {accordionSkills.map((item, index) => (
               <AccordionItem

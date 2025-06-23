@@ -1,9 +1,49 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { FaGraduationCap, FaBriefcase } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
+
+// --- Komponen Judul Animasi ---
+const letterVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
+};
+
+const titleContainerVariants: Variants = {
+  visible: {
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+interface AnimatedTitleProps {
+  text: string;
+}
+
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
+  const letters = Array.from(text);
+  return (
+    <motion.div
+      variants={titleContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.8 }}
+    >
+      <h2 className={styles.animatedGradientTitle}>
+        {letters.map((letter, index) => (
+          <motion.span key={index} variants={letterVariants}>
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        ))}
+      </h2>
+    </motion.div>
+  );
+};
 
 // --- Tipe Data & Kategori ---
 type Category = "All" | "Education" | "Experience";
@@ -78,7 +118,7 @@ const ResumeSection: FC = () => {
           transition={{ duration: 0.6 }}
           className={styles.sectionTitle}
         >
-          <h2>Resume</h2>
+          <AnimatedTitle text="My Resume" />
           <p>
             A glimpse into my professional journey and educational background.
           </p>

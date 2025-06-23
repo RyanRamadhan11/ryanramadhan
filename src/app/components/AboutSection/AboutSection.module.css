@@ -1,55 +1,65 @@
-/* src/components/AboutSection/AboutSection.module.css */
-
 /* General & Layout */
 .main {
   width: 100%;
 }
-
 .aboutSection,
 .techStackSection,
 .skillsSection {
   padding-block: 80px;
   overflow-x: hidden;
 }
-
 .techStackSection {
   background-color: var(--surface-color);
 }
 
+/* --- Judul Section --- */
 .sectionTitle {
   text-align: center;
   padding-bottom: 50px;
 }
 
-.sectionTitle h2 {
+.animatedGradientTitle {
   font-size: clamp(2.2rem, 5vw, 2.8rem);
   font-weight: 800;
   position: relative;
   padding-bottom: 20px;
   margin-bottom: 15px;
   font-family: var(--font-jetbrains, sans-serif);
-  background: linear-gradient(
-    90deg,
-    var(--accent-color) 0%,
-    var(--hero-highlight-color) 100%
-  );
+  display: inline-block;
+
+  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
+  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background-size: 200% auto;
+  color: #fff;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: gradientFlow 5s linear infinite;
 }
 
-.sectionTitle h2::after {
+/* Underline untuk judul */
+.animatedGradientTitle::after {
   content: "";
   position: absolute;
   display: block;
   width: 80px;
   height: 5px;
-  background: var(--accent-color);
+  background: #c427c9; /* Warna underline juga di-hardcode */
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 3px;
   opacity: 0.8;
+}
+
+/* Keyframes untuk gradasi bergerak */
+@keyframes gradientFlow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
 }
 
 .sectionTitle p {
@@ -60,7 +70,7 @@
   font-size: 1.1rem;
 }
 
-/* --- About Me Section --- */
+/* --- Section About Me --- */
 .aboutLayout {
   display: flex;
   align-items: center;
@@ -71,8 +81,8 @@
 .aboutImageWrapper {
   flex: 1 1 40%;
   min-width: 320px;
-  overflow: hidden; /* [PERBAIKAN UTAMA] Mengurung animasi agar tidak menyebabkan scroll */
-  border-radius: 12px; /* Tambahkan radius di sini agar cocok dengan container */
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .aboutContentWrapper {
@@ -84,6 +94,7 @@
   border-radius: 12px;
   padding: 4px;
   background-color: transparent;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
 }
 
 .imageContainer::before {
@@ -94,7 +105,6 @@
   padding: 3px;
   background: linear-gradient(45deg, #d400ff, #ff0080, #ff8c00, #4affff);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: gradientSpin 4s linear infinite;
 }
@@ -106,14 +116,11 @@
 }
 
 .profileImg {
-  border-radius: 12px; /* [PERBAIKAN] Dibuat statis */
+  border-radius: 10px;
   width: 100%;
   height: auto;
   display: block;
-  /* [PERBAIKAN] Animasi border-radius dihapus dari sini */
 }
-
-/* [PERBAIKAN] Keyframes untuk animasi border-radius dihapus */
 
 .aboutContent h3 {
   font-size: clamp(1.6rem, 4vw, 2rem);
@@ -141,31 +148,23 @@
   border-radius: 50px;
   background-image: linear-gradient(
     to right,
-    var(--hero-accent-color) 0%,
-    var(--hero-highlight-color) 51%,
-    var(--hero-accent-color) 100%
+    #c427c9 0%,
+    #03dac6 51%,
+    #c427c9 100%
   );
   background-size: 200% auto;
-  color: var(--hero-background-dark); /* Warna teks sesuai permintaan */
+  color: #1a1a2e; /* Warna gelap untuk kontras */
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   border: none;
 }
 
 .cvButton:hover {
   background-position: right center;
-  box-shadow: 0 8px 25px
-    color-mix(in srgb, var(--accent-color), transparent 70%);
-  color: var(
-    --hero-background-dark
-  ); /* Pastikan warna teks tetap sama saat hover */
+  color: #1a1a2e;
 }
 
-.cvButton i {
-  font-size: 1.2rem;
-}
-
-/* --- Tech Stack Section --- */
+/* --- Section Tech Stack --- */
 .techStackGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -175,7 +174,8 @@
 .techCard {
   background-color: var(--background-color);
   border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border: 1px solid
+    color-mix(in srgb, var(--default-color, #fff), transparent 85%);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
   overflow: hidden;
   position: relative;
@@ -186,11 +186,7 @@
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(
-    45deg,
-    var(--accent-color),
-    var(--hero-highlight-color)
-  );
+  background: linear-gradient(45deg, #c427c9, #03dac6);
   z-index: -1;
   filter: blur(20px);
   opacity: 0;
@@ -199,7 +195,9 @@
 
 .techCard:hover {
   transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
+
 .techCard:hover::after {
   opacity: 0.25;
 }
@@ -207,7 +205,7 @@
 .cardHeader {
   padding: 20px;
   border-bottom: 1px solid
-    color-mix(in srgb, var(--default-color), transparent 85%);
+    color-mix(in srgb, var(--default-color, #fff), transparent 85%);
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -216,9 +214,7 @@
 
 .cardIcon {
   font-size: 1.8rem;
-  color: var(--accent-color);
-  margin: 0;
-  display: inline-block;
+  color: #c427c9;
 }
 
 .cardHeader h4 {
@@ -243,7 +239,7 @@
   cursor: help;
 }
 
-/* --- Skills Accordion Section --- */
+/* --- Section Skills Accordion --- */
 .accordionContainer {
   max-width: 800px;
   margin: 0 auto;
@@ -254,7 +250,8 @@
 
 .accordionItem {
   background: var(--surface-color);
-  border: 2px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border: 2px solid
+    color-mix(in srgb, var(--default-color, #fff), transparent 85%);
   border-radius: 8px;
   overflow: hidden;
   transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
@@ -262,8 +259,8 @@
 
 .accordionItem:hover {
   transform: scale(1.02);
-  border-color: var(--accent-color);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border-color: #c427c9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .accordionHeader {
@@ -300,35 +297,36 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
+  background-color: color-mix(
+    in srgb,
+    var(--default-color, #fff),
+    transparent 90%
+  );
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid transparent;
   transition: all 0.3s ease;
 }
 
+.stackTag:hover {
+  border-color: #c427c9;
+  transform: translateY(-2px);
+  color: #c427c9;
+}
+
 .stackTag span {
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--default-color);
-  transition: color 0.3s ease;
 }
 
 .stackTag svg {
   font-size: 1.3rem;
 }
 
-.stackTag:hover {
-  border-color: var(--accent-color);
-  transform: translateY(-2px);
-}
-.stackTag:hover span {
-  color: var(--accent-color);
-}
-
-/* --- RESPONSIVE FIXES --- */
+/* --- Responsive --- */
 @media (max-width: 991px) {
   .aboutLayout {
+    flex-direction: column;
     gap: 2rem;
   }
   .aboutImageWrapper,
@@ -338,6 +336,10 @@
   }
   .aboutContent {
     text-align: center;
+  }
+  .aboutContent h3 {
+    max-width: 500px;
+    margin-inline: auto;
   }
 }
 
@@ -350,46 +352,26 @@
   .sectionTitle {
     padding-bottom: 40px;
   }
-  .sectionTitle h2 {
+  .animatedGradientTitle {
     font-size: 2rem;
   }
   .sectionTitle p {
     font-size: 1rem;
   }
-
   .aboutContent {
     text-align: left;
   }
-  .cvButton {
-    /* width: 100%; */
-    justify-content: center;
-  }
-
   .techStackGrid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-
-  .techCard {
-    padding: 0;
-  }
-  .cardHeader {
-    padding: 15px;
-  }
-  .cardHeader h4 {
-    font-size: 1.1rem;
-  }
-  .cardIcon {
-    font-size: 1.5rem;
-  }
   .techIconGrid {
-    gap: 1rem;
-    padding: 20px;
+    gap: 1.2rem;
+    padding: 20px 15px;
   }
   .techIconItem {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
-
   .accordionHeader {
     font-size: 1.1rem;
     padding: 15px;
