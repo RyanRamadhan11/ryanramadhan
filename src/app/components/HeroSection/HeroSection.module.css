@@ -1,6 +1,4 @@
-/* src/components/HeroSection/HeroSection.module.css */
-
-/* Keyframes untuk Kursor Mengetik */
+/* Keyframes untuk kursor dan animasi border (Tidak Berubah) */
 @keyframes blink-caret {
   from,
   to {
@@ -11,30 +9,30 @@
   }
 }
 
+@keyframes snake-border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /*--------------------------------------------------------------
-# Hero Section Base Styles
+# Hero Section Base
 --------------------------------------------------------------*/
 .hero {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-
-  /* --- PERUBAHAN: Padding bawah dihapus --- */
-  padding-top: 6rem;
-  padding-bottom: 0;
-
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   color: var(--hero-text-color-primary);
   margin-inline: auto;
   max-width: var(--content-max-width);
   box-sizing: border-box;
 }
-
-/* Kode untuk background animasi (.hero::before, .hero::after, @keyframes background-glow) telah dihapus */
 
 /*--------------------------------------------------------------
 # Hero Content
@@ -46,54 +44,46 @@
   max-width: 700px;
 }
 
+/* [DIREVISI] Judul dengan efek gradasi */
 .heroContent h1 {
-  font-size: clamp(3rem, 7vw, 2rem);
-  margin-bottom: 0.5rem;
-  color: var(--hero-accent-color);
-  line-height: 1.2;
-  /* Jika Anda sudah mengatur font di globals.css atau layout, baris di bawah ini bisa opsional */
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  margin: 0;
+  line-height: 1.1;
   font-family: var(--font-jetbrains, sans-serif);
+
+  /* Efek Gradasi */
+  background-image: linear-gradient(
+    to right,
+    #c427c9,
+    var(--hero-highlight-color)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.heroContent p {
-  font-size: clamp(1rem, 3.5vw, 1.5rem);
-  color: var(--hero-text-color-secondary);
-  max-width: 700px;
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.highlight {
-  color: var(--hero-highlight-color);
+.heroContent h1 .highlight {
   font-weight: 700;
 }
 
-/*--------------------------------------------------------------
-# Typing Animation
---------------------------------------------------------------*/
-.fixedRoleIntro {
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  font-weight: 500;
-  color: var(--hero-text-color-primary);
-  line-height: 1.2;
-  margin-bottom: 0rem;
+.hello {
+  /* Tidak perlu properti color lagi karena sudah diatur oleh gradasi di h1 */
 }
 
-.animatedRoleLine {
+.roleLine {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 500;
   color: var(--hero-text-color-primary);
-  line-height: 1.2;
   min-height: 2.5rem;
-  margin-top: 0rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0 0.5rem;
 }
 
+/* [BARU] Style untuk teks profesi yang beranimasi */
 .animatedRole {
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  line-height: inherit;
+  color: var(--hero-highlight-color);
+  font-weight: 600;
 }
 
 .cursor {
@@ -107,86 +97,107 @@
 }
 
 .tagline {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--hero-text-color-secondary);
-  margin-bottom: 1.5rem;
   max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  line-height: 1.6;
+  margin: 0 0 2rem;
 }
 
 /*--------------------------------------------------------------
-# Experience and Projects Stats
+# [DIREVISI] Stats, Frameworks, CTA
 --------------------------------------------------------------*/
-.experienceStats {
+
+.statsContainer {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2.5rem;
+  gap: 1rem;
   margin-bottom: 2.5rem;
-  color: var(--hero-text-color-primary);
-  font-weight: 400;
 }
 
-.statItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1rem;
-  position: relative;
+/* [DIREVISI] Styling untuk Kartu Statistik dengan warna tematik & lebar pas */
+.statCard {
+  background: rgba(196, 39, 201, 0.1); /* Ungu tematik transparan */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  /* flex: 1; <-- Dihapus agar lebar kartu pas dengan konten */
+  text-align: center;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
-.statItem:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  right: -1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 60%;
-  background-color: rgba(255, 255, 255, 0.2);
+.statCard:hover {
+  background: rgba(6, 182, 212, 0.2); /* Cyan tematik transparan saat hover */
+  transform: translateY(-5px);
 }
 
-.experienceStats .statDescription {
-  font-size: clamp(1rem, 3.5vw, 1rem);
+.statCardNumber {
+  font-size: clamp(1rem, 5vw, 1.5rem);
+  font-weight: 700;
+  color: var(--hero-highlight-color);
+  line-height: 1;
+  font-family: var(--font-jetbrains, sans-serif);
 }
 
-.statDescription {
+.statCardDescription {
+  font-size: 1rem;
   color: var(--hero-text-color-secondary);
-  margin-bottom: 0.2rem;
-  text-transform: uppercase;
+  margin-top: 0.5rem;
   letter-spacing: 0.05em;
   font-weight: 500;
 }
 
-.statNumber {
-  display: block;
-  font-weight: 700;
-  color: var(--hero-highlight-color);
-  line-height: 1;
-  margin: 0;
+.frameworkHighlight {
+  margin-bottom: 2.5rem;
+}
+.highlightTitle {
+  font-size: 1rem;
+  color: var(--hero-text-color-secondary);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.frameworkIcons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
-/*--------------------------------------------------------------
-# Call to Action Buttons
---------------------------------------------------------------*/
+.frameworkIconWrapper {
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.frameworkIconWrapper:hover {
+  filter: drop-shadow(0 0 8px var(--icon-color));
+  transform: scale(1.1);
+}
+
+.frameworkIcon {
+  font-size: 2.2rem;
+  color: var(--icon-color);
+  color: var(--icon-color, #a0a0a0);
+}
+
 .callToAction {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  margin-top: 2.5rem;
-  justify-content: center;
 }
 
 .button,
 .buttonSecondary {
   padding: 0.9rem 2rem;
-  border-radius: 8px;
+  border-radius: 10px;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1) inset;
 }
-
 .button {
   background-image: linear-gradient(
     to right,
@@ -196,89 +207,70 @@
   );
   background-size: 200% auto;
   color: var(--hero-background-dark);
-  transition: all 0.5s ease;
 }
-
 .button:hover {
   background-position: right center;
+  color: black;
   transform: translateY(-3px);
-  color: var(--hero-background-dark);
-  box-shadow: 0 6px 20px
-    color-mix(in srgb, var(--hero-accent-color), transparent 60%);
+  box-shadow: 0 7px 20px
+      color-mix(in srgb, var(--hero-accent-color), transparent 60%),
+    0 0 30px rgba(0, 0, 0, 0.2) inset;
 }
-
 .buttonSecondary {
   background-color: transparent;
   color: var(--hero-highlight-color);
-  border: 2px solid;
-  border-image: linear-gradient(
-      to right,
-      var(--hero-accent-color),
-      var(--hero-highlight-color)
-    )
-    1;
-  transition: all 0.5s ease;
+  border: 2px solid var(--hero-highlight-color);
 }
-
 .buttonSecondary:hover {
-  background-image: linear-gradient(
-    to right,
-    var(--hero-accent-color),
-    var(--hero-highlight-color)
-  );
-  background-size: 100% auto;
+  background-color: var(--hero-highlight-color);
   color: var(--hero-background-dark);
-  border-image: none;
-  border-color: transparent;
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px
-    color-mix(in srgb, var(--hero-highlight-color), transparent 60%);
+  box-shadow: 0 7px 20px
+      color-mix(in srgb, var(--hero-highlight-color), transparent 70%),
+    0 0 30px rgba(0, 0, 0, 0.2) inset;
 }
 
 /*--------------------------------------------------------------
-# Social Media Icons
---------------------------------------------------------------*/
-.socialIcons {
-  margin-top: 3.5rem;
-  display: flex;
-  gap: 1.8rem;
-  justify-content: center;
-}
-
-.socialIcons a {
-  color: var(--hero-text-color-primary);
-  font-size: 1.5rem;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.socialIcons a:hover {
-  color: var(--hero-highlight-color);
-  transform: translateY(-6px) rotate(5deg);
-}
-
-/*--------------------------------------------------------------
-# Profile Image Wrapper (IDE/MacBook Style)
+# Profile Image (Tidak Berubah)
 --------------------------------------------------------------*/
 .profileImageWrapper {
   position: relative;
   z-index: 1;
-  margin-top: 4rem;
   background-color: var(--hero-surface-dark);
   border-radius: 12px;
   padding: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 5px rgba(0, 218, 198, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   max-width: 450px;
   width: 90%;
   aspect-ratio: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.4s ease;
 }
 
-/* ... (sisa style untuk profile image, dots, logo, dll tetap sama) ... */
+.profileImageWrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: conic-gradient(
+    transparent,
+    transparent,
+    transparent,
+    var(--hero-highlight-color)
+  );
+  animation: snake-border-spin 4s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
+.profileImage {
+  position: relative;
+  z-index: 2;
+  object-fit: cover;
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+}
 
 .windowControls {
   position: absolute;
@@ -286,22 +278,14 @@
   left: 15px;
   display: flex;
   gap: 8px;
-  z-index: 2;
+  z-index: 3;
 }
-
 .dot {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   opacity: 0.8;
-  transition: opacity 0.3s ease;
-  cursor: default;
 }
-
-.dot:hover {
-  opacity: 1;
-}
-
 .red {
   background-color: #ff5f56;
 }
@@ -311,16 +295,6 @@
 .green {
   background-color: #27c93f;
 }
-
-.profileImage {
-  object-fit: cover;
-  border-radius: 8px;
-  display: block;
-  width: calc(100% - 30px);
-  height: calc(100% - 30px);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-}
-
 .macbookLogo {
   position: absolute;
   top: 15px;
@@ -337,12 +311,10 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
-
 .macbookLogo:hover {
   transform: scale(1.1) rotate(10deg);
   background-color: rgba(3, 218, 198, 0.7);
 }
-
 .logoIcon {
   font-size: 1.8rem;
   color: var(--hero-highlight-color);
@@ -351,36 +323,39 @@
 /*--------------------------------------------------------------
 # Responsive Styles
 --------------------------------------------------------------*/
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .hero {
-    /* Padding bawah di mobile juga diatur ulang */
-    padding-top: 4rem;
-    padding-bottom: 4rem; /* Beri sedikit padding bawah di mobile agar tidak terlalu mepet */
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
   }
-
-  /* ... (sisa media query untuk mobile) ... */
-  .heroContent h1 {
-    font-size: 2.5rem;
+  .heroContent {
+    max-width: 100%;
+    padding-right: 0;
   }
-  .heroContent p {
-    font-size: 1.2rem;
-  }
-  .fixedRoleIntro,
-  .animatedRoleLine {
-    font-size: 1.5rem;
-    line-height: 1.2;
-    margin-bottom: 0.2rem;
+  .callToAction,
+  .socialIcons,
+  .statsContainer,
+  .frameworkIcons {
+    justify-content: center;
   }
   .profileImageWrapper {
-    width: 300px;
-    height: 300px;
-    margin-top: 2rem;
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 3rem;
+    width: min(80vw, 300px);
   }
-  .profileImage {
-    width: calc(100% - 30px);
-    height: calc(100% - 30px);
+}
+@media (max-width: 767px) {
+  .heroContent h1 {
+    font-size: 2.2rem;
+  }
+  .roleLine {
+    font-size: 1.3rem;
+  }
+  .tagline {
+    font-size: 1rem;
   }
   .callToAction {
     flex-direction: column;
@@ -388,64 +363,27 @@
   }
   .button,
   .buttonSecondary {
-    /* width: 100%; */
-    text-align: center;
-  }
-  .socialIcons {
-    gap: 1.5rem;
-  }
-  .socialIcons a {
-    font-size: 2rem;
-  }
-  .experienceStats {
-    flex-direction: row;
-    gap: 1rem;
-    font-size: 0.9rem;
-    padding: 0 1rem;
     justify-content: center;
   }
-  .statItem {
-    padding: 0 0.5rem;
-    text-align: center;
-  }
-  .statItem:not(:last-child)::after {
-    right: -0.5rem;
-    height: 80%;
-  }
-  .statDescription {
-    font-size: 0.8rem;
-  }
-  .statNumber {
-    font-size: 2rem;
+  .statsContainer {
+    flex-direction: column; /* Kartu akan bertumpuk di layar kecil */
   }
 }
-
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .hero {
     flex-direction: row;
     text-align: left;
     justify-content: space-between;
-    padding-top: calc(var(--navbar-height) + 2rem);
-    padding-bottom: 0; /* --- PERUBAHAN: Padding bawah dihapus --- */
-  }
-  .heroContent {
-    flex: 1;
-    max-width: 50%;
-    padding-right: 4rem;
+    padding-top: var(--navbar-height);
+    padding-bottom: var(--navbar-height);
   }
   .callToAction,
   .socialIcons,
-  .experienceStats {
+  .statsContainer,
+  .frameworkIcons {
     justify-content: flex-start;
   }
   .profileImageWrapper {
-    margin-top: 0;
-    margin-left: 4rem;
-    width: 400px;
-    height: 400px;
-  }
-  .profileImage {
-    width: calc(100% - 30px);
-    height: calc(100% - 30px);
+    margin-left: 2rem;
   }
 }

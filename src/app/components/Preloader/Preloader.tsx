@@ -1,45 +1,65 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import styles from "./Preloader.module.css";
 
-const Preloader = () => {
-  const [isLoading, setIsLoading] = useState(true);
+const Preloader: FC = () => {
+  const [currentTime, setCurrentTime] = useState("");
 
+  // Efek untuk mengupdate jam digital setiap detik
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2500); // Durasi preloader ditampilkan (2.5 detik)
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString("en-US", { hour12: false }));
+    }, 1000);
 
-    return () => clearTimeout(timer);
+    return () => clearInterval(timer); // Cleanup interval saat komponen unmount
   }, []);
 
   return (
-    <AnimatePresence>
-      {isLoading && (
+    <div className={styles.preloader}>
+      <div className={styles.contentWrapper}>
         <motion.div
-          className={styles.preloader}
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className={styles.logoContainer}>
-            <Image
-              src="/images/logo-ryns.png" // Pastikan path logo benar
-              alt="Ryan Ramadhan Logo"
-              width={120}
-              height={120}
-              priority
-            />
-            <div className={styles.typingContainer}>
-              <span className={styles.typingText}></span>
-            </div>
-          </div>
+          <Image
+            src="/images/logo-ryns.png"
+            alt="Ryan Ramadhan Logo"
+            width={100}
+            height={100}
+            priority
+            className={styles.logo}
+          />
         </motion.div>
-      )}
-    </AnimatePresence>
+
+        <motion.p
+          className={styles.welcomeText}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          Welcome to my Website
+        </motion.p>
+
+        <div className={styles.loaderContainer}>
+          <div className={styles.loaderInfo}>
+            <span>System Boot...</span>
+            <span className={styles.clock}>{currentTime}</span>
+          </div>
+          <div className={styles.loadingBarContainer}>
+            <motion.div
+              className={styles.loadingBar}
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 2, ease: "linear", delay: 0.8 }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
