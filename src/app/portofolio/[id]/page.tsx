@@ -1,5 +1,5 @@
 // 📁 src/app/portofolio/[id]/page.tsx
-// (Versi Final Dengan Carousel)
+// (Versi Final Tanpa Video)
 
 "use client";
 
@@ -25,8 +25,8 @@ import {
   iconColors,
 } from "@/data/portfolioData";
 
-import { FaArrowLeft } from "react-icons/fa";
-import { FiExternalLink, FiGithub } from "react-icons/fi";
+import { FaArrowLeft, FaLightbulb } from "react-icons/fa";
+import { FiExternalLink, FiGithub, FiAlertTriangle } from "react-icons/fi";
 import { BsBox, BsCodeSlash } from "react-icons/bs";
 
 import styles from "./PortfolioDetail.module.css";
@@ -54,6 +54,8 @@ const PortfolioDetailPage: React.FC = () => {
     liveUrl,
     githubUrl,
     keyFeatures,
+    // --- Data videoUrl dihapus dari sini ---
+    challenges,
   } = portofolio;
 
   return (
@@ -136,11 +138,40 @@ const PortfolioDetailPage: React.FC = () => {
                 })}
               </div>
             </div>
+
+            {/* Bagian Tantangan & Solusi tetap ada */}
+            {challenges && (
+              <motion.div
+                className={styles.challengesSection}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h3 className={styles.challengesTitle}>
+                  Challenges & Solution
+                </h3>
+                <div className={styles.challengeBlock}>
+                  <div className={styles.challengeHeader}>
+                    <FiAlertTriangle className={styles.challengeIcon} />
+                    <span>The Challenge</span>
+                  </div>
+                  <p>{challenges.problem}</p>
+                </div>
+                <div className={styles.challengeBlock}>
+                  <div className={styles.challengeHeader}>
+                    <FaLightbulb className={styles.solutionIcon} />
+                    <span>The Solution</span>
+                  </div>
+                  <p>{challenges.solution}</p>
+                </div>
+              </motion.div>
+            )}
           </div>
 
           <div className={styles.rightColumn}>
-            {/* --- MULAI PERUBAHAN: TAMPILAN CAROUSEL --- */}
             <div className={styles.previewContainer}>
+              {/* --- LOGIKA CAROUSEL DIKEMBALIKAN KE VERSI GAMBAR SAJA --- */}
               {imageUrls.length > 1 ? (
                 <Swiper
                   modules={[Navigation, Pagination, A11y]}
@@ -157,7 +188,7 @@ const PortfolioDetailPage: React.FC = () => {
                         alt={`${title} preview ${index + 1}`}
                         fill
                         className={styles.previewImage}
-                        priority={index === 0} // Prioritaskan gambar pertama
+                        priority={index === 0}
                       />
                     </SwiperSlide>
                   ))}
@@ -173,7 +204,6 @@ const PortfolioDetailPage: React.FC = () => {
                 />
               )}
             </div>
-            {/* --- SELESAI PERUBAHAN --- */}
 
             {keyFeatures && keyFeatures.length > 0 && (
               <div className={styles.featuresSection}>
