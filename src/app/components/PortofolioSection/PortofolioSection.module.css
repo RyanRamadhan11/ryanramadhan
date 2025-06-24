@@ -1,50 +1,104 @@
-/* src/components/PortofolioSection/PortofolioSection.module.css */
+/*
+// 📁 src/components/PortofolioSection/PortofolioSection.module.css
+// (Versi Lengkap & Final)
+*/
 
 .portofolioSection {
   padding: 5rem 0;
+  background-color: #121212;
 }
 
-.sectionTitle {
+.titleContainer {
+  display: flex;
+  justify-content: center;
   text-align: center;
-  font-size: clamp(2.5rem, 5vw, 3rem);
+}
+
+.animatedGradientTitle {
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
   font-weight: 800;
-  margin-bottom: 3rem;
-  background: linear-gradient(
-    to right,
-    var(--hero-accent-color) 0%,
-    var(--hero-highlight-color) 51%,
-    var(--hero-accent-color) 100%
-  );
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  font-family: var(--font-jetbrains, sans-serif);
+  display: inline-block;
+  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background-size: 200% auto;
+  color: #fff;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
-  animation: shine 5s linear infinite;
+  animation: gradientFlow 5s linear infinite;
 }
 
-@keyframes shine {
-  to {
-    background-position: -200% center;
-  }
+.animatedGradientTitle::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: #c427c9;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  opacity: 0.8;
 }
 
-/* --- Filter --- */
-/* Container untuk filter diberi background */
+.filterWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem auto 3.5rem auto;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.filterLabel {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #9e9e9e;
+  text-align: center;
+  padding-left: 0.5rem;
+}
+
 .filterContainer {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 3.5rem;
   background-color: rgba(255, 255, 255, 0.05);
   padding: 0.5rem;
   border-radius: 50px;
   width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-/* Tombol filter dengan style baru */
+.yearDropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: rgb(51, 51, 51);
+  color: #ccc;
+  padding: 0.75rem 3rem 0.75rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
 .filterButton {
   padding: 0.75rem 1.75rem;
   border: none;
@@ -58,7 +112,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Efek hover dan active dengan gradasi dan shadow */
 .filterButton:hover,
 .filterButton.active {
   color: var(--hero-background-dark, #121212);
@@ -70,68 +123,104 @@
     color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 
-/* --- Grid --- */
+@keyframes gradientFlow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.yearDropdown:hover {
+  border-color: var(--hero-accent-color);
+  box-shadow: 0 5px 15px rgba(3, 218, 198, 0.1);
+}
+
+.yearDropdown:focus {
+  outline: none;
+  border-color: var(--hero-highlight-color);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
+}
+
 .portofolioGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+  align-items: stretch;
 }
 
-/* --- Card --- */
 .cardWrapper {
   position: relative;
+  height: 100%;
   border-radius: 16px;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.cardWrapper::after,
 .cardWrapper::before {
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: 0;
   border-radius: inherit;
+  padding: 1px;
   background: linear-gradient(
-    45deg,
-    var(--hero-accent-color, #03dac6),
-    var(--hero-highlight-color, #bb86fc)
+    135deg,
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
   );
-  z-index: 0;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s ease;
 }
 
-.cardWrapper::after {
-  filter: blur(15px);
-}
-
-.cardWrapper:hover::before,
-.cardWrapper:hover::after {
+.cardWrapper:hover::before {
   opacity: 1;
 }
 
 .portofolioCard {
-  background-color: #25252a;
-  border-radius: 14px;
+  background: #1e1e24;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   height: 100%;
   position: relative;
   z-index: 1;
-  transition: transform 0.4s ease-in-out;
+  transition: transform 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cardWrapper:hover .portofolioCard {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* --- Carousel & Navigasi --- */
-.carouselContainer {
+.carousel {
   width: 100%;
-  aspect-ratio: 16 / 10; /* Menjaga rasio gambar agar konsisten */
+  height: 220px;
   position: relative;
-  overflow: hidden;
+}
+
+.imageContainer {
+  width: 100%;
+  height: 220px;
+  position: relative;
+}
+
+.imageContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(30, 30, 36, 0.8) 0%,
+    transparent 60%
+  );
+  z-index: 2;
 }
 
 .carouselImage {
@@ -139,7 +228,7 @@
 }
 
 .cardWrapper:hover .carouselImage {
-  transform: scale(1.05); /* Efek zoom pada gambar saat hover */
+  transform: scale(1.1);
 }
 
 .customDotsContainer {
@@ -153,16 +242,16 @@
   display: flex !important;
   justify-content: center;
   gap: 8px;
+  z-index: 3;
 }
 
 .customDotsContainer li {
-  /* ... */
   cursor: pointer;
 }
 
 .customPagingDot {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
@@ -171,18 +260,6 @@
 .customDotsContainer li.slick-active .customPagingDot {
   background-color: var(--hero-highlight-color);
   transform: scale(1.2);
-}
-
-.carousel {
-  width: 100%;
-  height: 220px;
-  position: relative;
-}
-
-.imageContainer {
-  width: 100%;
-  height: 220px;
-  position: relative;
 }
 
 .slickArrow {
@@ -221,21 +298,6 @@
   transform: translateY(-50%) scale(1.1);
 }
 
-.carousel .slick-dots {
-  bottom: 10px;
-}
-.carousel .slick-dots li button:before {
-  font-size: 12px;
-  color: #fff;
-  opacity: 0.5;
-  transition: all 0.3s ease;
-}
-.carousel .slick-dots li.slick-active button:before {
-  opacity: 1;
-  color: var(--hero-accent-color, #03dac6);
-}
-
-/* --- Konten Card --- */
 .portofolioContent {
   padding: 1.5rem;
   text-align: left;
@@ -248,28 +310,63 @@
   margin-bottom: 0.8rem;
 }
 
-.categoryTag {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--hero-accent-color, #03dac6);
-  padding: 0.3rem 0.7rem;
-  border-radius: 5px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  display: inline-block;
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 0.8rem;
+  gap: 0.5rem;
+}
+
+.categoryTag {
+  background-color: color-mix(
+    in srgb,
+    var(--hero-accent-color),
+    transparent 85%
+  );
+  color: var(--hero-accent-color, #03dac6);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-block;
+  border: 1px solid
+    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
+}
+
+.yearTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: color-mix(
+    in srgb,
+    var(--hero-highlight-color),
+    transparent 85%
+  );
+  color: var(--hero-highlight-color, #c427c9);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
+}
+
+.yearTag svg {
+  font-size: 0.7rem;
 }
 
 .header h3 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: #f0f0f0;
   margin: 0;
   line-height: 1.3;
 }
 
 .portofolioContent p {
   font-size: 0.95rem;
-  color: #c5c5c5;
+  color: #a0a0a0;
   margin-bottom: 1.5rem;
   line-height: 1.6;
   flex-grow: 1;
@@ -279,42 +376,67 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .techIcon {
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   cursor: help;
   transition: all 0.3s ease;
+  color: #888;
 }
 
 .techIcon:hover {
   transform: scale(1.2) translateY(-2px);
+  filter: drop-shadow(0 0 5px currentColor);
 }
 
 .portofolioLinks {
   display: flex;
-  gap: 1.5rem;
+  justify-content: flex-end;
+  align-items: center;
   margin-top: auto;
 }
 
-.portofolioLinks a {
-  display: flex;
+.detailLink {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--hero-accent-color, #03dac6);
+  gap: 0.7rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  color: #f0f0f0;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  background: linear-gradient(
+    90deg,
+    var(--hero-highlight-color) 0%,
+    var(--hero-accent-color) 50%,
+    var(--hero-highlight-color) 100%
+  );
+  background-size: 200% auto;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.portofolioLinks a:hover {
-  color: #fff;
-  transform: translateY(-2px);
+.detailLink svg {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
 }
 
-/* --- Pagination --- */
+.detailLink:hover {
+  color: #121212;
+  background-position: right center;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
+}
+
+.detailLink:hover svg {
+  transform: rotate(-45deg);
+}
+
 .paginationContainer {
   display: flex;
   justify-content: center;
@@ -346,46 +468,9 @@
   cursor: not-allowed;
 }
 
-.animatedGradientTitle {
-  font-size: clamp(2.2rem, 5vw, 2.8rem);
-  font-weight: 800;
-  position: relative;
-  padding-bottom: 20px;
-  margin-bottom: 15px;
-  font-family: var(--font-jetbrains, sans-serif);
-  display: inline-block;
-
-  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
-  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
-  background-size: 200% auto;
-  color: #fff;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientFlow 5s linear infinite;
-}
-
-/* Underline untuk judul */
-.animatedGradientTitle::after {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 80px;
-  height: 5px;
-  background: #c427c9; /* Warna underline juga di-hardcode */
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 3px;
-  opacity: 0.8;
-}
-
-/* Keyframes untuk gradasi bergerak */
-@keyframes gradientFlow {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
+.noResults {
+  text-align: center;
+  color: #888;
+  margin-top: 4rem;
+  font-size: 1.1rem;
 }

@@ -1,57 +1,34 @@
+//
+// 📁 src/components/PortofolioSection/PortofolioSection.tsx
+// (Versi Final dengan Judul Center, Dropdown Tahun, & Cursor Pointer)
+//
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Slider from "react-slick";
 
-// Impor ikon dari react-icons
-import { FiExternalLink, FiGithub } from "react-icons/fi";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import {
-  DiReact,
-  DiNodejs,
-  DiMongodb,
-  DiJava,
-  DiPhp,
-  DiLaravel,
-  DiAndroid,
-  DiApple,
-} from "react-icons/di";
-import {
-  SiNextdotjs,
-  SiExpress,
-  SiRedux,
-  SiSocketdotio,
-  SiFirebase,
-  SiTypescript,
-  SiCss3,
-  SiFigma,
-  SiFlutter,
-  SiKotlin,
-} from "react-icons/si";
+import { BsArrowUpRightCircle } from "react-icons/bs";
+import { FaChevronLeft, FaChevronRight, FaCalendarAlt } from "react-icons/fa";
 
-import styles from "./PortofolioSection.module.css"; // Pastikan nama file sudah diubah
+import { portofolios, techIconMap, iconColors } from "@/data/portfolioData";
 
-// CSS untuk Slick Carousel
+import styles from "./PortofolioSection.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// --- Tipe Data & Kategori ---
-type Category = "All" | "Frontend" | "Backend" | "Mobile" | "UI/UX" | "Desktop";
+type Category =
+  | "All"
+  | "Frontend"
+  | "Backend"
+  | "Mobile"
+  | "UI/UX"
+  | "Desktop"
+  | "Automation";
 
-interface Portofolio {
-  id: number;
-  title: string;
-  category: Omit<Category, "All">;
-  description: string;
-  technologies: string[];
-  imageUrls: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-}
-
-// --- Komponen Judul Animasi ---
+// --- Komponen Judul Animasi (Tidak Berubah) ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -91,249 +68,8 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- Mapping Teknologi ke Ikon ---
-const techIconMap: { [key: string]: React.ElementType } = {
-  React: DiReact,
-  "Next.js": SiNextdotjs,
-  "Node.js": DiNodejs,
-  Express: SiExpress,
-  MongoDB: DiMongodb,
-  Redux: SiRedux,
-  "Socket.IO": SiSocketdotio,
-  Firebase: SiFirebase,
-  TypeScript: SiTypescript,
-  "Framer Motion": motion.div,
-  "CSS Modules": SiCss3,
-  Figma: SiFigma,
-  Java: DiJava,
-  PHP: DiPhp,
-  Laravel: DiLaravel,
-  Flutter: SiFlutter,
-  Kotlin: SiKotlin,
-  Android: DiAndroid,
-  Swift: DiApple,
-};
-
-// --- Konstanta Warna untuk Ikon ---
-const iconColors: { [key: string]: string } = {
-  React: "#61dafb",
-  "Next.js": "#000000",
-  "Node.js": "#3c873a",
-  Express: "#444444",
-  MongoDB: "#47a248",
-  Redux: "#764abc",
-  "Socket.IO": "#010101",
-  Firebase: "#ffca28",
-  TypeScript: "#3178c6",
-  "Framer Motion": "#0055ff",
-  "CSS Modules": "#264de4",
-  Figma: "#f24e1e",
-  Java: "#f89820",
-  PHP: "#8892be",
-  Laravel: "#fb503b",
-  Flutter: "#02569b",
-  Kotlin: "#7f52ff",
-  Android: "#3ddc84",
-  Swift: "#f05138",
-};
-
-// --- Data Portofolio Lengkap ---
-const portofolios: Portofolio[] = [
-  // Data tidak diubah, salin dari prompt sebelumnya
-  // --- FRONTEND (8 items) ---
-  {
-    id: 1,
-    title: "Platform E-commerce",
-    category: "Frontend",
-    description:
-      "Platform e-commerce dengan otentikasi, manajemen produk, dan integrasi payment gateway.",
-    technologies: ["Next.js", "Redux", "TypeScript"],
-    imageUrls: [
-      "/images/profile.jpg",
-      "/images/profile2.jpg",
-      "/images/profile.jpg",
-    ],
-    liveUrl: "https://demo.com",
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 2,
-    title: "Landing Page Interaktif",
-    category: "Frontend",
-    description:
-      "Landing page produk dengan animasi Framer Motion yang memukau.",
-    technologies: ["Next.js", "Framer Motion"],
-    imageUrls: ["/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-  },
-  {
-    id: 3,
-    title: "Company Profile V3",
-    category: "Frontend",
-    description: "Website company profile modern dengan CMS terintegrasi.",
-    technologies: ["React", "TypeScript", "CSS Modules"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 4,
-    title: "Dashboard Analitik",
-    category: "Frontend",
-    description:
-      "Dashboard admin untuk visualisasi data penjualan secara real-time.",
-    technologies: ["React", "Redux"],
-    imageUrls: ["/images/profile.jpg", "/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-  },
-  {
-    id: 5,
-    title: "Aplikasi Web Streaming",
-    category: "Frontend",
-    description: "Klien web untuk layanan streaming film, mirip Netflix.",
-    technologies: ["Next.js", "TypeScript"],
-    imageUrls: ["/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 6,
-    title: "Blog Pribadi",
-    category: "Frontend",
-    description:
-      "Blog personal dengan sistem render statis untuk kecepatan maksimal.",
-    technologies: ["Next.js"],
-    imageUrls: ["/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-  },
-  {
-    id: 7,
-    title: "Web App Reservasi Hotel",
-    category: "Frontend",
-    description: "Aplikasi pencarian dan pemesanan kamar hotel.",
-    technologies: ["React", "Firebase"],
-    imageUrls: ["/images/profile.jpg", "/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 8,
-    title: "Clone Trello Board",
-    category: "Frontend",
-    description: "Aplikasi papan kanban dengan fungsionalitas drag-and-drop.",
-    technologies: ["React"],
-    imageUrls: ["/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-  },
-  // --- BACKEND (7 items) ---
-  {
-    id: 9,
-    title: "Aplikasi Chat Real-time",
-    category: "Backend",
-    description:
-      "Aplikasi chat dengan WebSockets untuk pesan pribadi dan grup.",
-    technologies: ["Node.js", "Socket.IO", "Express"],
-    imageUrls: ["/images/profile.jpg", "/images/profile.jpg"],
-    liveUrl: "https://demo.com",
-  },
-  {
-    id: 10,
-    title: "Sistem Manajemen Karyawan",
-    category: "Backend",
-    description:
-      "RESTful API untuk manajemen data karyawan, absensi, dan penggajian.",
-    technologies: ["Laravel", "PHP", "MongoDB"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 11,
-    title: "API E-Learning",
-    category: "Backend",
-    description:
-      "REST API untuk platform e-learning dengan manajemen kursus dan user.",
-    technologies: ["Node.js", "Express", "MongoDB"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 12,
-    title: "Server Otentikasi JWT",
-    category: "Backend",
-    description:
-      "Microservice terpisah untuk handle otentikasi dan otorisasi user.",
-    technologies: ["Node.js", "Express"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 13,
-    title: "Sinkronisasi Data Gudang",
-    category: "Backend",
-    description:
-      "Layanan background job untuk sinkronisasi stok barang antar gudang.",
-    technologies: ["Java"],
-    imageUrls: ["/images/profile.jpg"],
-  },
-  {
-    id: 14,
-    title: "API Payment Gateway",
-    category: "Backend",
-    description: "API untuk memproses pembayaran dari berbagai metode.",
-    technologies: ["Laravel", "PHP"],
-    imageUrls: ["/images/profile.jpg", "/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 15,
-    title: "Bot Notifikasi Telegram",
-    category: "Backend",
-    description:
-      "Bot untuk mengirim notifikasi penting dari sistem ke grup Telegram.",
-    technologies: ["Node.js"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  // --- KATEGORI LAIN ---
-  {
-    id: 16,
-    title: "Desain UI Aplikasi Mobile",
-    category: "UI/UX",
-    description: "Prototipe dan desain UI/UX untuk aplikasi travel booking.",
-    technologies: ["Figma"],
-    imageUrls: ["/images/profile.jpg"],
-    liveUrl: "https://figma.com",
-  },
-  {
-    id: 17,
-    title: "Aplikasi Mobile Restoran",
-    category: "Mobile",
-    description:
-      "Aplikasi cross-platform untuk memesan makanan dan reservasi meja.",
-    technologies: ["Flutter", "Firebase"],
-    imageUrls: ["/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-  {
-    id: 18,
-    title: "Aplikasi Kasir Desktop",
-    category: "Desktop",
-    description:
-      "Aplikasi Point of Sale (POS) berbasis desktop untuk toko retail.",
-    technologies: ["Java"],
-    imageUrls: ["/images/profile.jpg"],
-  },
-  {
-    id: 19,
-    title: "Aplikasi Resep Makanan",
-    category: "Mobile",
-    description:
-      "Aplikasi mobile berbasis Android native dengan koleksi resep.",
-    technologies: ["Kotlin", "Android"],
-    imageUrls: ["/images/profile.jpg", "/images/profile.jpg"],
-    githubUrl: "https://github.com",
-  },
-];
-
 const ITEMS_PER_PAGE = 6;
+
 const filterCategories: Category[] = [
   "All",
   "Frontend",
@@ -341,15 +77,15 @@ const filterCategories: Category[] = [
   "Mobile",
   "UI/UX",
   "Desktop",
+  "Automation",
 ];
 
-// [BARU] Interface untuk props Arrow agar tidak 'any'
+// --- Komponen Panah Carousel (Tidak Berubah) ---
 interface ArrowProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
-
 const NextArrow = (props: ArrowProps) => {
   const { className, onClick } = props;
   return (
@@ -361,7 +97,6 @@ const NextArrow = (props: ArrowProps) => {
     </div>
   );
 };
-
 const PrevArrow = (props: ArrowProps) => {
   const { className, onClick } = props;
   return (
@@ -376,12 +111,28 @@ const PrevArrow = (props: ArrowProps) => {
 
 const PortofolioSection: FC = () => {
   const [activeFilter, setActiveFilter] = useState<Category>("All");
+  const [activeYear, setActiveYear] = useState<number | "All">("All");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredPortofolios =
-    activeFilter === "All"
-      ? portofolios
-      : portofolios.filter((p) => p.category === activeFilter);
+  const yearFilterOptions: (number | "All")[] = useMemo(() => {
+    const years = [...new Set(portofolios.map((p) => p.year))];
+    years.sort((a, b) => b - a);
+    return ["All", ...years];
+  }, []);
+
+  const filteredPortofolios = useMemo(() => {
+    let filtered = portofolios;
+
+    if (activeFilter !== "All") {
+      filtered = filtered.filter((p) => p.category === activeFilter);
+    }
+
+    if (activeYear !== "All") {
+      filtered = filtered.filter((p) => p.year === activeYear);
+    }
+
+    return filtered;
+  }, [activeFilter, activeYear]);
 
   const totalPages = Math.ceil(filteredPortofolios.length / ITEMS_PER_PAGE);
   const paginatedPortofolios = filteredPortofolios.slice(
@@ -394,18 +145,14 @@ const PortofolioSection: FC = () => {
     setCurrentPage(1);
   };
 
-  // const sliderSettings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  //   autoplay: true,
-  //   autoplaySpeed: 3000,
-  //   fade: true,
-  //   nextArrow: <NextArrow />,
-  //   prevArrow: <PrevArrow />,
-  // };
+  // --- PERUBAHAN 1: Handler baru untuk dropdown tahun ---
+  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    // Nilai dari <select> selalu string, jadi kita konversi jika itu bukan "All"
+    const newYear = value === "All" ? "All" : Number(value);
+    setActiveYear(newYear);
+    setCurrentPage(1);
+  };
 
   const sliderSettings = {
     dots: true,
@@ -414,52 +161,69 @@ const PortofolioSection: FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000, // [DIUBAH] Slide otomatis setiap 3 detik
+    autoplaySpeed: 3000,
     fade: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    // --- [BARU] Bagian untuk dot navigasi custom ---
     dotsClass: styles.customDotsContainer,
-    // [FIX] Tambahkan komentar di bawah ini untuk mematikan error ESLint
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     customPaging: (_i: number) => <div className={styles.customPagingDot} />,
-    // ---------------------------------------------
   };
 
   return (
     <section id="portofolio" className={styles.portofolioSection}>
       <div className="page-container">
-        <motion.h2
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className={styles.sectionTitle}
-        >
-          <AnimatedTitle text="My Portofolio" />
-        </motion.h2>
+        {/* --- PERUBAHAN 2: Wrapper div untuk menengahkan judul --- */}
+        <div className={styles.titleContainer}>
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <AnimatedTitle text="My Portofolio" />
+          </motion.div>
+        </div>
 
-        <div className={styles.filterContainer}>
-          {filterCategories.map((category) => (
-            <motion.button
-              key={category}
-              onClick={() => handleFilterClick(category)}
-              className={`${styles.filterButton} ${
-                activeFilter === category ? styles.active : ""
-              }`}
-              whileHover={{ y: -3 }}
-              transition={{ type: "spring", stiffness: 300 }}
+        {/* --- Filter Kategori --- */}
+        <div className={styles.filterWrapper}>
+          <div className={styles.filterContainer}>
+            {filterCategories.map((category) => (
+              <motion.button
+                key={category}
+                onClick={() => handleFilterClick(category)}
+                className={`${styles.filterButton} ${
+                  activeFilter === category ? styles.active : ""
+                }`}
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                {category}
+              </motion.button>
+            ))}
+          </div>
+
+          {/* --- PERUBAHAN 3: UI untuk Filter Tahun diubah menjadi Dropdown --- */}
+          <div className={styles.dropdownWrapper}>
+            <select
+              id="year-filter"
+              className={styles.yearDropdown}
+              value={activeYear}
+              onChange={handleYearChange}
             >
-              {category}
-            </motion.button>
-          ))}
+              {yearFilterOptions.map((year) => (
+                <option key={year} value={year}>
+                  {year === "All" ? "All Years" : year}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <AnimatePresence mode="wait">
           <motion.div className={styles.portofolioGrid} layout>
             {paginatedPortofolios.map((portofolio) => (
               <motion.div
-                key={portofolio.id}
+                key={`${portofolio.id}-${portofolio.title}`}
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -474,9 +238,9 @@ const PortofolioSection: FC = () => {
                         <Image
                           src={url}
                           alt={`${portofolio.title} - view ${index + 1}`}
-                          fill // Menggunakan fill agar responsif di dalam container
-                          className={styles.carouselImage} // Class baru untuk animasi
-                          style={{ objectFit: "cover" }} // objectFit tetap cover
+                          fill
+                          className={styles.carouselImage}
+                          style={{ objectFit: "cover" }}
                         />
                       </div>
                     ))}
@@ -484,12 +248,19 @@ const PortofolioSection: FC = () => {
 
                   <div className={styles.portofolioContent}>
                     <div className={styles.header}>
-                      <span className={styles.categoryTag}>
-                        {portofolio.category}
-                      </span>
+                      <div className={styles.metaInfo}>
+                        <span className={styles.categoryTag}>
+                          {portofolio.category}
+                        </span>
+                        <span className={styles.yearTag}>
+                          <FaCalendarAlt /> {portofolio.year}
+                        </span>
+                      </div>
                       <h3>{portofolio.title}</h3>
                     </div>
-                    <p>{portofolio.description}</p>
+
+                    <p>{portofolio.description_short}</p>
+
                     <div className={styles.technologies}>
                       {portofolio.technologies.map((tech) => {
                         const Icon = techIconMap[tech] || "span";
@@ -506,25 +277,16 @@ const PortofolioSection: FC = () => {
                         );
                       })}
                     </div>
+
                     <div className={styles.portofolioLinks}>
-                      {portofolio.liveUrl && (
-                        <a
-                          href={portofolio.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <FiExternalLink /> Live Demo
-                        </a>
-                      )}
-                      {portofolio.githubUrl && (
-                        <a
-                          href={portofolio.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <FiGithub /> GitHub
-                        </a>
-                      )}
+                      <Link
+                        href={`/portofolio/${portofolio.id}`}
+                        className={styles.detailLink}
+                        title="Lihat Detail"
+                      >
+                        <span>View Detail</span>
+                        <BsArrowUpRightCircle />
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -532,6 +294,16 @@ const PortofolioSection: FC = () => {
             ))}
           </motion.div>
         </AnimatePresence>
+
+        {paginatedPortofolios.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={styles.noResults}
+          >
+            <p>Oops! No projects found for this filter combination.</p>
+          </motion.div>
+        )}
 
         {totalPages > 1 && (
           <motion.div
