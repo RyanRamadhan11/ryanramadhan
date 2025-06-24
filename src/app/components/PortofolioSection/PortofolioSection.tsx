@@ -166,6 +166,7 @@ const PortofolioSection: FC = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     dotsClass: styles.customDotsContainer,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     customPaging: (_i: number) => <div className={styles.customPagingDot} />,
   };
 
