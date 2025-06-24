@@ -78,6 +78,31 @@
   scroll-behavior: smooth;
 }
 
+/* body {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+  transition: background-color 0.3s ease, color 0.3s ease;
+} */
+
+/* 1. Mencegah horizontal scroll secara paksa di seluruh halaman */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 2. Mengubah cara browser menghitung lebar elemen (Best Practice) */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   color: var(--default-color);
   background-color: var(--background-color);

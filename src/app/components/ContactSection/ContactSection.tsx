@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { FiMail, FiMapPin, FiSend } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
@@ -14,6 +14,46 @@ declare global {
     };
   }
 }
+
+// --- Komponen Judul Animasi ---
+const letterVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
+};
+
+const titleContainerVariants: Variants = {
+  visible: {
+    transition: { staggerChildren: 0.04 },
+  },
+};
+
+interface AnimatedTitleProps {
+  text: string;
+}
+
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
+  const letters = Array.from(text);
+  return (
+    <motion.div
+      variants={titleContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.8 }}
+    >
+      <h2 className={styles.animatedGradientTitle}>
+        {letters.map((letter, index) => (
+          <motion.span key={index} variants={letterVariants}>
+            {letter === " " ? "\u00A0" : letter}
+          </motion.span>
+        ))}
+      </h2>
+    </motion.div>
+  );
+};
 
 const ContactSection: FC = () => {
   const [formData, setFormData] = useState({
@@ -70,7 +110,7 @@ const ContactSection: FC = () => {
           transition={{ duration: 0.6 }}
           className={styles.sectionTitle}
         >
-          <h2>Get In Touch</h2>
+          <AnimatedTitle text="Get In Touch" />
           <p>
             Interested in collaborating or just want to say hi? Feel free to
             reach out. I&apos;m always open to discussing new projects and

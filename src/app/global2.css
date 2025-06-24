@@ -13,9 +13,9 @@
 }
 
 /* * ==========================================
-  * WARNA UNTUK LIGHT & DARK MODE
-  * ==========================================
-  */
+ * WARNA UNTUK LIGHT & DARK MODE
+ * ==========================================
+ */
 
 /* [DEFAULT] Variabel Warna untuk Light Mode */
 :root,
@@ -76,6 +76,29 @@
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
+}
+
+/* ==========================================
+ * [PERBAIKAN] Aturan Dasar untuk Layout Stabil
+ * ==========================================
+ */
+
+/* 1. Mencegah horizontal scroll secara paksa di seluruh halaman */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* 2. Mengubah cara browser menghitung lebar elemen (Best Practice) */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 body {
@@ -370,7 +393,6 @@ h6 {
   margin-right: auto;
   padding-left: var(--content-padding-x);
   padding-right: var(--content-padding-x);
-  box-sizing: border-box; /* Pastikan padding tidak menambah lebar */
 }
 
 /* =================================================================== */

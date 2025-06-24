@@ -41,14 +41,53 @@
 .sectionTitle h2 {
   font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
-  background: linear-gradient(
-    90deg,
-    var(--hero-accent-color, #bb86fc),
-    var(--hero-highlight-color, #03dac6)
-  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.animatedGradientTitle {
+  font-size: clamp(2.2rem, 5vw, 2.8rem);
+  font-weight: 800;
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  font-family: var(--font-jetbrains, sans-serif);
+  display: inline-block;
+
+  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
+  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background-size: 200% auto;
+  color: #fff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 5s linear infinite;
+}
+
+/* Underline untuk judul */
+.animatedGradientTitle::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: #c427c9; /* Warna underline juga di-hardcode */
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  opacity: 0.8;
+}
+
+/* Keyframes untuk gradasi bergerak */
+@keyframes gradientFlow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
 }
 
 .sectionTitle p {

@@ -142,14 +142,38 @@
   background: var(--surface-color);
   position: relative;
   border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Tambah box-shadow default */
   border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden; /* Penting untuk efek pseudo-element */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek "bayangan kaca" */
+.timelineContent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 245, 245, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.6s ease-in-out;
 }
 
 .timelineItem:hover .timelineContent {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 24px rgba(9, 255, 161, 0.2); /* Box-shadow lebih kuat saat hover */
+}
+
+/* Animasi "bayangan kaca" saat hover */
+.timelineItem:hover .timelineContent::before {
+  left: 150%;
 }
 
 .duration {
@@ -231,19 +255,32 @@
 
 /* --- Desain Responsif untuk Mobile --- */
 @media (max-width: 991px) {
+  /* [PERBAIKAN] Tambahkan aturan untuk filter agar bisa wrap */
+  .filterContainer {
+    flex-wrap: wrap;
+    width: auto; /* Izinkan container menyesuaikan lebar */
+    padding: 0.5rem 1rem;
+  }
+
   .timelineContainer::before {
     left: 30px; /* Garis timeline pindah ke kiri */
   }
 
   .timelineItem {
     width: 100%;
-    padding-left: 80px; /* Semua item diberi padding kiri */
+    padding-left: 70px; /* Semua item diberi padding kiri (dikurangi sedikit) */
     padding-right: 15px;
     text-align: left; /* Semua item rata kiri */
   }
 
+  /* [PERBAIKAN UTAMA] Paksa lebar kartu konten jadi 100% */
+  .timelineContent {
+    width: 100%;
+  }
+
   .timelineItem.left,
   .timelineItem.right {
+    padding-right: 0;
     left: 0; /* Reset posisi */
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FC, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import { FiExternalLink, FiXCircle } from "react-icons/fi";
 import {
@@ -9,6 +9,8 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaQuestionCircle,
+  FaFilter,
+  FaFileAlt,
 } from "react-icons/fa";
 import {
   DiReact,
@@ -24,7 +26,7 @@ import {
   DiJavascript1,
   DiDocker,
   DiLinux,
-  DiGit, // DiCss3 diimpor dari sini
+  DiGit,
 } from "react-icons/di";
 import {
   SiNextdotjs,
@@ -40,11 +42,7 @@ import {
 
 import styles from "./CertificationSection.module.css";
 
-// CSS untuk Slick Carousel
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-// Tipe Data untuk Sertifikat
+// --- Tipe Data & Mapping (Tidak ada perubahan) ---
 interface Certification {
   id: number;
   title: string;
@@ -54,8 +52,6 @@ interface Certification {
   technologies: string[];
   credentialUrl?: string;
 }
-
-// --- Mapping & Warna Ikon Teknologi ---
 const techIconMap: { [key: string]: React.ElementType } = {
   React: DiReact,
   "Next.js": SiNextdotjs,
@@ -67,7 +63,7 @@ const techIconMap: { [key: string]: React.ElementType } = {
   Firebase: SiFirebase,
   TypeScript: SiTypescript,
   "Framer Motion": motion.div,
-  "CSS Modules": DiCss3, // [FIX] Menggunakan DiCss3 yang benar
+  "CSS Modules": DiCss3,
   Figma: SiFigma,
   Java: DiJava,
   PHP: DiPhp,
@@ -83,10 +79,9 @@ const techIconMap: { [key: string]: React.ElementType } = {
   Linux: DiLinux,
   Git: DiGit,
 };
-
 const iconColors: { [key: string]: string } = {
   React: "#61dafb",
-  "Next.js": "#000000",
+  "Next.js": "#ffffff",
   "Node.js": "#3c873a",
   Express: "#444444",
   MongoDB: "#47a248",
@@ -111,15 +106,13 @@ const iconColors: { [key: string]: string } = {
   Linux: "#e95420",
   Git: "#f1502f",
 };
-
-// --- DATA SERTIFIKAT ---
 const certificationsData: Certification[] = [
   {
     id: 1,
     title: "Dasar Pemrograman Web",
     issuer: "Dicoding Indonesia",
     date: "Issued Nov 2022",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/web-dasar/800/450",
     technologies: ["HTML5", "CSS", "Javascript"],
     credentialUrl: "https://www.dicoding.com/certificates/N9ZO52KLJPG5",
   },
@@ -128,7 +121,7 @@ const certificationsData: Certification[] = [
     title: "Cloud Practitioner Essentials",
     issuer: "AWS Skill Builder",
     date: "Issued Oct 2022",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/aws-cloud/800/450",
     technologies: ["Docker", "Linux"],
   },
   {
@@ -136,7 +129,7 @@ const certificationsData: Certification[] = [
     title: "Dasar-Dasar Keamanan Siber",
     issuer: "Cisco Networking Academy",
     date: "Issued Jan 2023",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/cisco-cyber/800/450",
     technologies: ["Git"],
   },
   {
@@ -144,7 +137,7 @@ const certificationsData: Certification[] = [
     title: "Full-Stack Web Developer",
     issuer: "Codecademy",
     date: "Issued May 2023",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/fullstack-web/800/450",
     technologies: ["React", "Node.js", "Express"],
   },
   {
@@ -152,7 +145,7 @@ const certificationsData: Certification[] = [
     title: "Belajar JavaScript Lanjutan",
     issuer: "Dicoding Indonesia",
     date: "Issued Jun 2023",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/js-lanjutan/800/450",
     technologies: ["Javascript", "Node.js"],
   },
   {
@@ -160,7 +153,7 @@ const certificationsData: Certification[] = [
     title: "Manajemen Proyek Scrum",
     issuer: "Coursera",
     date: "Issued Jul 2023",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/scrum-project/800/450",
     technologies: [],
   },
   {
@@ -168,24 +161,99 @@ const certificationsData: Certification[] = [
     title: "Desain UI/UX Fundamental",
     issuer: "Skilvul",
     date: "Issued Aug 2023",
-    imageUrl: "/images/profile.jpg",
+    imageUrl: "https://picsum.photos/seed/uiux-design/800/450",
     technologies: ["Figma"],
   },
 ];
-
 const ITEMS_PER_PAGE = 6;
+
+// --- Varian Animasi (Tidak ada perubahan) ---
+const gridContainerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+};
+const gridItemVariants: Variants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+  exit: { opacity: 0, scale: 0.9, transition: { duration: 0.3 } },
+};
+const sidebarVariants: Variants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.7,
+      delay: 0.2,
+      staggerChildren: 0.15,
+    },
+  },
+};
+const sidebarGroupVariants: Variants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0 },
+};
+
+// --- Komponen Judul Animasi (Tidak ada perubahan) ---
+const letterVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { ease: "easeOut", duration: 0.5 },
+  },
+};
+const titleContainerVariants: Variants = {
+  visible: {
+    transition: { staggerChildren: 0.04 },
+  },
+};
+interface AnimatedTitleProps {
+  text: string;
+}
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
+  const letters = Array.from(text);
+  return (
+    <motion.h2
+      className={styles.animatedGradientTitle}
+      variants={titleContainerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.8 }}
+    >
+      {letters.map((letter, index) => (
+        <motion.span key={index} variants={letterVariants}>
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.h2>
+  );
+};
 
 const CertificationSection: FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"Newest" | "Oldest">("Newest");
 
+  const parseDate = (dateStr: string): Date => {
+    return new Date(dateStr.replace("Issued ", ""));
+  };
+
   const sortedCertifications = [...certificationsData].sort((a, b) => {
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
     if (sortBy === "Newest") {
-      return b.id - a.id;
-    } else {
-      return a.id - b.id;
+      return dateB.getTime() - dateA.getTime();
     }
+    return dateA.getTime() - dateB.getTime();
   });
 
   const totalPages = Math.ceil(sortedCertifications.length / ITEMS_PER_PAGE);
@@ -197,7 +265,15 @@ const CertificationSection: FC = () => {
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
+      document
+        .getElementById("certifications")
+        ?.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortBy(e.target.value as "Newest" | "Oldest");
+    setCurrentPage(1);
   };
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -213,137 +289,179 @@ const CertificationSection: FC = () => {
             transition={{ duration: 0.6 }}
             className={styles.sectionTitle}
           >
-            <h2>My Certifications</h2>
+            <AnimatedTitle text="My Certifications" />
             <p>
               A collection of my professional certifications and qualifications.
             </p>
           </motion.div>
 
-          <div className={styles.certificationGrid}>
-            <AnimatePresence>
-              {paginatedCertifications.map((cert) => (
+          <div className={styles.mainContentLayout}>
+            <motion.div
+              className={styles.controlsSidebar}
+              variants={sidebarVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {/* Sidebar content (no changes) */}
+              <motion.div
+                className={styles.controlGroup}
+                variants={sidebarGroupVariants}
+              >
+                <h4>
+                  <FaFilter /> Sort By
+                </h4>
+                <div className={styles.selectWrapper}>
+                  <select
+                    id="sort-select"
+                    value={sortBy}
+                    onChange={handleSortChange}
+                    className={styles.sortSelect}
+                  >
+                    <option value="Newest">Newest</option>
+                    <option value="Oldest">Oldest</option>
+                  </select>
+                </div>
+              </motion.div>
+              {totalPages > 1 && (
                 <motion.div
-                  key={cert.id}
-                  layout
-                  initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -50, scale: 0.9 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className={styles.cardWrapper}
+                  className={styles.controlGroup}
+                  variants={sidebarGroupVariants}
                 >
-                  <div className={styles.certificationCard}>
-                    <motion.div
-                      className={styles.imageContainer}
-                      onClick={() => setSelectedImage(cert.imageUrl)}
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: "spring", stiffness: 300 }}
+                  <h4>
+                    <FaFileAlt /> Page
+                  </h4>
+                  <div className={styles.pagination}>
+                    <motion.button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className={styles.navButton}
+                      aria-label="Previous Page"
+                      whileHover={{ scale: currentPage > 1 ? 1.1 : 1 }}
+                      whileTap={{ scale: currentPage > 1 ? 0.95 : 1 }}
                     >
-                      <Image
-                        src={cert.imageUrl}
-                        alt={`Certificate for ${cert.title}`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        style={{ objectFit: "cover" }}
-                      />
-                      <div className={styles.imageOverlay}>
-                        <span>Click to Enlarge</span>
-                      </div>
-                    </motion.div>
-                    <div className={styles.cardContent}>
-                      <span className={styles.issuer}>
-                        <FaTrophy /> {cert.issuer}
-                      </span>
-                      <h3>{cert.title}</h3>
-                      <div className={styles.technologies}>
-                        {cert.technologies.map((tech) => {
-                          const Icon = techIconMap[tech] || FaQuestionCircle;
-                          return (
-                            <div
-                              key={tech}
-                              className={styles.techIcon}
-                              title={tech}
-                            >
-                              <Icon
-                                style={{ color: iconColors[tech] || "#bbb" }}
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className={styles.cardFooter}>
-                        <span className={styles.date}>{cert.date}</span>
-                        {cert.credentialUrl && (
-                          <a
-                            href={cert.credentialUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={styles.credentialLink}
-                          >
-                            Verify <FiExternalLink />
-                          </a>
-                        )}
-                      </div>
-                    </div>
+                      <FaChevronLeft />
+                    </motion.button>
+                    {pageNumbers.map((number) => (
+                      <motion.button
+                        key={number}
+                        onClick={() => handlePageChange(number)}
+                        className={`${styles.pageButton} ${
+                          currentPage === number ? styles.activePage : ""
+                        }`}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {number}
+                      </motion.button>
+                    ))}
+                    <motion.button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className={styles.navButton}
+                      aria-label="Next Page"
+                      whileHover={{
+                        scale: currentPage < totalPages ? 1.1 : 1,
+                      }}
+                      whileTap={{
+                        scale: currentPage < totalPages ? 0.95 : 1,
+                      }}
+                    >
+                      <FaChevronRight />
+                    </motion.button>
                   </div>
                 </motion.div>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {totalPages > 1 && (
-            <motion.div
-              className={styles.controlsContainer}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <div className={styles.pagination}>
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={styles.navButton}
-                >
-                  <FaChevronLeft />
-                </button>
-                {pageNumbers.map((number) => (
-                  <button
-                    key={number}
-                    onClick={() => handlePageChange(number)}
-                    className={`${styles.pageButton} ${
-                      currentPage === number ? styles.activePage : ""
-                    }`}
-                  >
-                    {number}
-                  </button>
-                ))}
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={styles.navButton}
-                >
-                  <FaChevronRight />
-                </button>
-              </div>
-              <div className={styles.sortContainer}>
-                <label htmlFor="sort-select">Sort by:</label>
-                <select
-                  id="sort-select"
-                  value={sortBy}
-                  onChange={(e) =>
-                    setSortBy(e.target.value as "Newest" | "Oldest")
-                  }
-                  className={styles.sortSelect}
-                >
-                  <option value="Newest">Newest</option>
-                  <option value="Oldest">Oldest</option>
-                </select>
-              </div>
+              )}
             </motion.div>
-          )}
+
+            <motion.div
+              key={`${sortBy}-${currentPage}`}
+              className={styles.certificationGrid}
+              variants={gridContainerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <AnimatePresence>
+                {paginatedCertifications.map((cert) => (
+                  <motion.div
+                    key={cert.id}
+                    className={styles.cardWrapper}
+                    variants={gridItemVariants}
+                    exit="exit"
+                    layout
+                  >
+                    <div className={styles.certificationCard}>
+                      <motion.div
+                        className={styles.imageContainer}
+                        onClick={() => setSelectedImage(cert.imageUrl)}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <Image
+                          src={cert.imageUrl}
+                          alt={`Certificate for ${cert.title}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          style={{ objectFit: "cover" }}
+                        />
+                        <div className={styles.imageOverlay}>
+                          <span>Click to Enlarge</span>
+                        </div>
+                      </motion.div>
+                      <div className={styles.cardContent}>
+                        <span className={styles.issuer}>
+                          <FaTrophy /> {cert.issuer}
+                        </span>
+                        <h3>{cert.title}</h3>
+                        <div className={styles.technologies}>
+                          {cert.technologies.length > 0 ? (
+                            cert.technologies.map((tech) => {
+                              const Icon =
+                                techIconMap[tech] || FaQuestionCircle;
+                              return (
+                                <div
+                                  key={tech}
+                                  className={styles.techIcon}
+                                  title={tech}
+                                >
+                                  <Icon
+                                    style={{
+                                      color: iconColors[tech] || "#bbb",
+                                    }}
+                                  />
+                                </div>
+                              );
+                            })
+                          ) : (
+                            <div className={styles.noTech}>
+                              General knowledge
+                            </div>
+                          )}
+                        </div>
+                        <div className={styles.cardFooter}>
+                          <span className={styles.date}>{cert.date}</span>
+                          {cert.credentialUrl && (
+                            <a
+                              href={cert.credentialUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={styles.credentialLink}
+                            >
+                              Verify <FiExternalLink />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Modal/Lightbox */}
+      {/* Modal (Tidak ada perubahan) */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -359,6 +477,7 @@ const CertificationSection: FC = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
             >
               <Image
                 src={selectedImage}
@@ -377,6 +496,7 @@ const CertificationSection: FC = () => {
               className={styles.closeButton}
               onClick={() => setSelectedImage(null)}
               whileHover={{ scale: 1.2, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
             >
               <FiXCircle />
             </motion.button>
