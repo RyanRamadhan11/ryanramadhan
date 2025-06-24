@@ -1,9 +1,12 @@
+// 📁 src/components/CertificationSection/CertificationSection.tsx
+// (Versi Final dengan Ikon Kalender & Peningkatan Lainnya)
+
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
-import { FiExternalLink, FiXCircle } from "react-icons/fi";
+import { FiExternalLink, FiXCircle, FiGrid, FiSearch } from "react-icons/fi";
 import {
   FaTrophy,
   FaChevronLeft,
@@ -11,6 +14,7 @@ import {
   FaQuestionCircle,
   FaFilter,
   FaFileAlt,
+  FaCalendarAlt, // <<<--- IMPORT ICON BARU DI SINI
 } from "react-icons/fa";
 import {
   DiReact,
@@ -111,7 +115,7 @@ const certificationsData: Certification[] = [
     id: 1,
     title: "Dasar Pemrograman Web",
     issuer: "Dicoding Indonesia",
-    date: "Issued Nov 2022",
+    date: "2022-11-01",
     imageUrl: "https://picsum.photos/seed/web-dasar/800/450",
     technologies: ["HTML5", "CSS", "Javascript"],
     credentialUrl: "https://www.dicoding.com/certificates/N9ZO52KLJPG5",
@@ -120,7 +124,7 @@ const certificationsData: Certification[] = [
     id: 2,
     title: "Cloud Practitioner Essentials",
     issuer: "AWS Skill Builder",
-    date: "Issued Oct 2022",
+    date: "2022-10-15",
     imageUrl: "https://picsum.photos/seed/aws-cloud/800/450",
     technologies: ["Docker", "Linux"],
   },
@@ -128,7 +132,7 @@ const certificationsData: Certification[] = [
     id: 3,
     title: "Dasar-Dasar Keamanan Siber",
     issuer: "Cisco Networking Academy",
-    date: "Issued Jan 2023",
+    date: "2023-01-20",
     imageUrl: "https://picsum.photos/seed/cisco-cyber/800/450",
     technologies: ["Git"],
   },
@@ -136,7 +140,7 @@ const certificationsData: Certification[] = [
     id: 4,
     title: "Full-Stack Web Developer",
     issuer: "Codecademy",
-    date: "Issued May 2023",
+    date: "2023-05-10",
     imageUrl: "https://picsum.photos/seed/fullstack-web/800/450",
     technologies: ["React", "Node.js", "Express"],
   },
@@ -144,7 +148,7 @@ const certificationsData: Certification[] = [
     id: 5,
     title: "Belajar JavaScript Lanjutan",
     issuer: "Dicoding Indonesia",
-    date: "Issued Jun 2023",
+    date: "2023-06-05",
     imageUrl: "https://picsum.photos/seed/js-lanjutan/800/450",
     technologies: ["Javascript", "Node.js"],
   },
@@ -152,7 +156,7 @@ const certificationsData: Certification[] = [
     id: 6,
     title: "Manajemen Proyek Scrum",
     issuer: "Coursera",
-    date: "Issued Jul 2023",
+    date: "2023-07-30",
     imageUrl: "https://picsum.photos/seed/scrum-project/800/450",
     technologies: [],
   },
@@ -160,41 +164,37 @@ const certificationsData: Certification[] = [
     id: 7,
     title: "Desain UI/UX Fundamental",
     issuer: "Skilvul",
-    date: "Issued Aug 2023",
+    date: "2023-08-15",
     imageUrl: "https://picsum.photos/seed/uiux-design/800/450",
     technologies: ["Figma"],
+  },
+  {
+    id: 8,
+    title: "Belajar React untuk Pemula",
+    issuer: "BuildWithAngga",
+    date: "2023-09-01",
+    imageUrl: "https://picsum.photos/seed/react-pemula/800/450",
+    technologies: ["React"],
   },
 ];
 const ITEMS_PER_PAGE = 6;
 
-// --- Varian Animasi (Tidak ada perubahan) ---
+// Varian Animasi
 const gridContainerVariants: Variants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
 };
 const gridItemVariants: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-  exit: { opacity: 0, scale: 0.9, transition: { duration: 0.3 } },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.3 } },
 };
 const sidebarVariants: Variants = {
   hidden: { opacity: 0, x: -50 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: {
-      duration: 0.7,
-      delay: 0.2,
-      staggerChildren: 0.15,
-    },
+    transition: { duration: 0.7, delay: 0.2, staggerChildren: 0.1 },
   },
 };
 const sidebarGroupVariants: Variants = {
@@ -202,68 +202,84 @@ const sidebarGroupVariants: Variants = {
   visible: { opacity: 1, x: 0 },
 };
 
-// --- Komponen Judul Animasi (Tidak ada perubahan) ---
+// Komponen Judul Animasi
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { ease: "easeOut", duration: 0.5 },
-  },
+  visible: { opacity: 1, y: 0, transition: { ease: "easeOut", duration: 0.5 } },
 };
 const titleContainerVariants: Variants = {
-  visible: {
-    transition: { staggerChildren: 0.04 },
-  },
+  visible: { transition: { staggerChildren: 0.04 } },
 };
 interface AnimatedTitleProps {
   text: string;
 }
-const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
-  const letters = Array.from(text);
-  return (
-    <motion.h2
-      className={styles.animatedGradientTitle}
-      variants={titleContainerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.8 }}
-    >
-      {letters.map((letter, index) => (
-        <motion.span key={index} variants={letterVariants}>
-          {letter === " " ? "\u00A0" : letter}
-        </motion.span>
-      ))}
-    </motion.h2>
-  );
-};
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => (
+  <motion.h2
+    className={styles.animatedGradientTitle}
+    variants={titleContainerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.8 }}
+  >
+    {Array.from(text).map((letter, index) => (
+      <motion.span key={index} variants={letterVariants}>
+        {letter === " " ? "\u00A0" : letter}
+      </motion.span>
+    ))}
+  </motion.h2>
+);
 
 const CertificationSection: FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"Newest" | "Oldest">("Newest");
+  const [activeTechs, setActiveTechs] = useState<string[]>([]);
+  const [techSearch, setTechSearch] = useState("");
 
-  const parseDate = (dateStr: string): Date => {
-    return new Date(dateStr.replace("Issued ", ""));
-  };
+  const allTechs = useMemo(() => {
+    const techSet = new Set<string>();
+    certificationsData.forEach((cert) =>
+      cert.technologies.forEach((tech) => techSet.add(tech))
+    );
+    return Array.from(techSet).sort();
+  }, []);
 
-  const sortedCertifications = [...certificationsData].sort((a, b) => {
-    const dateA = parseDate(a.date);
-    const dateB = parseDate(b.date);
-    if (sortBy === "Newest") {
-      return dateB.getTime() - dateA.getTime();
-    }
-    return dateA.getTime() - dateB.getTime();
-  });
+  const displayTechs = useMemo(() => {
+    if (!techSearch) return allTechs;
+    return allTechs.filter((tech) =>
+      tech.toLowerCase().includes(techSearch.toLowerCase())
+    );
+  }, [allTechs, techSearch]);
 
-  const totalPages = Math.ceil(sortedCertifications.length / ITEMS_PER_PAGE);
-  const paginatedCertifications = sortedCertifications.slice(
+  const filteredCertifications = useMemo(() => {
+    const techFiltered =
+      activeTechs.length === 0
+        ? certificationsData
+        : certificationsData.filter((cert) =>
+            activeTechs.every((activeTech) =>
+              cert.technologies.includes(activeTech)
+            )
+          );
+    return [...techFiltered].sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return sortBy === "Newest"
+        ? dateB.getTime() - dateA.getTime()
+        : dateA.getTime() - dateB.getTime();
+    });
+  }, [activeTechs, sortBy]);
+
+  const totalPages = Math.ceil(filteredCertifications.length / ITEMS_PER_PAGE);
+  const paginatedCertifications = filteredCertifications.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
   const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
+    const newTotalPages = Math.ceil(
+      filteredCertifications.length / ITEMS_PER_PAGE
+    );
+    if (page >= 1 && page <= (newTotalPages || 1)) {
       setCurrentPage(page);
       document
         .getElementById("certifications")
@@ -276,34 +292,40 @@ const CertificationSection: FC = () => {
     setCurrentPage(1);
   };
 
+  const handleTechFilter = (tech: string) => {
+    setActiveTechs((prevTechs) =>
+      prevTechs.includes(tech)
+        ? prevTechs.filter((t) => t !== tech)
+        : [...prevTechs, tech]
+    );
+    setCurrentPage(1);
+  };
+
+  const handleSelectAll = () => {
+    setActiveTechs([]);
+    setCurrentPage(1);
+  };
+
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <>
       <section id="certifications" className={styles.certificationSection}>
         <div className="page-container">
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className={styles.sectionTitle}
-          >
+          <div className={styles.sectionTitle}>
             <AnimatedTitle text="My Certifications" />
             <p>
               A collection of my professional certifications and qualifications.
             </p>
-          </motion.div>
-
+          </div>
           <div className={styles.mainContentLayout}>
-            <motion.div
+            <motion.aside
               className={styles.controlsSidebar}
               variants={sidebarVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {/* Sidebar content (no changes) */}
               <motion.div
                 className={styles.controlGroup}
                 variants={sidebarGroupVariants}
@@ -323,6 +345,55 @@ const CertificationSection: FC = () => {
                   </select>
                 </div>
               </motion.div>
+
+              <motion.div
+                className={styles.controlGroup}
+                variants={sidebarGroupVariants}
+              >
+                <h4>
+                  <FiGrid /> Filter by Technology
+                </h4>
+                <div className={styles.techSearchWrapper}>
+                  <FiSearch className={styles.techSearchIcon} />
+                  <input
+                    type="search"
+                    placeholder="Search technology..."
+                    className={styles.techSearchInput}
+                    value={techSearch}
+                    onChange={(e) => setTechSearch(e.target.value)}
+                  />
+                </div>
+                <div className={styles.techFilterContainer}>
+                  <motion.button
+                    onClick={handleSelectAll}
+                    className={`${styles.techFilterButton} ${
+                      activeTechs.length === 0 ? styles.activeTech : ""
+                    }`}
+                    whileHover={{ y: -2 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  >
+                    All
+                  </motion.button>
+                  {displayTechs.map((tech) => (
+                    <motion.button
+                      key={tech}
+                      onClick={() => handleTechFilter(tech)}
+                      className={`${styles.techFilterButton} ${
+                        activeTechs.includes(tech) ? styles.activeTech : ""
+                      }`}
+                      whileHover={{ y: -2 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 15,
+                      }}
+                    >
+                      {tech}
+                    </motion.button>
+                  ))}
+                </div>
+              </motion.div>
+
               {totalPages > 1 && (
                 <motion.div
                   className={styles.controlGroup}
@@ -340,7 +411,8 @@ const CertificationSection: FC = () => {
                       whileHover={{ scale: currentPage > 1 ? 1.1 : 1 }}
                       whileTap={{ scale: currentPage > 1 ? 0.95 : 1 }}
                     >
-                      <FaChevronLeft />
+                      {" "}
+                      <FaChevronLeft />{" "}
                     </motion.button>
                     {pageNumbers.map((number) => (
                       <motion.button
@@ -360,108 +432,123 @@ const CertificationSection: FC = () => {
                       disabled={currentPage === totalPages}
                       className={styles.navButton}
                       aria-label="Next Page"
-                      whileHover={{
-                        scale: currentPage < totalPages ? 1.1 : 1,
-                      }}
-                      whileTap={{
-                        scale: currentPage < totalPages ? 0.95 : 1,
-                      }}
+                      whileHover={{ scale: currentPage < totalPages ? 1.1 : 1 }}
+                      whileTap={{ scale: currentPage < totalPages ? 0.95 : 1 }}
                     >
-                      <FaChevronRight />
+                      {" "}
+                      <FaChevronRight />{" "}
                     </motion.button>
                   </div>
                 </motion.div>
               )}
-            </motion.div>
+            </motion.aside>
 
-            <motion.div
-              key={`${sortBy}-${currentPage}`}
-              className={styles.certificationGrid}
-              variants={gridContainerVariants}
-              initial="hidden"
-              animate="visible"
-            >
-              <AnimatePresence>
-                {paginatedCertifications.map((cert) => (
-                  <motion.div
-                    key={cert.id}
-                    className={styles.cardWrapper}
-                    variants={gridItemVariants}
-                    exit="exit"
-                    layout
-                  >
-                    <div className={styles.certificationCard}>
-                      <motion.div
-                        className={styles.imageContainer}
-                        onClick={() => setSelectedImage(cert.imageUrl)}
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <Image
-                          src={cert.imageUrl}
-                          alt={`Certificate for ${cert.title}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          style={{ objectFit: "cover" }}
-                        />
-                        <div className={styles.imageOverlay}>
-                          <span>Click to Enlarge</span>
+            <div className={styles.gridAndEmptyStateWrapper}>
+              <motion.div
+                key={`${sortBy}-${activeTechs.join("-")}-${currentPage}`}
+                className={styles.certificationGrid}
+                variants={gridContainerVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <AnimatePresence>
+                  {paginatedCertifications.map((cert) => (
+                    <motion.div
+                      key={cert.id}
+                      className={styles.cardWrapper}
+                      variants={gridItemVariants}
+                      exit="exit"
+                      layout
+                    >
+                      <motion.div className={styles.certificationCard}>
+                        <div
+                          className={styles.imageContainer}
+                          onClick={() => setSelectedImage(cert.imageUrl)}
+                        >
+                          <Image
+                            src={cert.imageUrl}
+                            alt={`Certificate for ${cert.title}`}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            style={{ objectFit: "cover" }}
+                            className={styles.cardImage}
+                          />
+                          <div className={styles.imageOverlay}>
+                            <span>Click to Enlarge</span>
+                          </div>
+                        </div>
+                        <div className={styles.cardContent}>
+                          <span className={styles.issuer}>
+                            <FaTrophy /> {cert.issuer}
+                          </span>
+                          <h3>{cert.title}</h3>
+                          <div className={styles.technologies}>
+                            {cert.technologies.length > 0 ? (
+                              cert.technologies.map((tech) => {
+                                const Icon =
+                                  techIconMap[tech] || FaQuestionCircle;
+                                return (
+                                  <div
+                                    key={tech}
+                                    className={styles.techIcon}
+                                    title={tech}
+                                  >
+                                    <Icon
+                                      style={{
+                                        color: iconColors[tech] || "#bbb",
+                                      }}
+                                    />
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className={styles.noTech}>
+                                General knowledge
+                              </div>
+                            )}
+                          </div>
+                          <div className={styles.cardFooter}>
+                            {/* --- PERUBAHAN DI SINI: Menambahkan Ikon Kalender --- */}
+                            <span className={styles.date}>
+                              <FaCalendarAlt />
+                              {new Date(cert.date).toLocaleDateString("en-GB", {
+                                month: "long",
+                                year: "numeric",
+                              })}
+                            </span>
+                            {cert.credentialUrl && (
+                              <a
+                                href={cert.credentialUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.credentialLink}
+                              >
+                                Verify <FiExternalLink />
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </motion.div>
-                      <div className={styles.cardContent}>
-                        <span className={styles.issuer}>
-                          <FaTrophy /> {cert.issuer}
-                        </span>
-                        <h3>{cert.title}</h3>
-                        <div className={styles.technologies}>
-                          {cert.technologies.length > 0 ? (
-                            cert.technologies.map((tech) => {
-                              const Icon =
-                                techIconMap[tech] || FaQuestionCircle;
-                              return (
-                                <div
-                                  key={tech}
-                                  className={styles.techIcon}
-                                  title={tech}
-                                >
-                                  <Icon
-                                    style={{
-                                      color: iconColors[tech] || "#bbb",
-                                    }}
-                                  />
-                                </div>
-                              );
-                            })
-                          ) : (
-                            <div className={styles.noTech}>
-                              General knowledge
-                            </div>
-                          )}
-                        </div>
-                        <div className={styles.cardFooter}>
-                          <span className={styles.date}>{cert.date}</span>
-                          {cert.credentialUrl && (
-                            <a
-                              href={cert.credentialUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className={styles.credentialLink}
-                            >
-                              Verify <FiExternalLink />
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+              {paginatedCertifications.length === 0 && (
+                <motion.div
+                  className={styles.noResults}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <FaQuestionCircle />
+                  <p>No certifications found for this filter.</p>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Modal (Tidak ada perubahan) */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div

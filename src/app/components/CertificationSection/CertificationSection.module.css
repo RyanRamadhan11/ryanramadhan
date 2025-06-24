@@ -1,10 +1,26 @@
 /* src/components/CertificationSection/CertificationSection.module.css */
+/* (Versi Final dengan Efek 3D & Gradient Shadow) */
 
 .certificationSection {
   padding: 5rem 0;
-  background-color: var(--background-color, #121212);
+  background-color: #121212;
   position: relative;
   overflow: hidden;
+}
+.certificationSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      circle at 10% 20%,
+      rgba(187, 134, 252, 0.05),
+      transparent 30%
+    ),
+    radial-gradient(circle at 90% 80%, rgba(3, 218, 198, 0.05), transparent 30%);
+  pointer-events: none;
 }
 
 .sectionTitle {
@@ -17,27 +33,26 @@
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
-  color: var(--default-color);
-  opacity: 0.8;
+  color: #a0a0a0;
 }
 
-/* --- Layout Utama dengan Sidebar --- */
 .mainContentLayout {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
 }
 
-/* --- Sidebar Kontrol (Tidak ada perubahan signifikan) --- */
 .controlsSidebar {
   flex: 0 0 260px;
   position: sticky;
-  top: 100px;
-  background-color: var(--surface-color, #1a1a1a); /* Sedikit lebih gelap */
-  border-radius: 12px;
+  top: 120px;
+  background: rgba(26, 26, 30, 0.7);
+  border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .controlGroup {
@@ -49,7 +64,7 @@
 
 .controlGroup h4 {
   font-size: 1.1rem;
-  color: var(--heading-color);
+  color: #ffffff;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -61,7 +76,6 @@
 .selectWrapper {
   position: relative;
 }
-
 .selectWrapper::after {
   content: "▼";
   position: absolute;
@@ -69,11 +83,10 @@
   right: 1rem;
   transform: translateY(-50%);
   font-size: 0.8rem;
-  color: var(--accent-color);
+  color: #bb86fc;
   pointer-events: none;
   transition: transform 0.3s ease;
 }
-
 .selectWrapper:focus-within::after {
   transform: translateY(-50%) rotate(180deg);
 }
@@ -81,8 +94,8 @@
 .sortSelect {
   width: 100%;
   padding: 0.75rem 1rem;
-  background-color: var(--background-color);
-  color: var(--default-color);
+  background-color: #121212;
+  color: #e0e0e0;
   border: 1px solid #444;
   border-radius: 8px;
   font-weight: 500;
@@ -93,16 +106,88 @@
   appearance: none;
 }
 .sortSelect:hover {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 10px rgba(187, 134, 252, 0.2);
+  border-color: #bb86fc;
 }
 .sortSelect:focus {
   outline: none;
-  border-color: var(--hero-highlight-color);
+  border-color: #03dac6;
+  box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+}
+
+/* --- Style untuk Search & Filterable List --- */
+.techSearchWrapper {
+  position: relative;
+  margin-bottom: 1rem;
+}
+.techSearchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0a0a0;
+}
+.techSearchInput {
+  width: 100%;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  background-color: #121212;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #e0e0e0;
+  transition: all 0.3s ease;
+}
+.techSearchInput::placeholder {
+  color: #a0a0a0;
+}
+.techSearchInput:focus {
+  outline: none;
+  border-color: #03dac6;
+  box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+}
+
+.techFilterContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  max-height: 250px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.techFilterContainer::-webkit-scrollbar {
+  width: 5px;
+}
+.techFilterContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+.techFilterContainer::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 10px;
+}
+
+.techFilterButton {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #a0a0a0;
+  border: 1px solid #444;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.techFilterButton:hover {
+  background-color: #bb86fc;
+  border-color: #bb86fc;
+  color: #121212;
+  transform: translateY(-1px);
+}
+.activeTech {
+  background-color: #03dac6;
+  border-color: #03dac6;
+  color: #121212;
+  font-weight: 700;
   box-shadow: 0 0 15px rgba(3, 218, 198, 0.3);
 }
 
-/* --- Styling Paginasi (Tidak ada perubahan signifikan) --- */
 .pagination {
   display: flex;
   align-items: center;
@@ -133,14 +218,14 @@
 }
 .navButton:hover:not(:disabled),
 .pageButton:hover:not(.activePage) {
-  background-color: var(--accent-color, #bb86fc);
-  color: var(--contrast-color, #000);
-  border-color: var(--accent-color, #bb86fc);
+  background-color: #bb86fc;
+  color: #000;
+  border-color: #bb86fc;
 }
 .activePage {
-  background-color: var(--hero-highlight-color, #03dac6);
-  color: var(--hero-background-dark, #121212);
-  border-color: var(--hero-highlight-color, #03dac6);
+  background-color: #03dac6;
+  color: #121212;
+  border-color: #03dac6;
   transform: scale(1.1);
   box-shadow: 0 0 15px rgba(3, 218, 198, 0.5);
 }
@@ -149,69 +234,77 @@
   cursor: not-allowed;
 }
 
-/* --- Area Grid --- */
-.certificationGrid {
+.gridAndEmptyStateWrapper {
   flex: 1;
+  position: relative;
+}
+.certificationGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2.5rem;
 }
-
-/* ============================================= */
-/* ⭐⭐⭐ PENYEMPURNAAN KARTU SERTIFIKAT ⭐⭐⭐ */
-/* ============================================= */
-
-/* [BARU] Wrapper kartu untuk efek 3D tilt. */
-.cardWrapper {
-  perspective: 1500px; /* Menambah kedalaman untuk efek 3D */
-  position: relative;
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+.noResults svg {
+  font-size: 3rem;
+  opacity: 0.5;
 }
 
-/* [DIROMBAK] Styling utama kartu sertifikat. */
+/* ============================================= */
+/* ⭐⭐⭐ EFEK HOVER BARU PADA KARTU ⭐⭐⭐ */
+/* ============================================= */
+
+.cardWrapper {
+  perspective: 1000px; /* Aktifkan perspektif 3D */
+}
+
 .certificationCard {
-  background: linear-gradient(
-    145deg,
-    #363535,
-    #000000
-  ); /* Gradien halus untuk background */
-  border-radius: 16px; /* Radius lebih besar */
+  background: linear-gradient(145deg, #2a2a2f, #1e1e24);
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid rgba(3, 107, 126, 0.1);
-  box-shadow: 0 8px 24px rgba(128, 129, 129, 0.3);
-
-  /* Transisi yang sangat halus untuk semua properti */
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.4s ease-out, border-color 0.4s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* Transisi yang lebih halus untuk efek baru */
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-style: preserve-3d;
-  will-change: transform, box-shadow; /* Optimasi performa animasi */
 }
 
-/* [DIROMBAK] Efek hover pada kartu. Inilah keajaibannya! */
-.cardWrapper:hover .certificationCard {
-  border-color: rgba(0, 0, 0, 0.7); /* Border glow warna highlight */
-
-  /* Efek 3D tilt yang modern dan shadow gradasi yang diminta */
-  transform: rotateX(8deg) rotateY(-6deg) scale(1.05) translateZ(30px);
+.certificationCard:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(-3deg);
   box-shadow: 
-    /* Shadow 1: Shadow utama yang lebih dalam untuk efek "mengangkat" */ 0
-      30px 60px -30px rgba(1, 65, 95, 0.5),
-    /* Shadow 2: Glow warna ungu (accent) di kiri atas */ -10px -10px 25px -5px rgba(187, 134, 252, 0.15),
-    /* Shadow 3: Glow warna teal (highlight) di kanan bawah */ 10px 10px 25px -5px
-      rgba(3, 218, 198, 0.15);
+    /* Bayangan utama untuk kedalaman */ 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    /* Glow ungu di kiri atas */ -10px -10px 20px rgba(187, 134, 252, 0.1),
+    /* Glow teal di kanan bawah */ 10px 10px 20px rgba(3, 218, 198, 0.1);
 }
 
-/* --- Styling Kartu Lainnya (Beberapa penyesuaian kecil) --- */
 .imageContainer {
   position: relative;
   width: 100%;
   aspect-ratio: 16/9;
   cursor: pointer;
   overflow: hidden;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+.cardImage {
+  transition: transform 0.4s ease;
+}
+/* Gambar ikut membesar saat kartu di-hover */
+.certificationCard:hover .cardImage {
+  transform: scale(1.05);
+}
+
 .imageOverlay {
   position: absolute;
   inset: 0;
@@ -224,11 +317,12 @@
   transition: opacity 0.3s ease;
   font-weight: 600;
   font-size: 1rem;
-  backdrop-filter: blur(2px); /* Efek blur halus di overlay */
+  backdrop-filter: blur(2px);
 }
 .imageContainer:hover .imageOverlay {
   opacity: 1;
 }
+
 .cardContent {
   padding: 1.5rem;
   display: flex;
@@ -241,20 +335,19 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: var(--default-color);
-  opacity: 0.8;
+  color: #a0a0a0;
   margin-bottom: 0.5rem;
 }
 .issuer svg {
-  color: var(--accent-color, #bb86fc);
+  color: #bb86fc;
 }
 .cardContent h3 {
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--heading-color);
+  color: #ffffff;
   line-height: 1.4;
   margin-bottom: 1rem;
-  min-height: 55px; /* Menjaga konsistensi tinggi judul */
+  min-height: 55px;
 }
 .technologies {
   display: flex;
@@ -265,18 +358,18 @@
   align-items: center;
 }
 .techIcon {
-  font-size: 1.8rem; /* Sedikit lebih besar */
+  font-size: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
 }
 .techIcon:hover {
-  transform: scale(1.2) rotate(5deg); /* Sedikit rotasi saat hover ikon */
+  transform: scale(1.2) rotate(5deg);
 }
 .noTech {
   font-size: 0.9rem;
-  color: var(--default-color);
+  color: #a0a0a0;
   opacity: 0.6;
   font-style: italic;
 }
@@ -288,28 +381,30 @@
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+/* --- PERUBAHAN DI SINI: Style untuk Tanggal dengan Ikon --- */
 .date {
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--default-color);
-  opacity: 0.7;
+  color: #a0a0a0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Jarak antara ikon dan teks */
 }
 .credentialLink {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: var(--accent-color, #bb86fc);
+  color: #bb86fc;
   font-weight: 600;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
-  position: relative;
 }
 .credentialLink:hover {
-  color: var(--hero-highlight-color, #03dac6);
-  transform: translateY(-2px); /* Efek angkat kecil */
+  color: #03dac6;
+  transform: translateY(-2px);
 }
 
-/* --- Modal (Tidak ada perubahan) --- */
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -337,7 +432,6 @@
   cursor: pointer;
 }
 
-/* --- Styling Judul Gradien (Sudah bagus, tidak diubah) --- */
 .animatedGradientTitle {
   font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
@@ -345,7 +439,6 @@
   position: relative;
   padding-bottom: 20px;
   margin-bottom: 15px;
-  font-family: var(--font-jetbrains, sans-serif);
   display: inline-block;
   background: linear-gradient(90deg, #bb86fc 0%, #03dac6 50%, #bb86fc 100%);
   background-size: 200% auto;
@@ -361,7 +454,7 @@
   display: block;
   width: 80px;
   height: 5px;
-  background: var(--hero-highlight-color, #03dac6);
+  background: #03dac6;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -377,7 +470,6 @@
   }
 }
 
-/* --- Aturan Responsif (Tidak ada perubahan) --- */
 @media (max-width: 991px) {
   .mainContentLayout {
     flex-direction: column;
