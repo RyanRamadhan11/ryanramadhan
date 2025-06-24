@@ -171,8 +171,8 @@
 .certificationCard {
   background: linear-gradient(
     145deg,
-    #014d57,
-    #25002e
+    #363535,
+    #000000
   ); /* Gradien halus untuk background */
   border-radius: 16px; /* Radius lebih besar */
   overflow: hidden;
@@ -197,7 +197,7 @@
   transform: rotateX(8deg) rotateY(-6deg) scale(1.05) translateZ(30px);
   box-shadow: 
     /* Shadow 1: Shadow utama yang lebih dalam untuk efek "mengangkat" */ 0
-      30px 60px -30px rgba(2, 117, 108, 0.5),
+      30px 60px -30px rgba(1, 65, 95, 0.5),
     /* Shadow 2: Glow warna ungu (accent) di kiri atas */ -10px -10px 25px -5px rgba(187, 134, 252, 0.15),
     /* Shadow 3: Glow warna teal (highlight) di kanan bawah */ 10px 10px 25px -5px
       rgba(3, 218, 198, 0.15);
