@@ -1,0 +1,165 @@
+/* 📁 app/NotFound.module.css */
+
+/* -- KEYFRAMES UNTUK ANIMASI -- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glitch {
+  2%,
+  64% {
+    transform: translate(2px, 0) skew(0deg);
+  }
+  4%,
+  60% {
+    transform: translate(-2px, 0) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(5deg);
+  }
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+/* -- STYLE UTAMA -- */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #a6b2c9; /* Warna teks kebiruan */
+  text-align: center;
+  font-family: "Fira Code", "Source Code Pro", monospace; /* Font coding */
+  animation: fadeIn 1s ease-in;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Efek Scanline (garis-garis TV lama) */
+.container::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+      to bottom,
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.25) 50%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.06),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.06)
+    );
+  background-size: 100% 4px, 6px 100%;
+  z-index: 2;
+  pointer-events: none;
+  animation: scanline 10s linear infinite;
+}
+
+.glitchWrapper {
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 15px rgba(255, 8, 226, 0.4)); /* Efek glow pink */
+}
+
+.image {
+  border-radius: 50%;
+  border: 3px solid rgba(0, 255, 234, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 234, 0.5);
+}
+
+.title {
+  position: relative;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #00ffee; /* Warna teks utama cyan/teal */
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  animation: glitch 1s linear infinite;
+}
+
+/* Efek Glitch pada Teks */
+.title::before,
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.title::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff08e2; /* Bayangan glitch pink */
+  animation: glitch 1.5s linear infinite reverse;
+}
+.title::after {
+  left: -2px;
+  text-shadow: -2px 0 #00ff73, 2px 2px #ff08e2; /* Bayangan glitch hijau & pink */
+  animation: glitch 2s linear infinite reverse;
+}
+
+.description {
+  font-size: 1.1rem;
+  max-width: 550px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 0 5px rgba(166, 178, 201, 0.5);
+}
+
+.homeButton {
+  position: relative;
+  padding: 0.8rem 2.5rem;
+  border-radius: 20px;
+  border: 2px solid #00ffee;
+  /* background-color: transparent; */
+  background: linear-gradient(90deg, #bb86fc 0%, #03dac6 90%);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0, 255, 234, 0.4),
+    0 0 10px rgba(0, 255, 234, 0.4);
+}
+
+.homeButton:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #03dac6 0%, #bb86fc 90%);
+  box-shadow: inset 0 0 20px rgba(0, 255, 234, 0.6),
+    0 0 30px rgba(0, 255, 234, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Media query untuk layar lebih kecil */
+@media (max-width: 600px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  .description {
+    font-size: 1rem;
+  }
+}

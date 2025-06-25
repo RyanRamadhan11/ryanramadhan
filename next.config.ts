@@ -4,11 +4,19 @@ const nextConfig: NextConfig = {
   /* config options here */
   images: {
     remotePatterns: [
+      // Konfigurasi untuk gambar robot 404
+      {
+        protocol: "http",
+        hostname: "googleusercontent.com",
+      },
+      // Jika kamu punya konfigurasi lain, biarkan saja. Contoh:
       {
         protocol: "https",
         hostname: "picsum.photos",
-        port: "",
-        pathname: "/**", // Izinkan semua path dari hostname ini
+      },
+      {
+        protocol: "https",
+        hostname: "i.giphy.com",
       },
     ],
   },
