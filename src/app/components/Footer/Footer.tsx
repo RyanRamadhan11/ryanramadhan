@@ -9,24 +9,24 @@ import { SiGithub, SiLinkedin, SiInstagram, SiMedium } from "react-icons/si";
 const socialLinksData = [
   {
     name: "GitHub",
-    href: "https://github.com/ryanmaramdh",
+    href: "https://github.com/RyanRamadhan11",
     icon: SiGithub,
   },
   {
     name: "LinkedIn",
-    href: "https://linkedin.com/in/ryanramadhan",
+    href: "https://www.linkedin.com/in/ryan-ramadhan-17118b222/",
     icon: SiLinkedin,
   },
   {
     name: "Instagram",
-    href: "https://instagram.com/ryanramadhan",
+    href: "https://www.instagram.com/ryanrmdhans/",
     icon: SiInstagram,
   },
-  {
-    name: "Medium",
-    href: "https://medium.com/@ryanramadhan",
-    icon: SiMedium,
-  },
+  // {
+  //   name: "Medium",
+  //   href: "https://medium.com/@ryanramadhan",
+  //   icon: SiMedium,
+  // },
 ];
 
 const Footer: FC = () => {
