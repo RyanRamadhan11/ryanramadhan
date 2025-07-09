@@ -5,7 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { FaGraduationCap, FaBriefcase } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
 
-// --- Komponen Judul Animasi ---
+// --- Animated Title Component ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -45,7 +45,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- Tipe Data & Kategori ---
+// --- Data Types & Categories ---
 type Category = "All" | "Education" | "Experience";
 
 interface ResumeItem {
@@ -54,47 +54,93 @@ interface ResumeItem {
   title: string;
   institution: string;
   duration: string;
-  description: string;
-  logoUrl?: string; // Opsional: URL logo perusahaan/sekolah
+  description: string[]; // Mengubah deskripsi menjadi array of strings untuk bullet points
 }
 
-// --- Data Resume ---
+// --- Refined Resume Data ---
 const resumeData: ResumeItem[] = [
   {
     id: 1,
     type: "Experience",
-    title: "Software Engineer",
-    institution: "PT. Visi Bima Jati",
-    duration: "Feb 2023 - Present",
-    description:
-      "Developed and maintained various web applications using Laravel, React, and Node.js. Collaborated with cross-functional teams to deliver high-quality software solutions.",
+    title: "Software Engineering Team Lead",
+    institution: "PT. Mekanika Digital Pratama",
+    duration: "Jun 2024 - Present",
+    description: [
+      "Led a team of developers in designing and deploying scalable web solutions.",
+      "Architected and developed key features using Laravel, React, .NET, and Node.js.",
+      "Conducted code reviews and mentored junior engineers to maintain high code quality.",
+    ],
   },
   {
     id: 2,
     type: "Experience",
-    title: "IT Support (Internship)",
-    institution: "PT. Bukit Asam Tbk",
-    duration: "Sep 2022 - Dec 2022",
-    description:
-      "Provided technical support, managed network infrastructure, and assisted in troubleshooting hardware and software issues.",
+    title: "Fullstack Developer",
+    institution: "PT. Enigmacamp",
+    duration: "Nov 2023 - May 2024",
+    description: [
+      "Completed an intensive, project-based training focused on enterprise-level development.",
+      "Built and deployed several full-stack applications using Java Spring Boot and React.",
+      "Practiced Agile methodologies, including sprint planning and daily stand-ups.",
+    ],
   },
   {
     id: 3,
-    type: "Education",
-    title: "Diploma in Informatics Engineering",
-    institution: "Singaperbangsa Karawang University",
-    duration: "2019 - 2022",
-    description:
-      "Focused on software development, database management, and web technologies, graduating with a GPA of 3.82.",
+    type: "Experience",
+    title: "Freelance Fullstack Developer",
+    institution: "Self-Employed",
+    duration: "Jan 2023 - Present",
+    description: [
+      "Developed custom web solutions for various clients, from landing pages to e-commerce sites.",
+      "Managed the full project lifecycle: from client consultation to final deployment.",
+      "Specialized in creating responsive and performant applications with Laravel and React.",
+    ],
   },
   {
     id: 4,
+    type: "Experience",
+    title: "Fullstack Web Developer",
+    institution: "PT. Nurul Fikri Cipta Inovasi",
+    duration: "Aug 2022 - Jan 2023",
+    description: [
+      "Developed and maintained modules for educational web platforms using Laravel.",
+      "Implemented new features and optimized database queries to improve performance.",
+      "Collaborated with the UI/UX team to integrate front-end designs using Blade templates.",
+    ],
+  },
+  {
+    id: 5,
+    type: "Experience",
+    title: "Fullstack Web Developer",
+    institution: "PT. Lentera Benderang",
+    duration: "Feb 2022 - Jun 2022",
+    description: [
+      "Contributed to building a company's core product with the Laravel framework.",
+      "Developed and integrated RESTful APIs for mobile and web client consumption.",
+      "Assisted in troubleshooting, bug fixing, and maintaining existing codebases.",
+    ],
+  },
+  {
+    id: 6,
     type: "Education",
-    title: "Vocational High School - Computer Networking",
-    institution: "SMK Negeri 1 Karawang",
+    title: "Bachelor's Degree in Informatics Engineering",
+    institution: "Singaperbangsa Karawang University",
+    duration: "2019 - 2023",
+    description: [
+      "Graduated with a GPA of 3.97.",
+      "Focused on software development, database management, and web technologies.",
+      "Completed a final project on developing a web-based inventory management system.",
+    ],
+  },
+  {
+    id: 7,
+    type: "Education",
+    title: "High School Diploma, Science Major",
+    institution: "SMA Negeri 1 Cilamaya",
     duration: "2016 - 2019",
-    description:
-      "Gained foundational skills in computer networking, hardware assembly, and basic programming principles.",
+    description: [
+      "Focused on core subjects in Mathematics and Natural Sciences.",
+      "Gained foundational knowledge in basic programming and computer logic.",
+    ],
   },
 ];
 
@@ -151,7 +197,7 @@ const ResumeSection: FC = () => {
           <AnimatePresence>
             {filteredData.map((item, index) => (
               <motion.div
-                key={item.id}
+                key={item.id} // Key sekarang unik dan benar
                 layout
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -172,7 +218,11 @@ const ResumeSection: FC = () => {
                   <span className={styles.duration}>{item.duration}</span>
                   <h3>{item.title}</h3>
                   <h4>{item.institution}</h4>
-                  <p>{item.description}</p>
+                  <ul className={styles.descriptionList}>
+                    {item.description.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             ))}

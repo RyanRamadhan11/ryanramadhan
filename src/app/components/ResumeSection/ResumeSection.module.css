@@ -242,6 +242,25 @@
   border-radius: 3px;
   opacity: 0.8;
 }
+/* Tambahkan ini di akhir file ResumeSection.module.css Anda */
+
+.descriptionList {
+  padding-left: 20px; /* Memberi sedikit indentasi pada list */
+  margin-top: 10px;
+  text-align: left; /* Memastikan teks di list selalu rata kiri */
+  color: var(--default-color);
+  opacity: 0.9;
+}
+
+.descriptionList li {
+  margin-bottom: 8px; /* Memberi jarak antar poin */
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.descriptionList li::marker {
+  color: var(--accent-color); /* Mengubah warna bullet point agar keren */
+}
 
 /* Keyframes untuk gradasi bergerak */
 @keyframes gradientFlow {

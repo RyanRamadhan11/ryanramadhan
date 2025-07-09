@@ -13,7 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./AboutSection.module.css";
 
-// --- Ikon ---
+// --- Icons ---
 import {
   DiPhp,
   DiJava,
@@ -39,14 +39,21 @@ import {
   SiSwagger,
   SiPostman,
   SiSocketdotio,
+  SiNextdotjs,
+  SiRedux,
+  SiPrisma,
+  SiFirebase,
+  SiHostinger,
+  SiGooglecloud,
 } from "react-icons/si";
 import { VscPackage, VscSourceControl } from "react-icons/vsc";
 import { AiOutlineSync } from "react-icons/ai";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { FaQuestionCircle } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
+import { TbBrandLaravel, TbBrandCSharp } from "react-icons/tb";
 
-// --- Komponen Judul Animasi ---
+// --- Animated Title Component ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -91,9 +98,13 @@ const masterTechData: { [key: string]: { icon: React.ElementType } } = {
   PHP: { icon: DiPhp },
   Javascript: { icon: DiJavascript1 },
   Java: { icon: DiJava },
+  "C#": { icon: TbBrandCSharp },
   Laravel: { icon: DiLaravel },
+  "Eloquent ORM": { icon: TbBrandLaravel },
   "React.js": { icon: DiReact },
   "React Native": { icon: DiReact },
+  "Next.js": { icon: SiNextdotjs },
+  Redux: { icon: SiRedux },
   "Express.js": { icon: SiExpress },
   "Node.Js": { icon: DiNodejs },
   "Java Spring Boot": { icon: SiSpring },
@@ -109,21 +120,29 @@ const masterTechData: { [key: string]: { icon: React.ElementType } } = {
   Postman: { icon: SiPostman },
   PostgreSQL: { icon: DiPostgresql },
   MySQL: { icon: DiMysql },
+  "Prisma Schema": { icon: SiPrisma },
   HTML5: { icon: DiHtml5 },
   CSS: { icon: DiCss3 },
   Bootstrap: { icon: DiBootstrap },
   AJAX: { icon: BsArrowLeftRight },
   "REST APIs": { icon: VscSourceControl },
   WebSockets: { icon: SiSocketdotio },
+  Firebase: { icon: SiFirebase },
+  "Google Auth": { icon: SiGooglecloud },
+  Hostinger: { icon: SiHostinger },
 };
 
 const iconColors: { [key: string]: string } = {
   PHP: "#8892be",
   Javascript: "#f7df1e",
   Java: "#f89820",
+  "C#": "#9b4f96",
   Laravel: "#fb503b",
+  "Eloquent ORM": "#fb503b",
   "React.js": "#61dafb",
   "React Native": "#61dafb",
+  "Next.js": "#000000",
+  Redux: "#764abc",
   "Express.js": "#444444",
   "Node.Js": "#3c873a",
   "Java Spring Boot": "#6db33f",
@@ -139,18 +158,22 @@ const iconColors: { [key: string]: string } = {
   Postman: "#ff6c37",
   PostgreSQL: "#336791",
   MySQL: "#00758f",
+  "Prisma Schema": "#2d3748",
   HTML5: "#e34f26",
   CSS: "#264de4",
   Bootstrap: "#563d7c",
   AJAX: "#007fff",
   "REST APIs": "#f58220",
   WebSockets: "#8c52ff",
+  Firebase: "#ffca28",
+  "Google Auth": "#4285f4",
+  Hostinger: "#673de6",
 };
 
 const techStack = [
   {
     category: "Programming Languages",
-    skills: ["PHP", "Javascript", "Java"],
+    skills: ["PHP", "Javascript", "Java", "C#"],
     icon: "bi-braces",
   },
   {
@@ -158,6 +181,8 @@ const techStack = [
     skills: [
       "Laravel",
       "React.js",
+      "Next.js",
+      "Redux",
       "React Native",
       "Express.js",
       "Node.Js",
@@ -168,11 +193,13 @@ const techStack = [
     icon: "bi-collection",
   },
   {
-    category: "Tools & Technologies",
+    category: "Tools & Platforms",
     skills: [
       "Docker",
       "Git",
       "CI/CD",
+      "Firebase",
+      "Hostinger",
       "Ubuntu/Linux",
       "Windows",
       "Maven",
@@ -182,13 +209,21 @@ const techStack = [
     icon: "bi-tools",
   },
   {
-    category: "Databases",
-    skills: ["PostgreSQL", "MySQL"],
+    category: "Databases & ORM",
+    skills: ["PostgreSQL", "MySQL", "Eloquent ORM", "Prisma Schema"],
     icon: "bi-hdd-stack",
   },
   {
     category: "Web Technologies",
-    skills: ["HTML5", "CSS", "Bootstrap", "AJAX", "REST APIs", "WebSockets"],
+    skills: [
+      "HTML5",
+      "CSS",
+      "Bootstrap",
+      "AJAX",
+      "REST APIs",
+      "WebSockets",
+      "Google Auth",
+    ],
     icon: "bi-globe2",
   },
 ];
@@ -201,12 +236,16 @@ const accordionSkills = [
     stack: [
       "PHP",
       "Laravel",
+      "Eloquent ORM",
       "Java",
       "Java Spring Boot",
       "Node.Js",
       "Express.js",
+      "C#",
+      ".Net Framework",
       "PostgreSQL",
       "MySQL",
+      "Prisma Schema",
       "REST APIs",
     ],
   },
@@ -219,15 +258,17 @@ const accordionSkills = [
       "CSS",
       "Javascript",
       "React.js",
+      "Next.js",
+      "Redux",
       "Bootstrap",
       "AJAX",
       "WebSockets",
     ],
   },
   {
-    title: "Mobile & DevOps",
+    title: "Mobile, DevOps & Services",
     content:
-      "Experienced in cross-platform mobile application development and implementing DevOps practices for efficient workflows.",
+      "Experienced in cross-platform mobile development, implementing DevOps practices, and integrating third-party services.",
     stack: [
       "React Native",
       "Git",
@@ -236,11 +277,14 @@ const accordionSkills = [
       "Ubuntu/Linux",
       "Postman",
       "Swagger API",
+      "Firebase",
+      "Google Auth",
+      "Hostinger",
     ],
   },
 ];
 
-// --- Komponen Accordion ---
+// --- Accordion Component ---
 const AccordionItem: FC<{
   item: (typeof accordionSkills)[0];
   isOpen: boolean;
@@ -295,7 +339,7 @@ const AccordionItem: FC<{
   </motion.div>
 );
 
-// --- Komponen Utama ---
+// --- Main Component ---
 const AboutSection: FC = () => {
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const handleAccordionClick = (index: number) =>
@@ -324,7 +368,7 @@ const AboutSection: FC = () => {
             >
               <div className={styles.imageContainer}>
                 <Image
-                  src="/images/profile.jpg"
+                  src="/images/bg-ryan.jpg"
                   className={styles.profileImg}
                   alt="Ryan Ramadhan's Profile Photo"
                   width={500}
@@ -343,14 +387,19 @@ const AboutSection: FC = () => {
               <div className={styles.aboutContent}>
                 <h3>Software Engineer with a Passion for Problem Solving.</h3>
                 <p>
-                  I am an Informatics Engineering graduate from Singaperbangsa
-                  Karawang University with over two years of experience as a
-                  Software Engineer.
+                  I am a passionate Full Stack Developer dedicated to designing,
+                  building, and maintaining responsive and scalable web
+                  applications. My expertise spans a variety of technologies,
+                  from backend stacks like{" "}
+                  <strong>PHP, Laravel, Java, and Node.js</strong>, to frontend
+                  frameworks like <strong>React and Next.js</strong>.
                 </p>
                 <p>
-                  I have hands-on experience in the entire software development
-                  lifecycle, including the use of Docker, Git, and CI/CD for
-                  streamlined and efficient deployment.
+                  I am proficient in managing the entire application development
+                  lifecycle to ensure optimal performance and user experience.
+                  Committed to continuous learning, I stay updated with the
+                  latest technology trends to deliver efficient and innovative
+                  solutions.
                 </p>
                 <motion.div
                   style={{ display: "inline-block" }}
