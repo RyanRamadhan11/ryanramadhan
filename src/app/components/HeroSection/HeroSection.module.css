@@ -1,4 +1,4 @@
-/* Keyframes untuk kursor dan animasi border (Tidak Berubah) */
+/* Keyframes untuk kursor dan animasi border */
 @keyframes blink-caret {
   from,
   to {
@@ -9,12 +9,16 @@
   }
 }
 
-@keyframes snake-border-spin {
-  from {
-    transform: rotate(0deg);
+/* [PERUBAHAN] Animasi baru untuk border gradasi */
+@keyframes glowing-border {
+  0% {
+    background-position: 0% 50%;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -44,14 +48,11 @@
   max-width: 700px;
 }
 
-/* [DIREVISI] Judul dengan efek gradasi */
 .heroContent h1 {
   font-size: clamp(2.5rem, 6vw, 3.5rem);
   margin: 0;
   line-height: 1.1;
   font-family: var(--font-jetbrains, sans-serif);
-
-  /* Efek Gradasi */
   background-image: linear-gradient(
     to right,
     #c427c9,
@@ -67,7 +68,7 @@
 }
 
 .hello {
-  /* Tidak perlu properti color lagi karena sudah diatur oleh gradasi di h1 */
+  /* Tidak perlu properti color lagi */
 }
 
 .roleLine {
@@ -80,7 +81,6 @@
   margin: 0.5rem 0 0.5rem;
 }
 
-/* [BARU] Style untuk teks profesi yang beranimasi */
 .animatedRole {
   color: var(--hero-highlight-color);
   font-weight: 600;
@@ -105,22 +105,19 @@
 }
 
 /*--------------------------------------------------------------
-# [DIREVISI] Stats, Frameworks, CTA
+# Stats, Frameworks, CTA
 --------------------------------------------------------------*/
-
 .statsContainer {
   display: flex;
   gap: 1rem;
   margin-bottom: 2.5rem;
 }
 
-/* [DIREVISI] Styling untuk Kartu Statistik dengan warna tematik & lebar pas */
 .statCard {
-  background: rgba(196, 39, 201, 0.1); /* Ungu tematik transparan */
+  background: rgba(196, 39, 201, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 1rem 1.5rem;
-  /* flex: 1; <-- Dihapus agar lebar kartu pas dengan konten */
   text-align: center;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -128,7 +125,7 @@
 }
 
 .statCard:hover {
-  background: rgba(6, 182, 212, 0.2); /* Cyan tematik transparan saat hover */
+  background: rgba(6, 182, 212, 0.2);
   transform: translateY(-5px);
 }
 
@@ -176,7 +173,6 @@
 
 .frameworkIcon {
   font-size: 2.2rem;
-  color: var(--icon-color);
   color: var(--icon-color, #a0a0a0);
 }
 
@@ -231,50 +227,39 @@
 }
 
 /*--------------------------------------------------------------
-# Profile Image (Tidak Berubah)
+# [PERUBAHAN] Profile Image dengan Efek Glowing
 --------------------------------------------------------------*/
 .profileImageWrapper {
   position: relative;
   z-index: 1;
-  background-color: var(--hero-surface-dark);
-  border-radius: 12px;
-  padding: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
+  border-radius: 20px; /* Sudut lebih bulat */
+  padding: 3px; /* Ketebalan border */
   max-width: 450px;
   width: 90%;
   aspect-ratio: 1 / 1;
+  background: linear-gradient(45deg, #f02d7d, #0f87ff); /* Gradasi border */
+  box-shadow: 0 0 30px rgba(240, 45, 125, 0.4), 0 0 30px rgba(15, 135, 255, 0.4); /* Shadow sesuai gradasi */
+  animation: glowing-border 8s ease-in-out infinite; /* Terapkan animasi baru */
+  background-size: 200% 200%; /* Ukuran background lebih besar untuk animasi */
 }
 
+/* Pseudo-element ini tidak lagi digunakan untuk border */
 .profileImageWrapper::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;
-  height: 150%;
-  background: conic-gradient(
-    transparent,
-    transparent,
-    transparent,
-    var(--hero-highlight-color)
-  );
-  animation: snake-border-spin 4s linear infinite;
-  transform: translate(-50%, -50%);
+  /* Kosongkan */
 }
 
 .profileImage {
   position: relative;
   z-index: 2;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 18px; /* Sesuaikan agar pas dengan wrapper */
   width: 100%;
   height: 100%;
 }
 
 .windowControls {
   position: absolute;
-  top: 8px;
+  top: 15px; /* Sesuaikan posisi agar di dalam padding */
   left: 15px;
   display: flex;
   gap: 8px;
@@ -368,7 +353,7 @@
     justify-content: center;
   }
   .statsContainer {
-    flex-direction: column; /* Kartu akan bertumpuk di layar kecil */
+    flex-direction: column;
   }
 }
 @media (min-width: 992px) {
