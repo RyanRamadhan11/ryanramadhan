@@ -139,7 +139,7 @@ const ContactSection: FC = () => {
             </div>
             <div className={styles.socialLinks}>
               <a
-                href="https://linkedin.com/in/ryan-ramadhan-8a49662a2"
+                href="https://www.linkedin.com/in/ryan-ramadhan-17118b222/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
@@ -147,7 +147,7 @@ const ContactSection: FC = () => {
                 <FaLinkedin />
               </a>
               <a
-                href="https://github.com/ryznox"
+                href="https://github.com/RyanRamadhan11"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
@@ -155,7 +155,7 @@ const ContactSection: FC = () => {
                 <FaGithub />
               </a>
               <a
-                href="https://instagram.com/ryznox"
+                href="https://www.instagram.com/ryanrmdhans/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
