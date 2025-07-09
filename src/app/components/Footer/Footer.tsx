@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import styles from "./Footer.module.css";
 
 // 1. Import ikon yang dibutuhkan dari react-icons
-import { SiGithub, SiLinkedin, SiInstagram, SiMedium } from "react-icons/si";
+import { SiGithub, SiLinkedin, SiInstagram } from "react-icons/si";
 
 // 2. Buat array untuk data sosial media agar lebih rapi
 const socialLinksData = [

@@ -3,7 +3,7 @@
 
 "use client";
 
-import React, { FC, useState, useMemo, useEffect } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import { FiExternalLink, FiXCircle, FiGrid, FiSearch } from "react-icons/fi";
