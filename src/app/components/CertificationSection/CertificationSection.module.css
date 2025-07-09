@@ -1,6 +1,9 @@
 /* src/components/CertificationSection/CertificationSection.module.css */
 /* (Versi Final dengan Efek 3D & Gradient Shadow) */
 
+/* ============================================= */
+/* --- General & Layout --- */
+/* ============================================= */
 .certificationSection {
   padding: 5rem 0;
   background-color: #121212;
@@ -22,12 +25,10 @@
     radial-gradient(circle at 90% 80%, rgba(3, 218, 198, 0.05), transparent 30%);
   pointer-events: none;
 }
-
 .sectionTitle {
   text-align: center;
   margin-bottom: 3.5rem;
 }
-
 .sectionTitle p {
   font-size: clamp(1rem, 2.5vw, 1.1rem);
   line-height: 1.7;
@@ -35,13 +36,60 @@
   margin: 1rem auto 0;
   color: #a0a0a0;
 }
-
 .mainContentLayout {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
 }
+.gridAndEmptyStateWrapper {
+  flex: 1;
+  position: relative;
+}
 
+/* ============================================= */
+/* --- Animated Title --- */
+/* ============================================= */
+.animatedGradientTitle {
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -1px;
+  position: relative;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  display: inline-block;
+  background: linear-gradient(90deg, #bb86fc 0%, #03dac6 50%, #bb86fc 100%);
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 5s linear infinite;
+}
+.animatedGradientTitle::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: #03dac6;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+  opacity: 0.8;
+}
+@keyframes gradientFlow {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* ============================================= */
+/* --- Sidebar & Controls --- */
+/* ============================================= */
 .controlsSidebar {
   flex: 0 0 260px;
   position: sticky;
@@ -54,14 +102,12 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-
 .controlGroup {
   margin-bottom: 2rem;
 }
 .controlGroup:last-child {
   margin-bottom: 0;
 }
-
 .controlGroup h4 {
   font-size: 1.1rem;
   color: #ffffff;
@@ -72,7 +118,6 @@
   align-items: center;
   gap: 0.75rem;
 }
-
 .selectWrapper {
   position: relative;
 }
@@ -90,7 +135,6 @@
 .selectWrapper:focus-within::after {
   transform: translateY(-50%) rotate(180deg);
 }
-
 .sortSelect {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -113,8 +157,6 @@
   border-color: #03dac6;
   box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
 }
-
-/* --- Style untuk Search & Filterable List --- */
 .techSearchWrapper {
   position: relative;
   margin-bottom: 1rem;
@@ -143,7 +185,6 @@
   border-color: #03dac6;
   box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
 }
-
 .techFilterContainer {
   display: flex;
   flex-wrap: wrap;
@@ -162,7 +203,6 @@
   background-color: #444;
   border-radius: 10px;
 }
-
 .techFilterButton {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
@@ -188,56 +228,132 @@
   box-shadow: 0 0 15px rgba(3, 218, 198, 0.3);
 }
 
+/* ======================================================= */
+/* --- Pagination (Final dengan UX & Animasi Lengkap) --- */
+/* ======================================================= */
 .pagination {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
+
 .navButton,
 .pageButton {
-  border: 1px solid #444;
-  background-color: transparent;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
   color: #ccc;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
 }
-.navButton {
-  width: 40px;
-  height: 40px;
+
+.navButton svg {
+  font-size: 1rem;
 }
+
 .pageButton {
-  min-width: 40px;
-  height: 40px;
-  padding: 0 0.5rem;
+  min-width: 38px;
 }
+
 .navButton:hover:not(:disabled),
 .pageButton:hover:not(.activePage) {
   background-color: #bb86fc;
-  color: #000;
+  color: #121212;
   border-color: #bb86fc;
+  transform: scale(1.08);
+  box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
 }
+
 .activePage {
   background-color: #03dac6;
   color: #121212;
   border-color: #03dac6;
   transform: scale(1.1);
-  box-shadow: 0 0 15px rgba(3, 218, 198, 0.5);
+  box-shadow: 0 0 10px rgba(3, 218, 198, 0.7);
 }
+
 .navButton:disabled {
-  opacity: 0.4;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
-.gridAndEmptyStateWrapper {
-  flex: 1;
-  position: relative;
+.goToPageForm {
+  display: flex;
+  justify-content: center; /* <<< Pusatkan form input */
+  margin-top: 1rem;
 }
+
+.pageInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #a0a0a0;
+  transition: all 0.2s ease-in-out;
+  width: auto; /* <<< Jangan memanjang penuh */
+}
+
+.pageInputContainer:focus-within {
+  border-color: #03dac6;
+  box-shadow: 0 0 10px rgba(3, 218, 198, 0.2);
+}
+
+.pageInputContainer span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.totalPagesText {
+  color: #ccc;
+}
+
+.paginationInput {
+  width: 45px;
+  background-color: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.3rem 0;
+  -moz-appearance: textfield;
+}
+
+.paginationInput::placeholder {
+  color: #666;
+  font-weight: bold;
+}
+
+.paginationInput:focus {
+  outline: none;
+  color: #03dac6;
+}
+
+.paginationInput::-webkit-outer-spin-button,
+.paginationInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Tombol Go sudah dihapus dari JSX, jadi stylenya bisa dihapus jika mau */
+.goToButton {
+  display: none;
+}
+
+/* ============================================= */
+/* --- Certification Grid & Card --- */
+/* ============================================= */
 .certificationGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -258,44 +374,29 @@
   font-size: 3rem;
   opacity: 0.5;
 }
-
-/* ============================================= */
-/* ⭐⭐⭐ EFEK HOVER BARU PADA KARTU ⭐⭐⭐ */
-/* ============================================= */
-
 .cardWrapper {
-  perspective: 1000px; /* Aktifkan perspektif 3D */
+  perspective: 1000px;
 }
-
 .certificationCard {
-  background: linear-gradient(
-    145deg,
-    #363535,
-    #000000
-  ); /* Gradien halus untuk background */
-  border-radius: 16px; /* Radius lebih besar */
+  background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
+  border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid rgba(3, 107, 126, 0.1);
-  box-shadow: 0 8px 24px rgba(128, 129, 129, 0.3);
-
-  /* Transisi yang sangat halus untuk semua properti */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.4s ease-out, border-color 0.4s ease-out;
   transform-style: preserve-3d;
-  will-change: transform, box-shadow; /* Optimasi performa animasi */
+  will-change: transform, box-shadow;
 }
-
 .certificationCard:hover {
   transform: translateY(-10px) rotateX(5deg) rotateY(-3deg);
-  box-shadow: 
-      /* Bayangan utama untuk kedalaman */ 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    /* Glow ungu di kiri atas */ -10px -10px 20px rgba(187, 134, 252, 0.1),
-    /* Glow teal di kanan bawah */ 10px 10px 20px rgba(3, 218, 198, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    -10px -10px 20px rgba(187, 134, 252, 0.1),
+    10px 10px 20px rgba(3, 218, 198, 0.1);
 }
-
 .imageContainer {
   position: relative;
   width: 100%;
@@ -306,11 +407,9 @@
 .cardImage {
   transition: transform 0.4s ease;
 }
-/* Gambar ikut membesar saat kartu di-hover */
 .certificationCard:hover .cardImage {
   transform: scale(1.05);
 }
-
 .imageOverlay {
   position: absolute;
   inset: 0;
@@ -328,7 +427,6 @@
 .imageContainer:hover .imageOverlay {
   opacity: 1;
 }
-
 .cardContent {
   padding: 1.5rem;
   display: flex;
@@ -387,15 +485,13 @@
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-/* --- PERUBAHAN DI SINI: Style untuk Tanggal dengan Ikon --- */
 .date {
   font-size: 0.8rem;
   font-style: italic;
   color: #a0a0a0;
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* Jarak antara ikon dan teks */
+  gap: 0.5rem;
 }
 .credentialLink {
   display: flex;
@@ -411,6 +507,9 @@
   transform: translateY(-2px);
 }
 
+/* ============================================= */
+/* --- Modal (dengan Scroll) & Responsive --- */
+/* ============================================= */
 .modalOverlay {
   position: fixed;
   inset: 0;
@@ -421,14 +520,18 @@
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  padding: 1rem;
+  padding: 2rem;
+  overflow-y: auto;
 }
 .modalContent {
   max-width: 95vw;
-  max-height: 95vh;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .closeButton {
-  position: absolute;
+  position: fixed;
   top: 1.5rem;
   right: 1.5rem;
   background: transparent;
@@ -436,44 +539,7 @@
   color: #fff;
   font-size: 2.5rem;
   cursor: pointer;
-}
-
-.animatedGradientTitle {
-  font-size: clamp(2.5rem, 5vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -1px;
-  position: relative;
-  padding-bottom: 20px;
-  margin-bottom: 15px;
-  display: inline-block;
-  background: linear-gradient(90deg, #bb86fc 0%, #03dac6 50%, #bb86fc 100%);
-  background-size: 200% auto;
-  color: #fff;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientFlow 5s linear infinite;
-}
-.animatedGradientTitle::after {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 80px;
-  height: 5px;
-  background: #03dac6;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 3px;
-  opacity: 0.8;
-}
-@keyframes gradientFlow {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
+  z-index: 2001;
 }
 
 @media (max-width: 991px) {
@@ -493,5 +559,11 @@
   }
   .controlsSidebar {
     padding: 1rem;
+  }
+  .modalOverlay {
+    padding: 1rem;
+  }
+  .pagination {
+    justify-content: center;
   }
 }
