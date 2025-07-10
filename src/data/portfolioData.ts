@@ -219,8 +219,8 @@ export const iconColors: { [key: string]: string } = {
 export const portofolios: Portofolio[] = [
   {
     id: 1,
-    title: "Real-Time Production Line Monitoring",
-    year: 2024,
+    title: "Real Time Production Line Monitoring",
+    year: 2025,
     category: "Fullstack",
     description_short:
       "A real-time production line monitoring dashboard for Astra Honda Motor, integrating live data and CCTV feeds to enhance operational oversight.",
@@ -261,7 +261,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 2,
     title: "EQC Machining NP",
-    year: 2024,
+    year: 2025,
     category: "Fullstack",
     description_short:
       "A centralized web platform for Electronic Quality Control (EQC) in a machining process, featuring master data management and part traceability using RFID.",
@@ -302,7 +302,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 3,
     title: "Toscast Communicator",
-    year: 2023,
+    year: 2025,
     category: "Desktop",
     description_short:
       "A desktop application designed for direct communication with Fanuc CNC machines, enabling program transfer and real-time monitoring.",
@@ -328,7 +328,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 4,
     title: "Cutting Tool Management System",
-    year: 2024,
+    year: 2025,
     category: "Fullstack",
     description_short:
       "A web application for monitoring the lifecycle of cutting tools, including transaction history, traceability, and precision offset measurements (Z and X values).",
@@ -807,7 +807,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 17,
     title: "Interactive Birthday Card",
-    year: 2024,
+    year: 2023,
     category: "Frontend",
     description_short:
       "A fun, interactive, and animated web-based birthday greeting card.",
@@ -859,7 +859,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 19,
     title: "Java MVC Point Of Sales",
-    year: 2023,
+    year: 2021,
     category: "Desktop",
     description_short:
       "A classic desktop Point of Sale (POS) application built with Java Swing, following the MVC architectural pattern.",
@@ -978,7 +978,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 23,
     title: "Car Sales App (Desktop)",
-    year: 2022,
+    year: 2021,
     category: "Desktop",
     description_short:
       "A desktop-based application for managing car sales and inventory, built with Java and NetBeans.",
@@ -1030,7 +1030,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 25,
     title: "Digicofee",
-    year: 2021,
+    year: 2022,
     category: "Fullstack",
     description_short:
       "A digital Point of Sale (POS) and cafe management system built with Laravel to streamline ordering and operations.",
@@ -1065,7 +1065,7 @@ export const portofolios: Portofolio[] = [
   {
     id: 26,
     title: "Animal Sounds Interactive Web",
-    year: 2021,
+    year: 2022,
     category: "Frontend",
     description_short:
       "An interactive web application for children to learn animal sounds by clicking on images.",
