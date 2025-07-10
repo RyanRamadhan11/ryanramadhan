@@ -44,84 +44,6 @@
   opacity: 0.8;
 }
 
-.filterWrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin: 2rem auto 3.5rem auto;
-}
-
-.filterGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.filterLabel {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #9e9e9e;
-  text-align: center;
-  padding-left: 0.5rem;
-}
-
-.filterContainer {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  padding: 0.5rem;
-  border-radius: 50px;
-  width: fit-content;
-}
-
-.yearDropdown {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-color: rgb(51, 51, 51);
-  color: #ccc;
-  padding: 0.75rem 3rem 0.75rem 1.5rem;
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 1rem center;
-  background-size: 1em;
-}
-
-.filterButton {
-  padding: 0.75rem 1.75rem;
-  border: none;
-  background-color: rgb(51, 51, 51);
-  color: #ccc;
-  border-radius: 50px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.filterButton:hover,
-.filterButton.active {
-  color: var(--hero-background-dark, #121212);
-  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
-  background-size: 200% auto;
-  color: #fff;
-  animation: gradientFlow 5s linear infinite;
-  box-shadow: 0 7px 20px
-    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
-}
-
 @keyframes gradientFlow {
   0% {
     background-position: 200% center;
@@ -131,11 +53,125 @@
   }
 }
 
-.yearDropdown:hover {
-  border-color: var(--hero-accent-color);
-  box-shadow: 0 5px 15px rgba(3, 218, 198, 0.1);
+/* --- [BARU] Kontainer Filter Modern --- */
+.filtersContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 2rem auto 3.5rem auto;
+  padding: 1rem 1.5rem;
+  background: rgba(30, 30, 36, 0.5);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  max-width: 90%;
+  width: fit-content;
 }
 
+/* --- [BARU] Wrapper & Input Pencarian --- */
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #e0e0e0;
+  padding: 0.75rem 1.5rem 0.75rem 2.8rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 250px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--hero-accent-color);
+  background-color: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--hero-accent-color), transparent 80%);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  color: #888;
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* --- [BARU] Grup Filter Kategori --- */
+.filterGroup {
+  display: flex;
+  align-items: center;
+}
+
+.filterContainer {
+  display: flex;
+  gap: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 12px;
+}
+
+.filterButton {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  color: #ccc;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.filterButton:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.filterButton.active {
+  color: #121212;
+  background: linear-gradient(90deg, #c427c9, #03dac6);
+  box-shadow: 0 4px 15px
+    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
+}
+
+/* --- [BARU] Wrapper & Dropdown Tahun --- */
+.yearFilterWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.yearDropdown {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #e0e0e0;
+  padding: 0.75rem 2.5rem 0.75rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  background-size: 1em;
+}
+
+/* --- [PERBAIKAN] Gaya focus pada dropdown tahun --- */
 .yearDropdown:focus {
   outline: none;
   border-color: var(--hero-highlight-color);
@@ -143,6 +179,76 @@
     color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
 }
 
+/* --- [PERBAIKAN] Gaya untuk option di dalam dropdown --- */
+.yearDropdown option {
+  background-color: #1e1e24; /* Warna background gelap yang sama dengan kartu */
+  color: #e0e0e0; /* Warna teks terang */
+}
+
+.yearIcon {
+  display: none; /* Ikon di dalam dropdown sudah cukup */
+}
+
+/* --- Media Query untuk Filter --- */
+@media (max-width: 992px) {
+  .filtersContainer {
+    flex-direction: column;
+    width: 90%;
+    max-width: 500px;
+    align-items: stretch;
+  }
+  .searchInput {
+    width: 100%;
+  }
+  .filterContainer {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* --- [BARU] Gaya untuk Loading Spinner --- */
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  width: 100%;
+}
+
+.loadingSpinner {
+  animation: rotate 2s linear infinite;
+  width: 50px;
+  height: 50px;
+}
+
+.spinnerPath {
+  stroke: var(--hero-accent-color, #03dac6);
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* --- Grid & Kartu Portofolio --- */
 .portofolioGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -230,6 +336,154 @@
   transform: scale(1.1);
 }
 
+.portofolioContent {
+  padding: 1.5rem;
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 0.8rem;
+}
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  gap: 0.5rem;
+}
+.categoryTag,
+.yearTag {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.categoryTag {
+  background-color: color-mix(
+    in srgb,
+    var(--hero-accent-color),
+    transparent 85%
+  );
+  color: var(--hero-accent-color, #03dac6);
+  border: 1px solid
+    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
+}
+.yearTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: color-mix(
+    in srgb,
+    var(--hero-highlight-color),
+    transparent 85%
+  );
+  color: var(--hero-highlight-color, #c427c9);
+  border: 1px solid
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
+}
+.header h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin: 0;
+  line-height: 1.3;
+}
+.portofolioContent p {
+  font-size: 0.95rem;
+  color: #a0a0a0;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+.techIcon {
+  font-size: 1.7rem;
+  cursor: help;
+  transition: all 0.3s ease;
+  color: #888;
+}
+.techIcon:hover {
+  transform: scale(1.2) translateY(-2px);
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+/* --- [BARU] Styling untuk Aksi Kartu --- */
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.likeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ccc;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.likeButton:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.likeButton.liked {
+  color: #ff4785;
+  background-color: rgba(255, 71, 133, 0.1);
+  border-color: rgba(255, 71, 133, 0.3);
+}
+
+.likeButton.liked:hover {
+  background-color: rgba(255, 71, 133, 0.2);
+}
+
+.likeButton svg {
+  font-size: 1.1rem;
+}
+
+.detailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  color: #f0f0f0;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: none;
+  background: linear-gradient(
+    90deg,
+    var(--hero-highlight-color),
+    var(--hero-accent-color)
+  );
+  background-size: 200% auto;
+  transition: all 0.4s ease;
+}
+
+.detailLink:hover {
+  background-position: right center;
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px
+    color-mix(in srgb, var(--hero-accent-color), transparent 75%);
+}
+
+/* --- Sisa CSS (Carousel, Pagination, dll.) --- */
 .customDotsContainer {
   position: absolute;
   bottom: 15px;
@@ -243,11 +497,6 @@
   gap: 8px;
   z-index: 3;
 }
-
-.customDotsContainer li {
-  cursor: pointer;
-}
-
 .customPagingDot {
   width: 10px;
   height: 10px;
@@ -255,12 +504,10 @@
   background-color: rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
 }
-
 .customDotsContainer li.slick-active .customPagingDot {
   background-color: var(--hero-highlight-color);
   transform: scale(1.2);
 }
-
 .slickArrow {
   position: absolute;
   top: 50%;
@@ -278,164 +525,20 @@
   opacity: 0;
   transition: all 0.3s ease;
 }
-
 .carousel:hover .slickArrow {
   opacity: 1;
 }
-
 .slickPrev {
   left: 10px;
 }
-
 .slickNext {
   right: 10px;
 }
-
 .slickArrow:hover {
   background-color: var(--hero-accent-color, #03dac6);
   color: #121212;
   transform: translateY(-50%) scale(1.1);
 }
-
-.portofolioContent {
-  padding: 1.5rem;
-  text-align: left;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.header {
-  margin-bottom: 0.8rem;
-}
-
-.metaInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.8rem;
-  gap: 0.5rem;
-}
-
-.categoryTag {
-  background-color: color-mix(
-    in srgb,
-    var(--hero-accent-color),
-    transparent 85%
-  );
-  color: var(--hero-accent-color, #03dac6);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  display: inline-block;
-  border: 1px solid
-    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
-}
-
-.yearTag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background-color: color-mix(
-    in srgb,
-    var(--hero-highlight-color),
-    transparent 85%
-  );
-  color: var(--hero-highlight-color, #c427c9);
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border: 1px solid
-    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
-}
-
-.yearTag svg {
-  font-size: 0.7rem;
-}
-
-.header h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #f0f0f0;
-  margin: 0;
-  line-height: 1.3;
-}
-
-.portofolioContent p {
-  font-size: 0.95rem;
-  color: #a0a0a0;
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-  flex-grow: 1;
-}
-
-.technologies {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-}
-
-.techIcon {
-  font-size: 1.7rem;
-  cursor: help;
-  transition: all 0.3s ease;
-  color: #888;
-}
-
-.techIcon:hover {
-  transform: scale(1.2) translateY(-2px);
-  filter: drop-shadow(0 0 5px currentColor);
-}
-
-.portofolioLinks {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: auto;
-}
-
-.detailLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.7rem 1.4rem;
-  border-radius: 50px;
-  color: #f0f0f0;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  border: none;
-  background: linear-gradient(
-    90deg,
-    var(--hero-highlight-color) 0%,
-    var(--hero-accent-color) 50%,
-    var(--hero-highlight-color) 100%
-  );
-  background-size: 200% auto;
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.detailLink svg {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
-}
-
-.detailLink:hover {
-  color: #121212;
-  background-position: right center;
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px
-    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
-}
-
-.detailLink:hover svg {
-  transform: rotate(-45deg);
-}
-
 .paginationContainer {
   display: flex;
   justify-content: center;
@@ -444,7 +547,6 @@
   margin-top: 3rem;
   color: #ccc;
 }
-
 .paginationContainer button {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
@@ -455,18 +557,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 .paginationContainer button:hover:not(:disabled) {
   background-color: var(--hero-accent-color, #03dac6);
   border-color: var(--hero-accent-color, #03dac6);
   color: #121212;
 }
-
 .paginationContainer button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 .noResults {
   text-align: center;
   color: #888;
