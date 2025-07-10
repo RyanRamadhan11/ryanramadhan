@@ -44,7 +44,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyB9Gdna1ez-e9JCyRH4HfYBP7KZHPOAYsw",
   authDomain: "profile-ryanramdhan.firebaseapp.com",
   projectId: "profile-ryanramdhan",
-  storageBucket: "profile-ryanramdhan.firebasestorage.app",
+  storageBucket: "profile-ryanramdhan.appspot.com",
   messagingSenderId: "1019748072921",
   appId: "1:1019748072921:web:a56062380ec00a8e73edc8",
   measurementId: "G-GDYW5DLC8X",
@@ -101,25 +101,50 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- [BARU] Komponen untuk animasi loading ---
-const LoadingSpinner = () => (
-  <motion.div
-    className={styles.loadingContainer}
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-  >
-    <svg className={styles.loadingSpinner} viewBox="0 0 50 50">
-      <circle
-        className={styles.spinnerPath}
-        cx="25"
-        cy="25"
-        r="20"
-        fill="none"
-        strokeWidth="4"
-      ></circle>
-    </svg>
-  </motion.div>
+// --- [BARU] Komponen Skeleton untuk Loading Portofolio ---
+const SkeletonCard = () => (
+  <div className={`${styles.cardWrapper} ${styles.skeletonWrapper}`}>
+    <div className={styles.portofolioCard}>
+      <div className={`${styles.carousel} ${styles.skeletonElement}`}></div>
+      <div className={styles.portofolioContent}>
+        <div className={styles.header}>
+          <div className={styles.metaInfo}>
+            <div
+              className={`${styles.skeletonElement} ${styles.skeletonTag}`}
+            ></div>
+            <div
+              className={`${styles.skeletonElement} ${styles.skeletonTag}`}
+            ></div>
+          </div>
+          <div
+            className={`${styles.skeletonElement} ${styles.skeletonTitle}`}
+          ></div>
+        </div>
+        <div
+          className={`${styles.skeletonElement} ${styles.skeletonDescription}`}
+        ></div>
+        <div
+          className={`${styles.skeletonElement} ${styles.skeletonDescription} ${styles.skeletonDescriptionShort}`}
+        ></div>
+        <div className={styles.technologies}>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className={`${styles.skeletonElement} ${styles.skeletonTechIcon}`}
+            ></div>
+          ))}
+        </div>
+        <div className={styles.cardActions}>
+          <div
+            className={`${styles.skeletonElement} ${styles.skeletonLikeButton}`}
+          ></div>
+          <div
+            className={`${styles.skeletonElement} ${styles.skeletonDetailButton}`}
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
 );
 
 const ITEMS_PER_PAGE = 6;
@@ -381,7 +406,11 @@ const PortofolioSection: FC = () => {
 
         <AnimatePresence mode="wait">
           {isLoading ? (
-            <LoadingSpinner />
+            <motion.div className={styles.portofolioGrid} layout>
+              {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                <SkeletonCard key={`skeleton-${index}`} />
+              ))}
+            </motion.div>
           ) : paginatedPortofolios.length > 0 ? (
             <motion.div className={styles.portofolioGrid} layout>
               {paginatedPortofolios.map((portofolio) => (

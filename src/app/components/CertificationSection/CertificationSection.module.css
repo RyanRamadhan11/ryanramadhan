@@ -87,7 +87,6 @@
   }
 }
 
-/* --- [PERUBAHAN] Wrapper untuk judul agar bisa dipecah di mobile --- */
 .titleWrapper {
   display: inline-flex; /* Di desktop, judul akan sejajar */
   gap: 1rem;
@@ -503,6 +502,65 @@
 .credentialLink:hover {
   color: #03dac6;
   transform: translateY(-2px);
+}
+
+/* ============================================= */
+/* --- [BARU] Skeleton Loader Styles --- */
+/* ============================================= */
+.skeletonWrapper {
+  pointer-events: none;
+}
+.skeletonElement {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.skeletonElement::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  height: 100%;
+  width: 150%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  100% {
+    left: 150%;
+  }
+}
+.skeletonIssuer {
+  width: 60%;
+  height: 18px;
+  margin-bottom: 0.75rem;
+}
+.skeletonTitle {
+  width: 90%;
+  height: 20px;
+  margin-bottom: 0.5rem;
+}
+.skeletonTitleShort {
+  width: 70%;
+}
+.skeletonTechIcon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+.skeletonDate {
+  width: 120px;
+  height: 16px;
+}
+.skeletonLink {
+  width: 80px;
+  height: 16px;
 }
 
 /* ============================================= */

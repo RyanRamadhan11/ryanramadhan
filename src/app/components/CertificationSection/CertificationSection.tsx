@@ -1,9 +1,9 @@
 // 📁 src/components/CertificationSection/CertificationSection.tsx
-// (Final dengan Judul Responsif yang Dipecah)
+// (Final dengan Loading Skeleton & Judul Responsif)
 
 "use client";
 
-import React, { FC, useState, useMemo } from "react";
+import React, { FC, useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import { FiExternalLink, FiXCircle, FiGrid, FiSearch } from "react-icons/fi";
@@ -350,6 +350,44 @@ const sidebarGroupVariants: Variants = {
   visible: { opacity: 1, x: 0 },
 };
 
+// --- [BARU] Komponen Skeleton untuk Loading ---
+const SkeletonCard = () => (
+  <div className={`${styles.cardWrapper} ${styles.skeletonWrapper}`}>
+    <div className={styles.certificationCard}>
+      <div
+        className={`${styles.imageContainer} ${styles.skeletonElement}`}
+      ></div>
+      <div className={styles.cardContent}>
+        <div
+          className={`${styles.skeletonElement} ${styles.skeletonIssuer}`}
+        ></div>
+        <div
+          className={`${styles.skeletonElement} ${styles.skeletonTitle}`}
+        ></div>
+        <div
+          className={`${styles.skeletonElement} ${styles.skeletonTitle} ${styles.skeletonTitleShort}`}
+        ></div>
+        <div className={styles.technologies}>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className={`${styles.skeletonElement} ${styles.skeletonTechIcon}`}
+            ></div>
+          ))}
+        </div>
+        <div className={styles.cardFooter}>
+          <div
+            className={`${styles.skeletonElement} ${styles.skeletonDate}`}
+          ></div>
+          <div
+            className={`${styles.skeletonElement} ${styles.skeletonLink}`}
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 const CertificationSection: FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -357,6 +395,16 @@ const CertificationSection: FC = () => {
   const [activeTechs, setActiveTechs] = useState<string[]>([]);
   const [techSearch, setTechSearch] = useState("");
   const [pageInput, setPageInput] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // <-- State untuk loading
+
+  // --- [BARU] Efek untuk simulasi loading ---
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); // Durasi loading 1.5 detik
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, []);
 
   const allTechs = useMemo(() => {
     const techSet = new Set<string>();
@@ -433,7 +481,6 @@ const CertificationSection: FC = () => {
       <section id="certifications" className={styles.certificationSection}>
         <div className="page-container">
           <div className={styles.sectionTitle}>
-            {/* --- [PERUBAHAN UTAMA] Memecah AnimatedTitle --- */}
             <div className={styles.titleWrapper}>
               <AnimatedTitle text="My" />
               <AnimatedTitle text="Certifications" />
@@ -618,111 +665,135 @@ const CertificationSection: FC = () => {
               )}
             </motion.aside>
 
-            {/* Grid & Modal */}
+            {/* --- [PERUBAHAN] Grid & Modal dengan Kondisi Loading --- */}
             <div className={styles.gridAndEmptyStateWrapper}>
-              <motion.div
-                key={`${sortBy}-${activeTechs.join("-")}-${currentPage}`}
-                className={styles.certificationGrid}
-                variants={gridContainerVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <AnimatePresence>
-                  {paginatedCertifications.map((cert) => (
-                    <motion.div
-                      key={cert.id}
-                      className={styles.cardWrapper}
-                      variants={gridItemVariants}
-                      exit="exit"
-                      layout
-                    >
-                      <motion.div className={styles.certificationCard}>
-                        <div
-                          className={styles.imageContainer}
-                          onClick={() => setSelectedImage(cert.imageUrl)}
-                        >
-                          <Image
-                            src={cert.imageUrl}
-                            alt={`Certificate for ${cert.title}`}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            style={{ objectFit: "cover" }}
-                            className={styles.cardImage}
-                          />
-                          <div className={styles.imageOverlay}>
-                            {" "}
-                            <span>Click to Enlarge</span>{" "}
-                          </div>
-                        </div>
-                        <div className={styles.cardContent}>
-                          <span className={styles.issuer}>
-                            <FaTrophy /> {cert.issuer}
-                          </span>
-                          <h3>{cert.title}</h3>
-                          <div className={styles.technologies}>
-                            {cert.technologies.length > 0 ? (
-                              cert.technologies.map((tech) => {
-                                const Icon =
-                                  techIconMap[tech] || FaQuestionCircle;
-                                return (
-                                  <div
-                                    key={tech}
-                                    className={styles.techIcon}
-                                    title={tech}
-                                  >
-                                    {" "}
-                                    <Icon
-                                      style={{
-                                        color: iconColors[tech] || "#bbb",
-                                      }}
-                                    />{" "}
-                                  </div>
-                                );
-                              })
-                            ) : (
-                              <div className={styles.noTech}>
-                                General knowledge
-                              </div>
-                            )}
-                          </div>
-                          <div className={styles.cardFooter}>
-                            <span className={styles.date}>
-                              <FaCalendarAlt />{" "}
-                              {new Date(cert.date).toLocaleDateString("en-GB", {
-                                month: "long",
-                                year: "numeric",
-                              })}
-                            </span>
-                            {cert.credentialUrl && (
-                              <a
-                                href={cert.credentialUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.credentialLink}
+              <AnimatePresence mode="wait">
+                {isLoading ? (
+                  <motion.div
+                    key="loading"
+                    className={styles.certificationGrid}
+                    variants={gridContainerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit={{ opacity: 0 }}
+                  >
+                    {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                      <SkeletonCard key={`skeleton-${index}`} />
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="content"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {paginatedCertifications.length > 0 ? (
+                      <motion.div
+                        key={`${sortBy}-${activeTechs.join(
+                          "-"
+                        )}-${currentPage}`}
+                        className={styles.certificationGrid}
+                        variants={gridContainerVariants}
+                        initial="hidden"
+                        animate="visible"
+                      >
+                        {paginatedCertifications.map((cert) => (
+                          <motion.div
+                            key={cert.id}
+                            className={styles.cardWrapper}
+                            variants={gridItemVariants}
+                            exit="exit"
+                            layout
+                          >
+                            <motion.div className={styles.certificationCard}>
+                              <div
+                                className={styles.imageContainer}
+                                onClick={() => setSelectedImage(cert.imageUrl)}
                               >
-                                {" "}
-                                Verify <FiExternalLink />{" "}
-                              </a>
-                            )}
-                          </div>
-                        </div>
+                                <Image
+                                  src={cert.imageUrl}
+                                  alt={`Certificate for ${cert.title}`}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  style={{ objectFit: "cover" }}
+                                  className={styles.cardImage}
+                                />
+                                <div className={styles.imageOverlay}>
+                                  <span>Click to Enlarge</span>
+                                </div>
+                              </div>
+                              <div className={styles.cardContent}>
+                                <span className={styles.issuer}>
+                                  <FaTrophy /> {cert.issuer}
+                                </span>
+                                <h3>{cert.title}</h3>
+                                <div className={styles.technologies}>
+                                  {cert.technologies.length > 0 ? (
+                                    cert.technologies.map((tech) => {
+                                      const Icon =
+                                        techIconMap[tech] || FaQuestionCircle;
+                                      return (
+                                        <div
+                                          key={tech}
+                                          className={styles.techIcon}
+                                          title={tech}
+                                        >
+                                          <Icon
+                                            style={{
+                                              color: iconColors[tech] || "#bbb",
+                                            }}
+                                          />
+                                        </div>
+                                      );
+                                    })
+                                  ) : (
+                                    <div className={styles.noTech}>
+                                      General knowledge
+                                    </div>
+                                  )}
+                                </div>
+                                <div className={styles.cardFooter}>
+                                  <span className={styles.date}>
+                                    <FaCalendarAlt />{" "}
+                                    {new Date(cert.date).toLocaleDateString(
+                                      "en-GB",
+                                      {
+                                        month: "long",
+                                        year: "numeric",
+                                      }
+                                    )}
+                                  </span>
+                                  {cert.credentialUrl && (
+                                    <a
+                                      href={cert.credentialUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={styles.credentialLink}
+                                    >
+                                      Verify <FiExternalLink />
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                            </motion.div>
+                          </motion.div>
+                        ))}
                       </motion.div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-              {paginatedCertifications.length === 0 && (
-                <motion.div
-                  className={styles.noResults}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  {" "}
-                  <FaQuestionCircle />{" "}
-                  <p>No certifications found for this filter.</p>{" "}
-                </motion.div>
-              )}
+                    ) : (
+                      <motion.div
+                        className={styles.noResults}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        <FaQuestionCircle />
+                        <p>No certifications found for this filter.</p>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
