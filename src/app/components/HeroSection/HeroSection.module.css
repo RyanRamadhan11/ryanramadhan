@@ -67,10 +67,6 @@
   font-weight: 700;
 }
 
-.hello {
-  /* Tidak perlu properti color lagi */
-}
-
 .roleLine {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -241,11 +237,6 @@
   box-shadow: 0 0 30px rgba(240, 45, 125, 0.4), 0 0 30px rgba(15, 135, 255, 0.4); /* Shadow sesuai gradasi */
   animation: glowing-border 8s ease-in-out infinite; /* Terapkan animasi baru */
   background-size: 200% 200%; /* Ukuran background lebih besar untuk animasi */
-}
-
-/* Pseudo-element ini tidak lagi digunakan untuk border */
-.profileImageWrapper::before {
-  /* Kosongkan */
 }
 
 .profileImage {

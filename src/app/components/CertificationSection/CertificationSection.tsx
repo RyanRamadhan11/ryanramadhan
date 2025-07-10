@@ -1,9 +1,9 @@
 // 📁 src/components/CertificationSection/CertificationSection.tsx
-// (Final dengan Peningkatan UX Pagination v2)
+// (Final dengan Judul Responsif yang Dipecah)
 
 "use client";
 
-import React, { FC, useState, useMemo } from "react";
+import React, { FC, useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Image from "next/image";
 import { FiExternalLink, FiXCircle, FiGrid, FiSearch } from "react-icons/fi";
@@ -280,7 +280,6 @@ const certificationsData: Certification[] = [
     credentialUrl: "https://www.dicoding.com/certificates/GRX5KQ603Z0M",
   },
 ];
-
 const ITEMS_PER_PAGE = 4;
 
 const generateSlidingPageNumbers = (
@@ -357,7 +356,6 @@ const CertificationSection: FC = () => {
   const [sortBy, setSortBy] = useState<"Newest" | "Oldest">("Newest");
   const [activeTechs, setActiveTechs] = useState<string[]>([]);
   const [techSearch, setTechSearch] = useState("");
-  // --- [PERUBAHAN] Inisialisasi input sebagai string kosong ---
   const [pageInput, setPageInput] = useState("");
 
   const allTechs = useMemo(() => {
@@ -420,21 +418,14 @@ const CertificationSection: FC = () => {
     setActiveTechs([]);
     setCurrentPage(1);
   };
-
-  // --- [PERUBAHAN] Fungsi Go To Page sekarang juga mengupdate input setelah berhasil ---
   const handleGoToPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const pageNum = parseInt(pageInput, 10);
     if (!isNaN(pageNum)) {
       handlePageChange(pageNum);
-      // Kosongkan kembali input setelah berhasil submit
       setPageInput("");
     }
   };
-
-  // Hapus useEffect agar input tidak otomatis terisi angka "1" saat load
-  // useEffect(() => { setPageInput(currentPage.toString()); }, [currentPage]);
-
   const pageNumbers = generateSlidingPageNumbers(totalPages, currentPage);
 
   return (
@@ -442,7 +433,11 @@ const CertificationSection: FC = () => {
       <section id="certifications" className={styles.certificationSection}>
         <div className="page-container">
           <div className={styles.sectionTitle}>
-            <AnimatedTitle text="My Certifications" />
+            {/* --- [PERUBAHAN UTAMA] Memecah AnimatedTitle --- */}
+            <div className={styles.titleWrapper}>
+              <AnimatedTitle text="My" />
+              <AnimatedTitle text="Certifications" />
+            </div>
             <p>
               A collection of my professional certifications and qualifications.
             </p>
@@ -598,8 +593,6 @@ const CertificationSection: FC = () => {
                       <FaAngleDoubleRight />{" "}
                     </motion.button>
                   </div>
-
-                  {/* --- [PERUBAHAN] Form Input Tanpa Tombol Go --- */}
                   <form
                     onSubmit={handleGoToPage}
                     className={styles.goToPageForm}
@@ -614,7 +607,7 @@ const CertificationSection: FC = () => {
                         min="1"
                         max={totalPages}
                         aria-label="Go to page"
-                        placeholder="..." // Placeholder saat kosong
+                        placeholder="..."
                       />
                       <span className={styles.totalPagesText}>
                         of {totalPages}
@@ -625,7 +618,7 @@ const CertificationSection: FC = () => {
               )}
             </motion.aside>
 
-            {/* Grid & Modal (Tidak ada perubahan) */}
+            {/* Grid & Modal */}
             <div className={styles.gridAndEmptyStateWrapper}>
               <motion.div
                 key={`${sortBy}-${activeTechs.join("-")}-${currentPage}`}

@@ -87,6 +87,24 @@
   }
 }
 
+/* --- [PERUBAHAN] Wrapper untuk judul agar bisa dipecah di mobile --- */
+.titleWrapper {
+  display: inline-flex; /* Di desktop, judul akan sejajar */
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.titleWrapper .animatedGradientTitle {
+  margin-bottom: 0; /* Hapus margin bawah dari judul individu */
+  padding-bottom: 0;
+}
+.titleWrapper .animatedGradientTitle::after {
+  display: none; /* Sembunyikan garis bawah individu */
+}
+.sectionTitle > .titleWrapper + p {
+  margin-top: 2rem; /* Beri jarak ke deskripsi */
+}
+
 /* ============================================= */
 /* --- Sidebar & Controls --- */
 /* ============================================= */
@@ -229,7 +247,7 @@
 }
 
 /* ======================================================= */
-/* --- Pagination (Final dengan UX & Animasi Lengkap) --- */
+/* --- Pagination --- */
 /* ======================================================= */
 .pagination {
   display: flex;
@@ -238,7 +256,6 @@
   gap: 0.5rem;
   flex-wrap: wrap;
 }
-
 .navButton,
 .pageButton {
   border: 1px solid #333;
@@ -255,15 +272,12 @@
   height: 38px;
   padding: 0;
 }
-
 .navButton svg {
   font-size: 1rem;
 }
-
 .pageButton {
   min-width: 38px;
 }
-
 .navButton:hover:not(:disabled),
 .pageButton:hover:not(.activePage) {
   background-color: #bb86fc;
@@ -272,7 +286,6 @@
   transform: scale(1.08);
   box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
 }
-
 .activePage {
   background-color: #03dac6;
   color: #121212;
@@ -280,18 +293,15 @@
   transform: scale(1.1);
   box-shadow: 0 0 10px rgba(3, 218, 198, 0.7);
 }
-
 .navButton:disabled {
   opacity: 0.3;
   cursor: not-allowed;
 }
-
 .goToPageForm {
   display: flex;
-  justify-content: center; /* <<< Pusatkan form input */
+  justify-content: center;
   margin-top: 1rem;
 }
-
 .pageInputContainer {
   display: flex;
   align-items: center;
@@ -302,23 +312,19 @@
   border-radius: 8px;
   color: #a0a0a0;
   transition: all 0.2s ease-in-out;
-  width: auto; /* <<< Jangan memanjang penuh */
+  width: auto;
 }
-
 .pageInputContainer:focus-within {
   border-color: #03dac6;
   box-shadow: 0 0 10px rgba(3, 218, 198, 0.2);
 }
-
 .pageInputContainer span {
   font-size: 0.9rem;
   font-weight: 500;
 }
-
 .totalPagesText {
   color: #ccc;
 }
-
 .paginationInput {
   width: 45px;
   background-color: transparent;
@@ -329,26 +335,18 @@
   padding: 0.3rem 0;
   -moz-appearance: textfield;
 }
-
 .paginationInput::placeholder {
   color: #666;
   font-weight: bold;
 }
-
 .paginationInput:focus {
   outline: none;
   color: #03dac6;
 }
-
 .paginationInput::-webkit-outer-spin-button,
 .paginationInput::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-/* Tombol Go sudah dihapus dari JSX, jadi stylenya bisa dihapus jika mau */
-.goToButton {
-  display: none;
 }
 
 /* ============================================= */
@@ -565,5 +563,14 @@
   }
   .pagination {
     justify-content: center;
+  }
+  /* --- [PERUBAHAN] Aturan untuk memecah judul di mobile --- */
+  .titleWrapper {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  .titleWrapper .animatedGradientTitle {
+    font-size: clamp(2rem, 8vw, 2.4rem);
   }
 }
