@@ -1,5 +1,7 @@
+//
 // 📁 src/components/PortofolioSection/PortofolioSection.tsx
-// (Versi Final dengan Default Urutan Berdasarkan Tahun Terbaru)
+// (Versi Final dengan Judul Center, Dropdown Tahun, & Cursor Pointer)
+//
 "use client";
 
 import React, { FC, useState, useMemo } from "react";
@@ -8,7 +10,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import Slider from "react-slick";
 
-import { BsArrowUpRightCircle, BsSearch } from "react-icons/bs";
+import { BsArrowUpRightCircle } from "react-icons/bs";
 import { FaChevronLeft, FaChevronRight, FaCalendarAlt } from "react-icons/fa";
 
 import { portofolios, techIconMap, iconColors } from "@/data/portfolioData";
@@ -28,14 +30,17 @@ const letterVariants: Variants = {
     transition: { ease: "easeOut", duration: 0.5 },
   },
 };
+
 const titleContainerVariants: Variants = {
   visible: {
     transition: { staggerChildren: 0.04 },
   },
 };
+
 interface AnimatedTitleProps {
   text: string;
 }
+
 const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   const letters = Array.from(text);
   return (
@@ -57,6 +62,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
 };
 
 const ITEMS_PER_PAGE = 6;
+
 const filterCategories: Category[] = [
   "All",
   "Frontend",
@@ -97,7 +103,6 @@ const PrevArrow = (props: ArrowProps) => {
 const PortofolioSection: FC = () => {
   const [activeFilter, setActiveFilter] = useState<Category>("All");
   const [activeYear, setActiveYear] = useState<number | "All">("All");
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   const yearFilterOptions: (number | "All")[] = useMemo(() => {
@@ -106,43 +111,19 @@ const PortofolioSection: FC = () => {
     return ["All", ...years];
   }, []);
 
-  // --- [BARU] Urutkan portofolio berdasarkan tahun (terbaru dulu) sebagai dasar ---
-  const sortedPortofolios = useMemo(() => {
-    // Buat salinan agar tidak mengubah array asli dan urutkan
-    return [...portofolios].sort((a, b) => b.year - a.year);
-  }, []); // Hanya dijalankan sekali karena portofolios tidak berubah
-
-  // --- Logika filter terpadu untuk search, kategori, dan tahun ---
   const filteredPortofolios = useMemo(() => {
-    // [DIUBAH] Mulai dari data yang sudah diurutkan, bukan data asli
-    let filtered = sortedPortofolios;
+    let filtered = portofolios;
 
-    // 1. Filter berdasarkan Search Term
-    if (searchTerm) {
-      filtered = filtered.filter(
-        (p) =>
-          p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          p.description_short
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          p.technologies.some((t) =>
-            t.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-      );
-    }
-
-    // 2. Filter berdasarkan Kategori
     if (activeFilter !== "All") {
       filtered = filtered.filter((p) => p.category === activeFilter);
     }
 
-    // 3. Filter berdasarkan Tahun
     if (activeYear !== "All") {
       filtered = filtered.filter((p) => p.year === activeYear);
     }
 
     return filtered;
-  }, [sortedPortofolios, activeFilter, activeYear, searchTerm]); // [DIUBAH] Tambahkan sortedPortofolios sebagai dependency
+  }, [activeFilter, activeYear]);
 
   const totalPages = Math.ceil(filteredPortofolios.length / ITEMS_PER_PAGE);
   const paginatedPortofolios = filteredPortofolios.slice(
@@ -155,14 +136,12 @@ const PortofolioSection: FC = () => {
     setCurrentPage(1);
   };
 
+  // --- PERUBAHAN 1: Handler baru untuk dropdown tahun ---
   const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setActiveYear(value === "All" ? "All" : Number(value));
-    setCurrentPage(1);
-  };
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    // Nilai dari <select> selalu string, jadi kita konversi jika itu bukan "All"
+    const newYear = value === "All" ? "All" : Number(value);
+    setActiveYear(newYear);
     setCurrentPage(1);
   };
 
@@ -173,71 +152,55 @@ const PortofolioSection: FC = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3500,
+    autoplaySpeed: 3000,
     fade: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     dotsClass: styles.customDotsContainer,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     customPaging: (_i: number) => <div className={styles.customPagingDot} />,
   };
 
-  // ... sisa dari return JSX tidak ada perubahan ...
   return (
     <section id="portofolio" className={styles.portofolioSection}>
       <div className="page-container">
+        {/* --- PERUBAHAN 2: Wrapper div untuk menengahkan judul --- */}
         <div className={styles.titleContainer}>
-          {/* ... motion.div untuk judul ... */}
           <motion.div
             initial={{ opacity: 0, y: -30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: "circOut" }}
+            transition={{ duration: 0.6 }}
           >
             <AnimatedTitle text="My Portofolio" />
           </motion.div>
         </div>
 
-        {/* --- Panel Kontrol --- */}
-        <motion.div
-          className={styles.controlsPanel}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          {/* ... filter buttons ... */}
-          <div className={styles.filterGroup}>
+        {/* --- Filter Kategori --- */}
+        <div className={styles.filterWrapper}>
+          <div className={styles.filterContainer}>
             {filterCategories.map((category) => (
-              <button
+              <motion.button
                 key={category}
                 onClick={() => handleFilterClick(category)}
                 className={`${styles.filterButton} ${
                   activeFilter === category ? styles.active : ""
                 }`}
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 {category}
-              </button>
+              </motion.button>
             ))}
           </div>
-          {/* ... search & year dropdown ... */}
-          <div className={styles.searchAndYearContainer}>
-            <div className={styles.searchContainer}>
-              <input
-                type="text"
-                placeholder="Search project or tech..."
-                className={styles.searchInput}
-                value={searchTerm}
-                onChange={handleSearchChange}
-              />
-              <BsSearch className={styles.searchIcon} />
-            </div>
 
+          {/* --- PERUBAHAN 3: UI untuk Filter Tahun diubah menjadi Dropdown --- */}
+          <div className={styles.dropdownWrapper}>
             <select
               id="year-filter"
               className={styles.yearDropdown}
               value={activeYear}
               onChange={handleYearChange}
-              aria-label="Filter by year"
             >
               {yearFilterOptions.map((year) => (
                 <option key={year} value={year}>
@@ -246,28 +209,20 @@ const PortofolioSection: FC = () => {
               ))}
             </select>
           </div>
-        </motion.div>
+        </div>
 
-        {/* --- Grid & Cards --- */}
         <AnimatePresence mode="wait">
           <motion.div className={styles.portofolioGrid} layout>
             {paginatedPortofolios.map((portofolio) => (
               <motion.div
                 key={`${portofolio.id}-${portofolio.title}`}
                 layout
-                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -50 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
                 className={styles.cardWrapper}
-                style={
-                  {
-                    "--glow-color":
-                      iconColors[portofolio.technologies[0]] || "#03dac6",
-                  } as React.CSSProperties
-                }
               >
-                {/* ... Card Content ... */}
                 <div className={styles.portofolioCard}>
                   <Slider {...sliderSettings} className={styles.carousel}>
                     {portofolio.imageUrls.map((url, index) => (
@@ -278,11 +233,11 @@ const PortofolioSection: FC = () => {
                           fill
                           className={styles.carouselImage}
                           style={{ objectFit: "cover" }}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       </div>
                     ))}
                   </Slider>
+
                   <div className={styles.portofolioContent}>
                     <div className={styles.header}>
                       <div className={styles.metaInfo}>
@@ -295,20 +250,17 @@ const PortofolioSection: FC = () => {
                       </div>
                       <h3>{portofolio.title}</h3>
                     </div>
+
                     <p>{portofolio.description_short}</p>
+
                     <div className={styles.technologies}>
-                      {portofolio.technologies.slice(0, 7).map((tech) => {
+                      {portofolio.technologies.map((tech) => {
                         const Icon = techIconMap[tech] || "span";
                         return (
                           <div
                             key={tech}
                             className={styles.techIcon}
                             title={tech}
-                            style={
-                              {
-                                "--glow-color": iconColors[tech] || "#888",
-                              } as React.CSSProperties
-                            }
                           >
                             <Icon
                               style={{ color: iconColors[tech] || "#a0a0a0" }}
@@ -317,6 +269,7 @@ const PortofolioSection: FC = () => {
                         );
                       })}
                     </div>
+
                     <div className={styles.portofolioLinks}>
                       <Link
                         href={`/portofolio/${portofolio.id}`}
@@ -334,8 +287,7 @@ const PortofolioSection: FC = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* --- No Results & Pagination --- */}
-        {filteredPortofolios.length === 0 && (
+        {paginatedPortofolios.length === 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -344,6 +296,7 @@ const PortofolioSection: FC = () => {
             <p>Oops! No projects found for this filter combination.</p>
           </motion.div>
         )}
+
         {totalPages > 1 && (
           <motion.div
             className={styles.paginationContainer}
