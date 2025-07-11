@@ -1,46 +1,150 @@
-/* src/components/ResumeSection/ResumeSection.module.css */
+/* 📁 src/components/ResumeSection/ResumeSection.module.css */
+/* [REVISI PROFESIONAL] Desain Ulang dengan Highlight Interaktif & Gradien Timeline */
 
-.resumeSection {
-  padding: 5rem 0;
-  background-color: var(--background-color, #121212);
-  position: relative;
+:root {
+  --glow-purple: #a855f7;
+  --glow-cyan: #22d3ee;
+  --bg-dark-navy: #020617; /* Tetap didefinisikan jika dibutuhkan di tempat lain */
+  --bg-card: rgba(15, 23, 42, 0.6);
+  --border-color: rgba(55, 65, 81, 0.7);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 }
 
+.resumeSection {
+  padding: 6rem 0;
+  /* [PERBAIKAN] Background color dihapus sesuai permintaan */
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- EFEK LATAR BELAKANG (Tidak berubah) --- */
+.resumeSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(203, 213, 225, 0.08) 1px,
+    transparent 0
+  );
+  background-size: 2rem 2rem;
+  mask-image: linear-gradient(to bottom, white, white, transparent);
+  z-index: 0;
+}
+
+.resumeSection::after {
+  content: "";
+  position: absolute;
+  width: 800px;
+  height: 600px;
+  top: 50%;
+  left: 50%;
+  background-image: radial-gradient(
+      circle at center,
+      var(--glow-purple),
+      transparent 60%
+    ),
+    radial-gradient(circle at center, var(--glow-cyan), transparent 60%);
+  background-size: 100% 100%, 80% 80%;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+  animation: aurora 25s linear infinite;
+  opacity: 0.1;
+  filter: blur(100px);
+  z-index: 0;
+}
+
+@keyframes aurora {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+  }
+}
+
+@keyframes cardShimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+/* --- Judul Section (Tidak berubah) --- */
 .sectionTitle {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   position: relative;
   z-index: 1;
 }
 
 .sectionTitle p {
-  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
-  color: var(--default-color);
-  opacity: 0.8;
+  color: var(--text-secondary);
 }
 
-/* --- Filter Buttons Keren --- */
+.animatedGradientTitle {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  position: relative;
+  padding-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  background: linear-gradient(90deg, #a855f7 0%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent; /* [PERBAIKAN] Menggunakan color transparent untuk kompatibilitas */
+  -webkit-text-fill-color: transparent;
+}
+
+.animatedGradientTitle::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: var(--glow-purple);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  opacity: 0.8;
+  box-shadow: 0 0 15px var(--glow-purple);
+}
+
+/* --- Filter Buttons (Tidak berubah) --- */
 .filterContainer {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 4rem;
-  background-color: rgba(255, 255, 255, 0.05);
+  margin-bottom: 3rem;
+  background-color: rgba(15, 23, 42, 0.7);
   padding: 0.5rem;
   border-radius: 50px;
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+  position: relative;
+  z-index: 2;
 }
 
 .filterButton {
   padding: 0.75rem 1.75rem;
   border: none;
   background-color: transparent;
-  color: #ccc;
+  color: var(--text-secondary);
   border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
@@ -52,263 +156,223 @@
   position: relative;
   z-index: 2;
 }
-
 .filterButton.active .filterButtonText {
-  color: var(--hero-background-dark, #121212);
+  color: var(--text-primary);
 }
-
 .activePill {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    var(--hero-accent-color),
-    var(--hero-highlight-color)
-  );
+  background: linear-gradient(to right, #a855f7, #2563eb);
   border-radius: 50px;
   z-index: 1;
 }
 
-/* --- Timeline Container & Spine --- */
-.timelineContainer {
+/* --- Skill Highlighter (Tidak berubah) --- */
+.skillHighlighterSection {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 1.5rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
-  max-width: 900px;
-  margin: 0 auto;
+  z-index: 2;
 }
 
-.timelineContainer::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 4px;
-  margin-left: -2px;
+.skillTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #cbd5e1;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.skillContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.skillButton {
+  padding: 0.5rem 1.25rem;
+  background-color: #1e293b;
+  color: var(--text-secondary);
+  border: 1px solid #374151;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.skillButton:hover {
+  background-color: var(--glow-purple);
+  color: #fff;
+  border-color: var(--glow-purple);
+  box-shadow: 0 0 15px var(--glow-purple);
+}
+
+/* --- [PERBAIKAN BESAR] Timeline --- */
+.timelineWrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* [PERBAIKAN] Memberi warna gradien pada garis utama timeline */
+:global(.vertical-timeline::before) {
   background: linear-gradient(
     to bottom,
-    var(--hero-accent-color),
-    var(--hero-highlight-color)
-  );
-  border-radius: 2px;
+    var(--glow-purple),
+    var(--glow-cyan)
+  ) !important;
+  opacity: 0.3;
 }
 
-/* --- Timeline Item (Card) --- */
-.timelineItem {
-  padding: 10px 40px;
+.timelineCard {
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.timelineCard.dimmed {
+  opacity: 0.25;
+  transform: scale(0.97);
+}
+
+/* [FITUR BARU] Efek highlight pada kartu yang cocok dengan skill */
+.timelineCard.highlighted {
+  transform: scale(1.02);
+}
+
+.timelineCard.highlighted .cardContent::before {
+  opacity: 1; /* Membuat glowing border menyala */
+}
+
+/* --- [PERBAIKAN] Card Content --- */
+.cardContent {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  padding: 2rem;
   position: relative;
-  width: 50%;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid transparent;
 }
 
-/* Posisi item kiri & kanan */
-.timelineItem.left {
-  left: 0;
-  padding-right: 70px;
-  text-align: right;
-}
-
-.timelineItem.right {
-  left: 50%;
-  padding-left: 70px;
-}
-
-/* --- Ikon di Tengah Timeline --- */
-.timelineIcon {
+.cardContent::before {
+  content: "";
   position: absolute;
-  top: 25px;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: var(--background-color);
-  border: 4px solid var(--hero-highlight-color);
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  color: var(--hero-highlight-color);
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(145deg, var(--glow-cyan), var(--glow-purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
 }
 
-.timelineItem.left .timelineIcon {
-  right: -25px; /* (50px / 2) */
+.cardContent:hover::before {
+  opacity: 1;
 }
 
-.timelineItem.right .timelineIcon {
-  left: -25px; /* (50px / 2) */
-}
-
-/* --- Konten di dalam Card --- */
-.timelineContent {
-  padding: 20px 30px;
-  background: var(--surface-color);
-  position: relative;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Tambah box-shadow default */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden; /* Penting untuk efek pseudo-element */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Efek "bayangan kaca" */
-.timelineContent::before {
+.cardContent::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
+  left: -150%;
+  width: 75%;
   height: 100%;
-  background: linear-gradient(
-    135deg,
-    rgba(245, 245, 245, 0.1) 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    rgba(255, 255, 255, 0.1) 100%
-  );
   transform: skewX(-25deg);
-  transition: left 0.6s ease-in-out;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
 }
 
-.timelineItem:hover .timelineContent {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(9, 255, 161, 0.2); /* Box-shadow lebih kuat saat hover */
+.cardContent:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-/* Animasi "bayangan kaca" saat hover */
-.timelineItem:hover .timelineContent::before {
-  left: 150%;
+.cardContent:hover::after {
+  animation: cardShimmer 1.5s ease-out;
 }
 
-.duration {
-  display: inline-block;
-  padding: 5px 15px;
-  background: color-mix(in srgb, var(--accent-color), transparent 85%);
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--accent-color);
-  margin-bottom: 10px;
+/* --- Styling Teks & List di dalam Kartu (Tidak berubah) --- */
+.cardTitle {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
 }
 
-.timelineContent h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--heading-color);
-  margin: 10px 0;
+.cardSubtitle {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
+  margin-top: 0.5rem !important;
 }
 
-.timelineContent h4 {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--default-color);
-  opacity: 0.8;
-  margin-bottom: 10px;
+:global(.vertical-timeline-element-content .vertical-timeline-element-date) {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
 }
-
-.timelineContent p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--default-color);
-  opacity: 0.9;
-}
-
-.animatedGradientTitle {
-  font-size: clamp(2.2rem, 5vw, 2.8rem);
-  font-weight: 800;
-  position: relative;
-  padding-bottom: 20px;
-  margin-bottom: 15px;
-  font-family: var(--font-jetbrains, sans-serif);
-  display: inline-block;
-
-  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
-  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
-  background-size: 200% auto;
-  color: #fff;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientFlow 5s linear infinite;
-}
-
-/* Underline untuk judul */
-.animatedGradientTitle::after {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 80px;
-  height: 5px;
-  background: #c427c9; /* Warna underline juga di-hardcode */
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 3px;
-  opacity: 0.8;
-}
-/* Tambahkan ini di akhir file ResumeSection.module.css Anda */
 
 .descriptionList {
-  padding-left: 20px; /* Memberi sedikit indentasi pada list */
-  margin-top: 10px;
-  text-align: left; /* Memastikan teks di list selalu rata kiri */
-  color: var(--default-color);
-  opacity: 0.9;
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1.25rem;
+  text-align: left;
+  color: var(--text-secondary);
 }
 
 .descriptionList li {
-  margin-bottom: 8px; /* Memberi jarak antar poin */
+  margin-bottom: 0.5rem;
   line-height: 1.6;
   font-size: 0.95rem;
+  position: relative;
+  padding-left: 25px;
 }
 
-.descriptionList li::marker {
-  color: var(--accent-color); /* Mengubah warna bullet point agar keren */
+.descriptionList li::before {
+  content: "▹";
+  color: var(--glow-cyan);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
-/* Keyframes untuk gradasi bergerak */
-@keyframes gradientFlow {
-  0% {
-    background-position: 200% center;
+/* --- Responsive (Tidak berubah) --- */
+@media (max-width: 1170px) {
+  :global(.vertical-timeline-element-date) {
+    display: block !important;
+    position: static !important;
+    margin-top: 0.5rem !important;
+    order: -1;
   }
-  100% {
-    background-position: 0% center;
+
+  /* [PERBAIKAN RESPONSIVE] Menyesuaikan skala highlight di mobile */
+  .timelineCard.highlighted {
+    transform: scale(1.01);
   }
 }
 
-/* --- Desain Responsif untuk Mobile --- */
-@media (max-width: 991px) {
-  /* [PERBAIKAN] Tambahkan aturan untuk filter agar bisa wrap */
+@media (max-width: 767px) {
   .filterContainer {
     flex-wrap: wrap;
-    width: auto; /* Izinkan container menyesuaikan lebar */
+    width: auto;
     padding: 0.5rem 1rem;
-  }
-
-  .timelineContainer::before {
-    left: 30px; /* Garis timeline pindah ke kiri */
-  }
-
-  .timelineItem {
-    width: 100%;
-    padding-left: 70px; /* Semua item diberi padding kiri (dikurangi sedikit) */
-    padding-right: 15px;
-    text-align: left; /* Semua item rata kiri */
-  }
-
-  /* [PERBAIKAN UTAMA] Paksa lebar kartu konten jadi 100% */
-  .timelineContent {
-    width: 100%;
-  }
-
-  .timelineItem.left,
-  .timelineItem.right {
-    padding-right: 0;
-    left: 0; /* Reset posisi */
-  }
-
-  .timelineIcon {
-    left: 5px; /* Posisi ikon di atas garis */
-  }
-
-  .timelineItem.left .timelineIcon,
-  .timelineItem.right .timelineIcon {
-    left: 5px;
   }
 }

@@ -44,6 +44,7 @@
 .gridAndEmptyStateWrapper {
   flex: 1;
   position: relative;
+  min-width: 0; /* Penting agar item flex dapat menyusut dengan benar */
 }
 
 /* ============================================= */
@@ -86,22 +87,21 @@
     background-position: 0% center;
   }
 }
-
 .titleWrapper {
-  display: inline-flex; /* Di desktop, judul akan sejajar */
+  display: inline-flex;
   gap: 1rem;
   align-items: center;
   justify-content: center;
 }
 .titleWrapper .animatedGradientTitle {
-  margin-bottom: 0; /* Hapus margin bawah dari judul individu */
+  margin-bottom: 0;
   padding-bottom: 0;
 }
 .titleWrapper .animatedGradientTitle::after {
-  display: none; /* Sembunyikan garis bawah individu */
+  display: none;
 }
 .sectionTitle > .titleWrapper + p {
-  margin-top: 2rem; /* Beri jarak ke deskripsi */
+  margin-top: 2rem;
 }
 
 /* ============================================= */
@@ -333,6 +333,7 @@
   text-align: center;
   padding: 0.3rem 0;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 .paginationInput::placeholder {
   color: #666;
@@ -349,7 +350,7 @@
 }
 
 /* ============================================= */
-/* --- Certification Grid & Card --- */
+/* --- Certification Grid & Card (Efek 3D) --- */
 /* ============================================= */
 .certificationGrid {
   display: grid;
@@ -448,7 +449,7 @@
   color: #ffffff;
   line-height: 1.4;
   margin-bottom: 1rem;
-  min-height: 55px;
+  min-height: 55px; /* Menjaga tinggi konsisten */
 }
 .technologies {
   display: flex;
@@ -505,13 +506,14 @@
 }
 
 /* ============================================= */
-/* --- [BARU] Skeleton Loader Styles --- */
+/* --- Skeleton Loader Styles --- */
 /* ============================================= */
 .skeletonWrapper {
   pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
 }
 .skeletonElement {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: #2a2a2e;
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -526,10 +528,10 @@
   background: linear-gradient(
     to right,
     transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.08) 50%,
     transparent 100%
   );
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 2.5s infinite;
 }
 @keyframes shimmer {
   100% {
@@ -538,7 +540,7 @@
 }
 .skeletonIssuer {
   width: 60%;
-  height: 18px;
+  height: 16px;
   margin-bottom: 0.75rem;
 }
 .skeletonTitle {
@@ -548,23 +550,24 @@
 }
 .skeletonTitleShort {
   width: 70%;
+  height: 20px;
 }
 .skeletonTechIcon {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
 }
 .skeletonDate {
-  width: 120px;
-  height: 16px;
+  width: 40%;
+  height: 14px;
 }
 .skeletonLink {
-  width: 80px;
-  height: 16px;
+  width: 30%;
+  height: 14px;
 }
 
 /* ============================================= */
-/* --- Modal (dengan Scroll) & Responsive --- */
+/* --- Modal & Responsive --- */
 /* ============================================= */
 .modalOverlay {
   position: fixed;
@@ -601,14 +604,17 @@
 @media (max-width: 991px) {
   .mainContentLayout {
     flex-direction: column;
+    align-items: stretch; /* [PERBAIKAN KUNCI] Memastikan item (sidebar & grid) meregang penuh */
   }
   .controlsSidebar {
     position: static;
     width: 100%;
-    flex: 1;
+    flex: 1 0 auto;
   }
 }
+
 @media (max-width: 767px) {
+  /* [PERBAIKAN FINAL] Menggunakan grid-template-columns: 1fr untuk memastikan lebar penuh */
   .certificationGrid {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -622,7 +628,6 @@
   .pagination {
     justify-content: center;
   }
-  /* --- [PERUBAHAN] Aturan untuk memecah judul di mobile --- */
   .titleWrapper {
     flex-direction: column;
     gap: 0.5rem;

@@ -1,5 +1,5 @@
 // 📁 src/components/CertificationSection/CertificationSection.tsx
-// (Final dengan Loading Skeleton & Judul Responsif)
+// (Data telah dipisah)
 
 "use client";
 
@@ -47,17 +47,12 @@ import {
 import { GrCertificate } from "react-icons/gr";
 
 import styles from "./CertificationSection.module.css";
+// [BARU] Impor data dan tipe dari file terpisah
+import { certificationsData, Certification } from "@/data/certificationData";
 
-// --- Tipe Data & Data lainnya (tidak ada perubahan) ---
-interface Certification {
-  id: number;
-  title: string;
-  issuer: string;
-  date: string;
-  imageUrl: string;
-  technologies: string[];
-  credentialUrl?: string;
-}
+// --- Hapus 'interface Certification' dan 'const certificationsData' dari sini ---
+
+// --- Mapping Ikon (tidak ada perubahan) ---
 const techIconMap: { [key: string]: React.ElementType } = {
   React: DiReact,
   "React Native": DiReact,
@@ -110,178 +105,10 @@ const iconColors: { [key: string]: string } = {
   C: "#a8b9cc",
   Cybersecurity: "#00aaff",
 };
-const certificationsData: Certification[] = [
-  {
-    id: 1,
-    title: "Fullstack Developer Bootcamp",
-    issuer: "Enigma Camp",
-    date: "2024-03-07",
-    imageUrl: "/images/certificate/sertif-11.jpg",
-    technologies: [
-      "Java",
-      "Spring Boot",
-      "React",
-      "React Native",
-      "PostgreSQL",
-      "Docker",
-      "Git",
-      "Linux",
-    ],
-    credentialUrl:
-      "https://drive.google.com/file/d/1mnrdBcbuaUprA3dzi2roEhyIHlkVlpAG/view",
-  },
-  {
-    id: 2,
-    title: "Fullstack Web Development",
-    issuer: "Kampus Merdeka - Binar Academy",
-    date: "2022-07-15",
-    imageUrl: "/images/certificate/sertif-3.jpg",
-    technologies: [
-      "React",
-      "Next.js",
-      "Express",
-      "PostgreSQL",
-      "Git",
-      "Postman",
-      "Bootstrap",
-    ],
-    credentialUrl:
-      "https://drive.google.com/file/d/1hrACsuGgTASxt-AibVQPgxTxQPN4l1bN/view",
-  },
-  {
-    id: 3,
-    title: "Competency in Fullstack Development",
-    issuer: "PT Nurul Fikri Cipta Inovasi",
-    date: "2022-12-31",
-    imageUrl: "/images/certificate/sertif-1.jpg",
-    technologies: [
-      "PHP",
-      "Laravel",
-      "React",
-      "MySQL",
-      "Bootstrap",
-      "Figma",
-      "Javascript",
-    ],
-    credentialUrl:
-      "https://drive.google.com/file/d/1HwAh40LaieCwo0VM1vvEiHM36Jv-Oe33/view",
-  },
-  {
-    id: 4,
-    title: "Official Training Completion",
-    issuer: "PT Nurul Fikri Cipta Inovasi",
-    date: "2022-12-31",
-    imageUrl: "/images/certificate/sertif-2.jpg",
-    technologies: ["Laravel", "PHP", "MySQL", "Git"],
-    credentialUrl:
-      "https://drive.google.com/file/d/1ofzEX2MeQ3b7fWRivA0s87K08e7VzOGM/view",
-  },
-  {
-    id: 5,
-    title: "Certified Junior Web Developer",
-    issuer: "Kominfo - Digital Talent Scholarship",
-    date: "2022-08-23",
-    imageUrl: "/images/certificate/sertif-4.jpg",
-    technologies: ["HTML5", "CSS3", "Javascript", "PHP", "Laravel", "MySQL"],
-    credentialUrl:
-      "https://drive.google.com/file/d/1vY2ull3GnSdIgdTKP0ecxvZdCgkgY5H-/view",
-  },
-  {
-    id: 6,
-    title: "Frontend Development Basics",
-    issuer: "Altera Academy",
-    date: "2022-08-23",
-    imageUrl: "/images/certificate/sertif-5.jpg",
-    technologies: [
-      "HTML5",
-      "CSS3",
-      "Javascript",
-      "React",
-      "Bootstrap",
-      "Git",
-      "Figma",
-    ],
-    credentialUrl:
-      "https://drive.google.com/file/d/1yZ6U-n3bOhlS3L1tjVeXMPx44rJ_Hq-j/view",
-  },
-  {
-    id: 7,
-    title: "Version Control with Git & GitHub",
-    issuer: "Dicoding",
-    date: "2021-09-06",
-    imageUrl: "/images/certificate/sertif-6.jpg",
-    technologies: ["Git", "GitHub"],
-    credentialUrl: "https://www.dicoding.com/certificates/0LZ036K1NZ65",
-  },
-  {
-    id: 8,
-    title: "Certified Secure Computer User (CSCU)",
-    issuer: "EC-Council",
-    date: "2021-10-04",
-    imageUrl: "/images/certificate/sertif-7.jpg",
-    technologies: ["Cybersecurity", "Linux"],
-    credentialUrl:
-      "https://drive.google.com/file/d/13BwL6HmJ83x26EiWLmmY97ZBuxlYKx4b/view",
-  },
-  {
-    id: 9,
-    title: "SQL Fundamentals",
-    issuer: "Progate",
-    date: "2021-09-08",
-    imageUrl: "/images/certificate/sertif-8.png",
-    technologies: ["MySQL", "PostgreSQL"],
-    credentialUrl: "https://progate.com/course_certificate/b1cb891bqz3qwh",
-  },
-  {
-    id: 10,
-    title: "Security Awareness Essentials",
-    issuer: "Kominfo",
-    date: "2021-09-08",
-    imageUrl: "/images/certificate/sertif-9.jpg",
-    technologies: ["Cybersecurity"],
-    credentialUrl:
-      "https://drive.google.com/file/d/136IZniCl2qqh30kY2L5MoRP2GqL12Gxs/view",
-  },
-  {
-    id: 11,
-    title: "Junior Web Developer National License",
-    issuer: "BNSP (National Agency for Professional Certification)",
-    date: "2022-10-08",
-    imageUrl: "/images/certificate/sertif-10.jpg",
-    technologies: ["HTML5", "CSS3", "Javascript", "PHP", "MySQL"],
-    credentialUrl:
-      "https://drive.google.com/file/d/1fwHp4YaFijjNTCfh1VoX2Ta3AwsC2IiL/view",
-  },
-  {
-    id: 12,
-    title: "Cloud Practitioner Essentials",
-    issuer: "Dicoding",
-    date: "2022-09-08",
-    imageUrl: "/images/certificate/sertif-12.jpg",
-    technologies: ["AWS"],
-    credentialUrl: "https://www.dicoding.com/certificates/NVP71J1ROPR0",
-  },
-  {
-    id: 13,
-    title: "Introduction to Java Programming",
-    issuer: "Dicoding",
-    date: "2022-09-08",
-    imageUrl: "/images/certificate/sertif-14.jpg",
-    technologies: ["Java"],
-    credentialUrl: "https://www.dicoding.com/certificates/4EXG6KD4QZRL",
-  },
-  {
-    id: 14,
-    title: "Introduction to C Programming",
-    issuer: "Dicoding",
-    date: "2022-08-08",
-    imageUrl: "/images/certificate/sertif-15.jpg",
-    technologies: ["C"],
-    credentialUrl: "https://www.dicoding.com/certificates/GRX5KQ603Z0M",
-  },
-];
+
 const ITEMS_PER_PAGE = 4;
 
+// ... sisa kode komponen tetap sama persis seperti sebelumnya ...
 const generateSlidingPageNumbers = (
   totalPages: number,
   currentPage: number
@@ -319,13 +146,11 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => (
     whileInView="visible"
     viewport={{ once: true, amount: 0.8 }}
   >
-    {" "}
     {Array.from(text).map((letter, index) => (
       <motion.span key={index} variants={letterVariants}>
-        {" "}
-        {letter === " " ? "\u00A0" : letter}{" "}
+        {letter === " " ? "\u00A0" : letter}
       </motion.span>
-    ))}{" "}
+    ))}
   </motion.h2>
 );
 const gridContainerVariants: Variants = {
@@ -350,7 +175,6 @@ const sidebarGroupVariants: Variants = {
   visible: { opacity: 1, x: 0 },
 };
 
-// --- [BARU] Komponen Skeleton untuk Loading ---
 const SkeletonCard = () => (
   <div className={`${styles.cardWrapper} ${styles.skeletonWrapper}`}>
     <div className={styles.certificationCard}>
@@ -395,15 +219,14 @@ const CertificationSection: FC = () => {
   const [activeTechs, setActiveTechs] = useState<string[]>([]);
   const [techSearch, setTechSearch] = useState("");
   const [pageInput, setPageInput] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // <-- State untuk loading
+  const [isLoading, setIsLoading] = useState(true);
 
-  // --- [BARU] Efek untuk simulasi loading ---
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // Durasi loading 1.5 detik
+    }, 1500);
 
-    return () => clearTimeout(timer); // Cleanup timer
+    return () => clearTimeout(timer);
   }, []);
 
   const allTechs = useMemo(() => {
@@ -413,12 +236,14 @@ const CertificationSection: FC = () => {
     );
     return Array.from(techSet).sort();
   }, []);
+
   const displayTechs = useMemo(() => {
     if (!techSearch) return allTechs;
     return allTechs.filter((tech) =>
       tech.toLowerCase().includes(techSearch.toLowerCase())
     );
   }, [allTechs, techSearch]);
+
   const filteredCertifications = useMemo(() => {
     const techFiltered =
       activeTechs.length === 0
@@ -436,7 +261,9 @@ const CertificationSection: FC = () => {
         : dateA.getTime() - dateB.getTime();
     });
   }, [activeTechs, sortBy]);
+
   const totalPages = Math.ceil(filteredCertifications.length / ITEMS_PER_PAGE);
+
   const paginatedCertifications = filteredCertifications.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
@@ -450,10 +277,12 @@ const CertificationSection: FC = () => {
         ?.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(e.target.value as "Newest" | "Oldest");
     setCurrentPage(1);
   };
+
   const handleTechFilter = (tech: string) => {
     setActiveTechs((prevTechs) =>
       prevTechs.includes(tech)
@@ -462,10 +291,12 @@ const CertificationSection: FC = () => {
     );
     setCurrentPage(1);
   };
+
   const handleSelectAll = () => {
     setActiveTechs([]);
     setCurrentPage(1);
   };
+
   const handleGoToPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const pageNum = parseInt(pageInput, 10);
@@ -474,6 +305,7 @@ const CertificationSection: FC = () => {
       setPageInput("");
     }
   };
+
   const pageNumbers = generateSlidingPageNumbers(totalPages, currentPage);
 
   return (
@@ -497,7 +329,6 @@ const CertificationSection: FC = () => {
               whileInView="visible"
               viewport={{ once: true }}
             >
-              {/* Filter & Sort */}
               <motion.div
                 className={styles.controlGroup}
                 variants={sidebarGroupVariants}
@@ -512,9 +343,8 @@ const CertificationSection: FC = () => {
                     onChange={handleSortChange}
                     className={styles.sortSelect}
                   >
-                    {" "}
-                    <option value="Newest">Newest</option>{" "}
-                    <option value="Oldest">Oldest</option>{" "}
+                    <option value="Newest">Newest</option>
+                    <option value="Oldest">Oldest</option>
                   </select>
                 </div>
               </motion.div>
@@ -547,8 +377,7 @@ const CertificationSection: FC = () => {
                     whileHover={{ y: -2 }}
                     transition={{ type: "spring", stiffness: 400, damping: 15 }}
                   >
-                    {" "}
-                    All{" "}
+                    All
                   </motion.button>
                   {displayTechs.map((tech) => (
                     <motion.button
@@ -564,14 +393,12 @@ const CertificationSection: FC = () => {
                         damping: 15,
                       }}
                     >
-                      {" "}
-                      {tech}{" "}
+                      {tech}
                     </motion.button>
                   ))}
                 </div>
               </motion.div>
 
-              {/* Navigasi Halaman */}
               {totalPages > 1 && (
                 <motion.div
                   className={styles.controlGroup}
@@ -589,8 +416,7 @@ const CertificationSection: FC = () => {
                       whileHover={{ scale: currentPage > 1 ? 1.1 : 1 }}
                       whileTap={{ scale: currentPage > 1 ? 0.95 : 1 }}
                     >
-                      {" "}
-                      <FaAngleDoubleLeft />{" "}
+                      <FaAngleDoubleLeft />
                     </motion.button>
                     <motion.button
                       onClick={() => handlePageChange(currentPage - 1)}
@@ -600,8 +426,7 @@ const CertificationSection: FC = () => {
                       whileHover={{ scale: currentPage > 1 ? 1.1 : 1 }}
                       whileTap={{ scale: currentPage > 1 ? 0.95 : 1 }}
                     >
-                      {" "}
-                      <FaChevronLeft />{" "}
+                      <FaChevronLeft />
                     </motion.button>
                     {pageNumbers.map((page) => (
                       <motion.button
@@ -613,8 +438,7 @@ const CertificationSection: FC = () => {
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        {" "}
-                        {page}{" "}
+                        {page}
                       </motion.button>
                     ))}
                     <motion.button
@@ -625,8 +449,7 @@ const CertificationSection: FC = () => {
                       whileHover={{ scale: currentPage < totalPages ? 1.1 : 1 }}
                       whileTap={{ scale: currentPage < totalPages ? 0.95 : 1 }}
                     >
-                      {" "}
-                      <FaChevronRight />{" "}
+                      <FaChevronRight />
                     </motion.button>
                     <motion.button
                       onClick={() => handlePageChange(totalPages)}
@@ -636,8 +459,7 @@ const CertificationSection: FC = () => {
                       whileHover={{ scale: currentPage < totalPages ? 1.1 : 1 }}
                       whileTap={{ scale: currentPage < totalPages ? 0.95 : 1 }}
                     >
-                      {" "}
-                      <FaAngleDoubleRight />{" "}
+                      <FaAngleDoubleRight />
                     </motion.button>
                   </div>
                   <form
@@ -665,7 +487,6 @@ const CertificationSection: FC = () => {
               )}
             </motion.aside>
 
-            {/* --- [PERUBAHAN] Grid & Modal dengan Kondisi Loading --- */}
             <div className={styles.gridAndEmptyStateWrapper}>
               <AnimatePresence mode="wait">
                 {isLoading ? (
@@ -798,6 +619,7 @@ const CertificationSection: FC = () => {
           </div>
         </div>
       </section>
+
       <AnimatePresence>
         {selectedImage && (
           <motion.div
@@ -813,8 +635,7 @@ const CertificationSection: FC = () => {
               whileHover={{ scale: 1.2, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
-              {" "}
-              <FiXCircle />{" "}
+              <FiXCircle />
             </motion.button>
             <motion.div
               className={styles.modalContent}

@@ -1,11 +1,20 @@
+// 📁 src/components/ResumeSection/ResumeSection.tsx
+// Versi Unggul dengan Efek Highlight & Desain Profesional
+
 "use client";
 
-import React, { FC, useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { FaGraduationCap, FaBriefcase } from "react-icons/fa";
+import React, { FC, useState, useMemo } from "react";
+import { motion, Variants } from "framer-motion";
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
+import { FaGraduationCap, FaBriefcase, FaCode } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
+import { resumeData, ResumeItem } from "@/data/resumeData";
 
-// --- Animated Title Component ---
+// --- Animated Title Component (tidak berubah) ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -45,114 +54,28 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- Data Types & Categories ---
+// --- Data Types & Categories (tidak berubah) ---
 type Category = "All" | "Education" | "Experience";
-
-interface ResumeItem {
-  id: number;
-  type: "Education" | "Experience";
-  title: string;
-  institution: string;
-  duration: string;
-  description: string[]; // Mengubah deskripsi menjadi array of strings untuk bullet points
-}
-
-// --- Refined Resume Data ---
-const resumeData: ResumeItem[] = [
-  {
-    id: 1,
-    type: "Experience",
-    title: "Software Engineering Team Lead",
-    institution: "PT. Mekanika Digital Pratama",
-    duration: "Jun 2024 - Present",
-    description: [
-      "Led a team of developers in designing and deploying scalable web solutions.",
-      "Architected and developed key features using Laravel, React, .NET, and Node.js.",
-      "Conducted code reviews and mentored junior engineers to maintain high code quality.",
-    ],
-  },
-  {
-    id: 2,
-    type: "Experience",
-    title: "Fullstack Developer",
-    institution: "PT. Enigmacamp",
-    duration: "Nov 2023 - May 2024",
-    description: [
-      "Completed an intensive, project-based training focused on enterprise-level development.",
-      "Built and deployed several full-stack applications using Java Spring Boot and React.",
-      "Practiced Agile methodologies, including sprint planning and daily stand-ups.",
-    ],
-  },
-  {
-    id: 3,
-    type: "Experience",
-    title: "Freelance Fullstack Developer",
-    institution: "Self-Employed",
-    duration: "Jan 2023 - Present",
-    description: [
-      "Developed custom web solutions for various clients, from landing pages to e-commerce sites.",
-      "Managed the full project lifecycle: from client consultation to final deployment.",
-      "Specialized in creating responsive and performant applications with Laravel and React.",
-    ],
-  },
-  {
-    id: 4,
-    type: "Experience",
-    title: "Fullstack Web Developer",
-    institution: "PT. Nurul Fikri Cipta Inovasi",
-    duration: "Aug 2022 - Jan 2023",
-    description: [
-      "Developed and maintained modules for educational web platforms using Laravel.",
-      "Implemented new features and optimized database queries to improve performance.",
-      "Collaborated with the UI/UX team to integrate front-end designs using Blade templates.",
-    ],
-  },
-  {
-    id: 5,
-    type: "Experience",
-    title: "Fullstack Web Developer",
-    institution: "PT. Lentera Benderang",
-    duration: "Feb 2022 - Jun 2022",
-    description: [
-      "Contributed to building a company's core product with the Laravel framework.",
-      "Developed and integrated RESTful APIs for mobile and web client consumption.",
-      "Assisted in troubleshooting, bug fixing, and maintaining existing codebases.",
-    ],
-  },
-  {
-    id: 6,
-    type: "Education",
-    title: "Bachelor's Degree in Informatics Engineering",
-    institution: "Singaperbangsa Karawang University",
-    duration: "2019 - 2023",
-    description: [
-      "Graduated with a GPA of 3.97.",
-      "Focused on software development, database management, and web technologies.",
-      "Completed a final project on developing a web-based inventory management system.",
-    ],
-  },
-  {
-    id: 7,
-    type: "Education",
-    title: "High School Diploma, Science Major",
-    institution: "SMA Negeri 1 Cilamaya",
-    duration: "2016 - 2019",
-    description: [
-      "Focused on core subjects in Mathematics and Natural Sciences.",
-      "Gained foundational knowledge in basic programming and computer logic.",
-    ],
-  },
-];
-
 const filterCategories: Category[] = ["All", "Education", "Experience"];
 
 const ResumeSection: FC = () => {
   const [activeFilter, setActiveFilter] = useState<Category>("All");
+  const [highlightedSkill, setHighlightedSkill] = useState<string | null>(null);
 
   const filteredData = resumeData.filter((item) => {
     if (activeFilter === "All") return true;
     return item.type === activeFilter;
   });
+
+  const allSkills = useMemo(() => {
+    const skills = new Set<string>();
+    resumeData.forEach((item) => {
+      if (item.type === "Experience") {
+        item.skills.forEach((skill) => skills.add(skill));
+      }
+    });
+    return Array.from(skills).sort(); // [PERBAIKAN] Urutkan skill agar konsisten
+  }, []);
 
   return (
     <section id="resume" className={styles.resumeSection}>
@@ -170,7 +93,7 @@ const ResumeSection: FC = () => {
           </p>
         </motion.div>
 
-        {/* --- Filter Buttons --- */}
+        {/* --- Filter Buttons (tidak berubah) --- */}
         <div className={styles.filterContainer}>
           {filterCategories.map((category) => (
             <button
@@ -192,41 +115,77 @@ const ResumeSection: FC = () => {
           ))}
         </div>
 
-        {/* --- Timeline --- */}
-        <div className={styles.timelineContainer}>
-          <AnimatePresence>
-            {filteredData.map((item, index) => (
-              <motion.div
-                key={item.id} // Key sekarang unik dan benar
-                layout
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.5 }}
-                className={`${styles.timelineItem} ${
-                  index % 2 === 0 ? styles.left : styles.right
-                }`}
+        {/* --- Skill Highlighter (tidak berubah) --- */}
+        <div className={styles.skillHighlighterSection}>
+          <h3 className={styles.skillTitle}>
+            <FaCode /> Highlight Skills
+          </h3>
+          <div className={styles.skillContainer}>
+            {allSkills.map((skill) => (
+              <motion.button
+                key={skill}
+                className={styles.skillButton}
+                onMouseEnter={() => setHighlightedSkill(skill)}
+                onMouseLeave={() => setHighlightedSkill(null)}
+                whileHover={{ y: -3, scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
-                <div className={styles.timelineIcon}>
-                  {item.type === "Education" ? (
-                    <FaGraduationCap />
-                  ) : (
-                    <FaBriefcase />
-                  )}
-                </div>
-                <div className={styles.timelineContent}>
-                  <span className={styles.duration}>{item.duration}</span>
-                  <h3>{item.title}</h3>
-                  <h4>{item.institution}</h4>
-                  <ul className={styles.descriptionList}>
-                    {item.description.map((point, i) => (
-                      <li key={i}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
+                {skill}
+              </motion.button>
             ))}
-          </AnimatePresence>
+          </div>
+        </div>
+
+        {/* --- Timeline --- */}
+        <div className={styles.timelineWrapper}>
+          {/* [PERBAIKAN] Hapus prop lineColor agar bisa di-style di CSS dengan gradien */}
+          <VerticalTimeline>
+            {filteredData.map((item) => {
+              const isEducation = item.type === "Education";
+              const icon = isEducation ? <FaGraduationCap /> : <FaBriefcase />;
+
+              // [LOGIKA BARU] Tambahkan state 'isHighlighted'
+              const isHighlighted =
+                highlightedSkill && item.skills?.includes(highlightedSkill);
+              const isDimmed =
+                highlightedSkill && !item.skills?.includes(highlightedSkill);
+
+              return (
+                <VerticalTimelineElement
+                  key={item.id}
+                  className={`${styles.timelineCard} ${
+                    isDimmed ? styles.dimmed : ""
+                  } ${isHighlighted ? styles.highlighted : ""}`} // [PERBAIKAN] Terapkan class baru
+                  contentStyle={{
+                    background: "transparent",
+                    boxShadow: "none",
+                  }}
+                  contentArrowStyle={{ borderRight: "7px solid #374151" }}
+                  date={item.duration}
+                  iconStyle={{
+                    background: isEducation
+                      ? "linear-gradient(to top, #c026d3, #a21caf)"
+                      : "linear-gradient(to top, #2563eb, #1d4ed8)",
+                    color: "#fff",
+                    boxShadow: `0 0 25px ${
+                      isEducation ? "#c026d3" : "#2563eb"
+                    }`,
+                  }}
+                  icon={icon}
+                >
+                  <div className={styles.cardContent}>
+                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                    <h4 className={styles.cardSubtitle}>{item.institution}</h4>
+                    <ul className={styles.descriptionList}>
+                      {item.description.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </VerticalTimelineElement>
+              );
+            })}
+          </VerticalTimeline>
         </div>
       </div>
     </section>
