@@ -22,7 +22,6 @@ import {
 
 import styles from "./CommandPalette.module.css";
 
-// ✅ Props type
 interface CommandPaletteProps {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -35,9 +34,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const { setTheme } = useTheme();
   const router = useRouter();
 
-  const runCommand = (command: () => void) => {
+  const runCommand = (callback: () => void) => {
     setOpen(false);
-    command();
+    callback();
   };
 
   return (
@@ -54,7 +53,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             transition={{ duration: 0.2 }}
           />
 
-          {/* Dialog Wrapper */}
+          {/* Dialog Container */}
           <motion.div
             className={styles.dialogWrapper}
             initial={{ opacity: 0, scale: 0.98 }}
@@ -68,24 +67,24 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               label="Global Command Menu"
               className={styles.commandDialog}
             >
-              {/* ✅ Fix A11y: Tambahkan Dialog.Title dari Radix */}
+              {/* Accessible title for screen readers */}
               <Dialog.Title className={styles.commandTitle}>
                 Command Palette
               </Dialog.Title>
 
               <Command.Input
-                placeholder="Ketik perintah atau cari..."
+                placeholder="Type a command or search..."
                 className={styles.commandInput}
               />
 
               <Command.List className={styles.commandList}>
                 <Command.Empty className={styles.commandEmpty}>
-                  Tidak ada hasil yang ditemukan.
+                  No results found.
                 </Command.Empty>
 
-                {/* ➤ NAVIGASI */}
+                {/* === NAVIGATION === */}
                 <Command.Group
-                  heading="Navigasi"
+                  heading="Navigation"
                   className={styles.commandGroup}
                 >
                   <Command.Item
@@ -116,7 +115,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     className={styles.commandItem}
                   >
                     <FaBriefcase />
-                    <span>Portofolio</span>
+                    <span>Portfolio</span>
                   </Command.Item>
                   <Command.Item
                     onSelect={() =>
@@ -125,7 +124,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     className={styles.commandItem}
                   >
                     <FaCertificate />
-                    <span>Certification</span>
+                    <span>Certifications</span>
                   </Command.Item>
                   <Command.Item
                     onSelect={() => runCommand(() => router.push("/contact"))}
@@ -136,9 +135,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   </Command.Item>
                 </Command.Group>
 
-                {/* ➤ GANTI TEMA */}
+                {/* === THEME SWITCH === */}
                 <Command.Group
-                  heading="Ganti Tema"
+                  heading="Switch Theme"
                   className={styles.commandGroup}
                 >
                   <Command.Item
@@ -164,9 +163,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                   </Command.Item>
                 </Command.Group>
 
-                {/* ➤ SOSIAL MEDIA */}
+                {/* === SOCIAL MEDIA === */}
                 <Command.Group
-                  heading="Sosial Media"
+                  heading="Social Media"
                   className={styles.commandGroup}
                 >
                   <Command.Item
