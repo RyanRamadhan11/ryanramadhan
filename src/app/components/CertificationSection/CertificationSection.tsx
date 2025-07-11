@@ -48,7 +48,7 @@ import { GrCertificate } from "react-icons/gr";
 
 import styles from "./CertificationSection.module.css";
 // [BARU] Impor data dan tipe dari file terpisah
-import { certificationsData, Certification } from "@/data/certificationData";
+import { certificationsData } from "@/data/certificationData";
 
 // --- Hapus 'interface Certification' dan 'const certificationsData' dari sini ---
 

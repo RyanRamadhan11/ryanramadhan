@@ -1,25 +1,13 @@
 /* 📁 src/components/ResumeSection/ResumeSection.module.css */
-/* [REVISI PROFESIONAL] Desain Ulang dengan Highlight Interaktif & Gradien Timeline */
-
-:root {
-  --glow-purple: #a855f7;
-  --glow-cyan: #22d3ee;
-  --bg-dark-navy: #020617; /* Tetap didefinisikan jika dibutuhkan di tempat lain */
-  --bg-card: rgba(15, 23, 42, 0.6);
-  --border-color: rgba(55, 65, 81, 0.7);
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-}
+/* [REVISI] Tanpa :root dan :global */
 
 .resumeSection {
   padding: 6rem 0;
-  /* [PERBAIKAN] Background color dihapus sesuai permintaan */
   position: relative;
   overflow: hidden;
 }
 
-/* --- EFEK LATAR BELAKANG (Tidak berubah) --- */
+/* --- EFEK LATAR BELAKANG --- */
 .resumeSection::before {
   content: "";
   position: absolute;
@@ -43,10 +31,10 @@
   left: 50%;
   background-image: radial-gradient(
       circle at center,
-      var(--glow-purple),
-      transparent 60%
+      #a855f7,
+      /* --glow-purple */ transparent 60%
     ),
-    radial-gradient(circle at center, var(--glow-cyan), transparent 60%);
+    radial-gradient(circle at center, #22d3ee, transparent 60%); /* --glow-cyan */
   background-size: 100% 100%, 80% 80%;
   background-repeat: no-repeat;
   will-change: transform, opacity;
@@ -77,7 +65,7 @@
   }
 }
 
-/* --- Judul Section (Tidak berubah) --- */
+/* --- Judul Section --- */
 .sectionTitle {
   text-align: center;
   margin-bottom: 2rem;
@@ -90,7 +78,7 @@
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
-  color: var(--text-secondary);
+  color: #94a3b8; /* --text-secondary */
 }
 
 .animatedGradientTitle {
@@ -100,11 +88,27 @@
   padding-bottom: 1.5rem;
   margin-bottom: 1rem;
   display: inline-block;
-  background: linear-gradient(90deg, #a855f7 0%, #22d3ee 100%);
+
+  /* Gradien dibuat lebih besar dari teksnya */
+  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background-size: 200% auto; /* [PERUBAHAN] Ukuran background diperbesar */
+
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent; /* [PERBAIKAN] Menggunakan color transparent untuk kompatibilitas */
+  color: transparent;
   -webkit-text-fill-color: transparent;
+
+  /* Animasi untuk menggerakkan background */
+  animation: moveGradient 4s linear infinite; /* [PERUBAHAN] Terapkan animasi */
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
 }
 
 .animatedGradientTitle::after {
@@ -113,16 +117,16 @@
   display: block;
   width: 100px;
   height: 4px;
-  background: var(--glow-purple);
+  background: #c427c9;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   border-radius: 2px;
   opacity: 0.8;
-  box-shadow: 0 0 15px var(--glow-purple);
+  box-shadow: 0 0 15px #a855f7; /* --glow-purple */
 }
 
-/* --- Filter Buttons (Tidak berubah) --- */
+/* --- Filter Buttons --- */
 .filterContainer {
   display: flex;
   justify-content: center;
@@ -134,7 +138,7 @@
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(55, 65, 81, 0.7); /* --border-color */
   backdrop-filter: blur(8px);
   position: relative;
   z-index: 2;
@@ -144,7 +148,7 @@
   padding: 0.75rem 1.75rem;
   border: none;
   background-color: transparent;
-  color: var(--text-secondary);
+  color: #94a3b8; /* --text-secondary */
   border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
@@ -157,8 +161,8 @@
   z-index: 2;
 }
 .filterButton.active .filterButtonText {
-  color: var(--text-primary);
-}
+  color: #f1f5f9;
+} /* --text-primary */
 .activePill {
   position: absolute;
   inset: 0;
@@ -167,14 +171,14 @@
   z-index: 1;
 }
 
-/* --- Skill Highlighter (Tidak berubah) --- */
+/* --- Skill Highlighter --- */
 .skillHighlighterSection {
   text-align: center;
   margin-bottom: 4rem;
   padding: 1.5rem;
   background: rgba(15, 23, 42, 0.5);
   border-radius: 1rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(55, 65, 81, 0.7); /* --border-color */
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -202,7 +206,7 @@
 .skillButton {
   padding: 0.5rem 1.25rem;
   background-color: #1e293b;
-  color: var(--text-secondary);
+  color: #94a3b8; /* --text-secondary */
   border: 1px solid #374151;
   border-radius: 0.5rem;
   font-weight: 500;
@@ -211,26 +215,45 @@
 }
 
 .skillButton:hover {
-  background-color: var(--glow-purple);
+  background-color: #a855f7; /* --glow-purple */
   color: #fff;
-  border-color: var(--glow-purple);
-  box-shadow: 0 0 15px var(--glow-purple);
+  border-color: #a855f7; /* --glow-purple */
+  box-shadow: 0 0 15px #a855f7; /* --glow-purple */
 }
 
-/* --- [PERBAIKAN BESAR] Timeline --- */
+/* --- Timeline --- */
 .timelineWrapper {
   position: relative;
   z-index: 1;
 }
 
-/* [PERBAIKAN] Memberi warna gradien pada garis utama timeline */
-:global(.vertical-timeline::before) {
+.customTimeline::before {
+  /*
+    Properti ini (content, position, top, left, height, width) 
+    perlu didefinisikan ulang untuk memastikan garisnya muncul 
+    dengan benar karena kita menimpa selector default dari library.
+  */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  height: 100%;
+  width: 4px;
+
+  /* Ini adalah bagian gradiennya, sama seperti sebelumnya */
   background: linear-gradient(
-    to bottom,
-    var(--glow-purple),
-    var(--glow-cyan)
-  ) !important;
-  opacity: 0.3;
+    to top,
+    /* Arah gradien dari bawah ke atas */ #c026d3,
+    /* Warna ungu kuat */ #a855f7,
+    /* Warna ungu glow */ #2563eb,
+    /* Warna biru */ #22d3ee /* Warna cyan di puncak */
+  );
+
+  /* Efek glow tambahan */
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.4), 0 0 15px rgba(37, 99, 235, 0.4);
+
+  /* Ujung garis membulat */
+  border-radius: 2px;
 }
 
 .timelineCard {
@@ -242,18 +265,17 @@
   transform: scale(0.97);
 }
 
-/* [FITUR BARU] Efek highlight pada kartu yang cocok dengan skill */
 .timelineCard.highlighted {
   transform: scale(1.02);
 }
 
 .timelineCard.highlighted .cardContent::before {
-  opacity: 1; /* Membuat glowing border menyala */
+  opacity: 1;
 }
 
-/* --- [PERBAIKAN] Card Content --- */
+/* --- Card Content --- */
 .cardContent {
-  background: var(--bg-card);
+  background: rgba(15, 23, 42, 0.6); /* --bg-card */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0.75rem;
@@ -270,7 +292,11 @@
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(145deg, var(--glow-cyan), var(--glow-purple));
+  background: linear-gradient(
+    145deg,
+    #22d3ee,
+    #a855f7
+  ); /* --glow-cyan, --glow-purple */
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -308,25 +334,18 @@
   animation: cardShimmer 1.5s ease-out;
 }
 
-/* --- Styling Teks & List di dalam Kartu (Tidak berubah) --- */
+/* --- Styling Teks & List di dalam Kartu --- */
 .cardTitle {
   font-size: 1.5rem !important;
   font-weight: 700 !important;
-  color: var(--text-primary) !important;
+  color: #f1f5f9 !important; /* --text-primary */
 }
 
 .cardSubtitle {
   font-size: 1rem !important;
   font-weight: 500 !important;
-  color: var(--text-muted) !important;
+  color: #64748b !important; /* --text-muted */
   margin-top: 0.5rem !important;
-}
-
-:global(.vertical-timeline-element-content .vertical-timeline-element-date) {
-  color: var(--text-muted) !important;
-  opacity: 1 !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
 }
 
 .descriptionList {
@@ -334,7 +353,7 @@
   padding-left: 0;
   margin-top: 1.25rem;
   text-align: left;
-  color: var(--text-secondary);
+  color: #94a3b8; /* --text-secondary */
 }
 
 .descriptionList li {
@@ -347,23 +366,15 @@
 
 .descriptionList li::before {
   content: "▹";
-  color: var(--glow-cyan);
+  color: #22d3ee; /* --glow-cyan */
   font-weight: bold;
   position: absolute;
   left: 0;
   top: 0;
 }
 
-/* --- Responsive (Tidak berubah) --- */
+/* --- Responsive --- */
 @media (max-width: 1170px) {
-  :global(.vertical-timeline-element-date) {
-    display: block !important;
-    position: static !important;
-    margin-top: 0.5rem !important;
-    order: -1;
-  }
-
-  /* [PERBAIKAN RESPONSIVE] Menyesuaikan skala highlight di mobile */
   .timelineCard.highlighted {
     transform: scale(1.01);
   }

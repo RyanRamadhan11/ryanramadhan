@@ -12,7 +12,7 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import { FaGraduationCap, FaBriefcase, FaCode } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
-import { resumeData, ResumeItem } from "@/data/resumeData";
+import { resumeData } from "@/data/resumeData";
 
 // --- Animated Title Component (tidak berubah) ---
 const letterVariants: Variants = {
@@ -93,6 +93,27 @@ const ResumeSection: FC = () => {
           </p>
         </motion.div>
 
+        {/* --- Skill Highlighter (tidak berubah) --- */}
+        <div className={styles.skillHighlighterSection}>
+          <h3 className={styles.skillTitle}>
+            <FaCode /> Highlight Skills
+          </h3>
+          <div className={styles.skillContainer}>
+            {allSkills.map((skill) => (
+              <motion.button
+                key={skill}
+                className={styles.skillButton}
+                onMouseEnter={() => setHighlightedSkill(skill)}
+                onMouseLeave={() => setHighlightedSkill(null)}
+                whileHover={{ y: -3, scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                {skill}
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
         {/* --- Filter Buttons (tidak berubah) --- */}
         <div className={styles.filterContainer}>
           {filterCategories.map((category) => (
@@ -115,31 +136,9 @@ const ResumeSection: FC = () => {
           ))}
         </div>
 
-        {/* --- Skill Highlighter (tidak berubah) --- */}
-        <div className={styles.skillHighlighterSection}>
-          <h3 className={styles.skillTitle}>
-            <FaCode /> Highlight Skills
-          </h3>
-          <div className={styles.skillContainer}>
-            {allSkills.map((skill) => (
-              <motion.button
-                key={skill}
-                className={styles.skillButton}
-                onMouseEnter={() => setHighlightedSkill(skill)}
-                onMouseLeave={() => setHighlightedSkill(null)}
-                whileHover={{ y: -3, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              >
-                {skill}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
         {/* --- Timeline --- */}
         <div className={styles.timelineWrapper}>
-          {/* [PERBAIKAN] Hapus prop lineColor agar bisa di-style di CSS dengan gradien */}
-          <VerticalTimeline>
+          <VerticalTimeline className={styles.customTimeline}>
             {filteredData.map((item) => {
               const isEducation = item.type === "Education";
               const icon = isEducation ? <FaGraduationCap /> : <FaBriefcase />;
