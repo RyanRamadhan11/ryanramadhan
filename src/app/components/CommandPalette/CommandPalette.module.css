@@ -1,105 +1,181 @@
-/* Gaya untuk Command Palette, sudah mendukung tema terang/gelap */
+/* Container flex yang memenuhi layar untuk centering */
+.dialogWrapper {
+  position: fixed;
+  inset: 0; /* Shorthand untuk top:0, right:0, bottom:0, left:0 */
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start; /* [PERBAIKAN] Posisikan ke atas, bukan tengah */
+  justify-content: center;
+  padding: 1rem;
+}
 
+/* [PERBAIKAN UTAMA] Desain Ulang Command Palette */
 .commandDialog {
+  width: 100%; /* Lebar penuh di mobile, dibatasi oleh max-width */
+  max-width: 640px;
+  border-radius: 12px;
+  border: 1px solid var(--dialog-border-color); /* Menggunakan variabel baru */
+  background-color: var(--dialog-bg-color); /* Menggunakan variabel baru */
+  transition: background-color 0.3s, border-color 0.3s;
+
   position: fixed;
   top: 20%; /* Posisikan lebih ke atas */
   left: 50%;
   transform: translate(-50%, 0); /* Hanya transform X */
-  width: 90%;
-  max-width: 640px;
-  background-color: color-mix(in srgb, var(--surface-color), transparent 15%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-radius: 12px;
-  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   z-index: 9999;
   overflow: hidden;
 }
 
-/* Overlay */
-.commandDialog[data-open="true"]::before {
-  content: "";
+.commandP {
+  padding-left: 15px;
+}
+
+/* Variabel warna untuk Light & Dark Mode */
+[data-theme="light"] .commandDialog {
+  --dialog-bg-color: rgba(255, 255, 255, 0.8);
+  --dialog-border-color: #e2e8f0;
+  --dialog-input-border-color: #e2e8f0;
+  --dialog-text-primary: #1a202c;
+  --dialog-text-secondary: #718096;
+  --dialog-item-hover-bg: #f7fafc;
+  --dialog-shortcut-bg: #e2e8f0;
+  --dialog-shortcut-text: #4a5568;
+}
+
+[data-theme="dark"] .commandDialog {
+  /* [PERBAIKAN WARNA] Warna baru yang lebih solid dan modern untuk dark mode */
+  --dialog-bg-color: #1a1b26; /* Biru gelap keunguan */
+  --dialog-border-color: #2d2e3f; /* Border yang sedikit lebih terang */
+  --dialog-input-border-color: #2d2e3f;
+  --dialog-text-primary: #f0f0f0; /* Teks utama lebih cerah */
+  --dialog-text-secondary: #a0aec0; /* Teks sekunder (grup, ikon) */
+  --dialog-item-hover-bg: rgba(
+    74,
+    85,
+    104,
+    0.25
+  ); /* Latar hover lebih subtle */
+  --dialog-shortcut-bg: #2d3748;
+  --dialog-shortcut-text: #e2e8f0;
+}
+
+/* Overlay yang menggelapkan sisa halaman */
+.commandOverlay {
   position: fixed;
   inset: 0;
-  background-color: color-mix(
-    in srgb,
-    var(--background-color),
-    transparent 30%
-  );
-  z-index: -1;
-  animation: fadeIn 0.2s ease-out forwards;
+  background-color: rgba(0, 0, 0, 0.5); /* Sedikit lebih gelap */
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
+/* Input field */
 .commandInput {
   width: 100%;
-  padding: 1rem 1.25rem;
-  font-size: 1.1rem;
+  padding: 1.125rem 1.25rem;
+  font-size: 1rem;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--heading-color), transparent 90%);
-  color: var(--heading-color);
+  border-bottom: 1px solid var(--dialog-input-border-color);
+  color: var(--dialog-text-primary);
   outline: none;
+  transition: border-color 0.2s;
+}
+
+.commandInput:focus {
+  border-color: var(--accent-color, #00e0b8);
 }
 
 .commandInput::placeholder {
-  color: var(--hero-text-color-secondary);
+  color: var(--dialog-text-secondary);
 }
 
+/* List container */
 .commandList {
+  /* [PERBAIKAN PADDING] Padding horizontal diperlebar */
   max-height: 400px;
   overflow-y: auto;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Padding merata di semua sisi */
 }
 
+/* Pesan saat tidak ada hasil */
 .commandEmpty {
   padding: 1.5rem;
   text-align: center;
-  color: var(--default-color);
+  color: var(--dialog-text-secondary);
 }
 
+/* Judul Grup (Navigation, Theme, etc.) */
 .commandGroup[data-heading] {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--hero-text-color-secondary);
+  padding: 0.75rem 0.875rem; /* Disesuaikan dengan padding item */
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--dialog-text-secondary);
   text-transform: uppercase;
-  padding: 0.75rem 1rem;
   letter-spacing: 0.05em;
 }
 
+/* Desain Item */
 .commandItem {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1rem;
+  /* [PERBAIKAN PADDING] Padding horizontal item lebih lebar */
+  padding: 0.75rem 0.875rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  color: var(--default-color);
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+  color: var(--dialog-text-primary);
+  position: relative;
 }
 
+/* Efek Hover */
+.commandItem:not([aria-selected="true"]):hover {
+  background-color: var(--dialog-item-hover-bg);
+  color: var(--dialog-text-primary);
+}
+
+/* Item yang terpilih (highlight) */
 .commandItem[aria-selected="true"] {
-  background-color: var(--accent-color);
-  color: var(--contrast-color);
+  background-color: var(--accent-color, #00e0b8);
+  color: #000;
 }
 
-.commandItem[aria-selected="true"] svg,
-.commandItem[aria-selected="true"] span {
-  color: var(--contrast-color);
-}
-
+/* Icon di dalam item */
 .commandItem svg {
   font-size: 1.1rem;
-  color: var(--hero-text-color-secondary);
-  transition: color 0.2s ease;
+  color: var(--dialog-text-secondary);
+  transition: color 0.15s ease;
+}
+
+/* Warna ikon berubah saat item di-hover atau terpilih */
+.commandItem:hover svg {
+  color: var(--dialog-text-primary);
+}
+
+.commandItem[aria-selected="true"] svg {
+  color: #000;
+}
+
+/* Style untuk Shortcut <kbd> */
+.shortcut {
+  margin-left: auto;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.75rem;
+  font-family: "SF Mono", "Fira Code", monospace;
+  background-color: var(--dialog-shortcut-bg);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--dialog-shortcut-text);
+  transition: background-color 0.15s, color 0.15s;
+}
+
+/* Shortcut di item yang terpilih */
+.commandItem[aria-selected="true"] .shortcut {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: transparent;
+  color: #000;
 }

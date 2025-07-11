@@ -1,5 +1,5 @@
 // 📁 src/components/ResumeSection/ResumeSection.tsx
-// Versi Unggul dengan Efek Highlight & Desain Profesional
+// Versi Lengkap dan Final
 
 "use client";
 
@@ -14,7 +14,7 @@ import { FaGraduationCap, FaBriefcase, FaCode } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
 import { resumeData } from "@/data/resumeData";
 
-// --- Animated Title Component (tidak berubah) ---
+// --- Animated Title Component (VERSI BARU YANG DIPERBAIKI) ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -34,29 +34,40 @@ interface AnimatedTitleProps {
   text: string;
 }
 
+// [PERBAIKAN UTAMA] Logika diubah untuk memproses per kata, bukan per huruf
 const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
-  const letters = Array.from(text);
+  const words = text.split(" "); // -> ["My", "Resume"]
+
   return (
     <motion.div
       variants={titleContainerVariants}
       initial="hidden"
-      // whileInView="visible"
-      // viewport={{ once: true, amount: 0.8 }}
       animate="visible"
       viewport={{ once: true }}
     >
       <h2 className={styles.animatedGradientTitle}>
-        {letters.map((letter, index) => (
-          <motion.span key={index} variants={letterVariants}>
-            {letter === " " ? "\u00A0" : letter}
-          </motion.span>
+        {words.map((word, wordIndex) => (
+          // Bungkus setiap kata dalam span agar bisa diberi spasi
+          <span key={wordIndex} className={styles.wordWrapper}>
+            {/* Pecah kata menjadi huruf-huruf */}
+            {Array.from(word).map((letter, letterIndex) => (
+              <motion.span
+                key={letterIndex}
+                variants={letterVariants}
+                // Beri kelas khusus jika ini adalah huruf pertama dari sebuah kata
+                className={letterIndex === 0 ? styles.firstLetter : ""}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </span>
         ))}
       </h2>
     </motion.div>
   );
 };
 
-// --- Data Types & Categories (tidak berubah) ---
+// --- Data Types & Categories ---
 type Category = "All" | "Education" | "Experience";
 const filterCategories: Category[] = ["All", "Education", "Experience"];
 
@@ -72,11 +83,11 @@ const ResumeSection: FC = () => {
   const allSkills = useMemo(() => {
     const skills = new Set<string>();
     resumeData.forEach((item) => {
-      if (item.type === "Experience") {
+      if (item.type === "Experience" && item.skills) {
         item.skills.forEach((skill) => skills.add(skill));
       }
     });
-    return Array.from(skills).sort(); // [PERBAIKAN] Urutkan skill agar konsisten
+    return Array.from(skills).sort();
   }, []);
 
   return (
@@ -95,7 +106,7 @@ const ResumeSection: FC = () => {
           </p>
         </motion.div>
 
-        {/* --- Skill Highlighter (tidak berubah) --- */}
+        {/* --- Skill Highlighter --- */}
         <div className={styles.skillHighlighterSection}>
           <h3 className={styles.skillTitle}>
             <FaCode /> Highlight Skills
@@ -116,7 +127,7 @@ const ResumeSection: FC = () => {
           </div>
         </div>
 
-        {/* --- Filter Buttons (tidak berubah) --- */}
+        {/* --- Filter Buttons --- */}
         <div className={styles.filterContainer}>
           {filterCategories.map((category) => (
             <button
@@ -145,7 +156,6 @@ const ResumeSection: FC = () => {
               const isEducation = item.type === "Education";
               const icon = isEducation ? <FaGraduationCap /> : <FaBriefcase />;
 
-              // [LOGIKA BARU] Tambahkan state 'isHighlighted'
               const isHighlighted =
                 highlightedSkill && item.skills?.includes(highlightedSkill);
               const isDimmed =
@@ -156,7 +166,7 @@ const ResumeSection: FC = () => {
                   key={item.id}
                   className={`${styles.timelineCard} ${
                     isDimmed ? styles.dimmed : ""
-                  } ${isHighlighted ? styles.highlighted : ""}`} // [PERBAIKAN] Terapkan class baru
+                  } ${isHighlighted ? styles.highlighted : ""}`}
                   contentStyle={{
                     background: "transparent",
                     boxShadow: "none",
