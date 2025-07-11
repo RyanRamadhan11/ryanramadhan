@@ -1,3 +1,5 @@
+/* src/app/components/Navbar/Navbar.tsx */
+
 "use client";
 
 import React, { FC, useState, useEffect } from "react";
