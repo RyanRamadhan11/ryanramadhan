@@ -64,8 +64,8 @@
   /* Nav Menu Colors */
   --nav-color: #e0e0e0;
   --nav-hover-color: #03dac6;
-  --nav-mobile-background-color: #1e1e1e;
-  --nav-dropdown-background-color: #1e1e1e;
+  --nav-mobile-background-color: #000000;
+  --nav-dropdown-background-color: #000000;
   --nav-dropdown-color: #e0e0e0;
   --nav-dropdown-hover-color: #03dac6;
 

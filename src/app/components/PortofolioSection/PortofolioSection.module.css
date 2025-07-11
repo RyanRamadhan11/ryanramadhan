@@ -164,11 +164,22 @@
     color-mix(in srgb, var(--hero-accent-color), transparent 70%);
 }
 
-/* --- Wrapper & Dropdown Tahun --- */
+/* --- [PERUBAHAN] Wrapper & Dropdown Tahun --- */
 .yearFilterWrapper {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+/* [PERUBAHAN] Ikon sekarang diposisikan di dalam wrapper */
+.yearIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--hero-text-color-secondary);
+  font-size: 1.1rem;
+  pointer-events: none;
 }
 
 .yearDropdown {
@@ -181,13 +192,15 @@
     transparent 20%
   );
   color: var(--default-color);
-  padding: 0.75rem 2.5rem 0.75rem 1.2rem;
+  /* [PERUBAHAN] Padding kiri ditambah untuk memberi ruang bagi ikon */
+  padding: 0.75rem 2.5rem 0.75rem 2.8rem;
   border-radius: 12px;
   border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  /* Panah dropdown tetap di kanan */
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cccccc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.8rem center;

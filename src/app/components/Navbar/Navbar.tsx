@@ -68,7 +68,7 @@ const Navbar: FC = () => {
                 onClick={handleNavLinkClick}
                 className={pathname === "/about" ? styles.active : ""}
               >
-                About Me
+                About
               </Link>
             </li>
             <li className={styles.navItem}>

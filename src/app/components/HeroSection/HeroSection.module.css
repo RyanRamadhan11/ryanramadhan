@@ -206,6 +206,7 @@
 }
 .button:hover {
   background-position: right center;
+  color: white;
   transform: translateY(-3px);
   box-shadow: 0 7px 20px
       color-mix(in srgb, var(--hero-accent-color), transparent 60%),

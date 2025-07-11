@@ -1,6 +1,6 @@
 /*
 // 📁 src/components/PortofolioSection/PortofolioSection.tsx
-// (Versi Final dengan Firebase Likes, Filter Modern, & Responsif)
+// (Tidak ada perubahan logika, hanya memastikan struktur sudah benar)
 */
 "use client";
 
@@ -21,7 +21,6 @@ import {
   collection,
   Firestore,
 } from "firebase/firestore";
-// [DIHAPUS] Tidak perlu getAuth dan signInAnonymously lagi
 
 import { BsArrowUpRightCircle } from "react-icons/bs";
 import {
@@ -29,7 +28,7 @@ import {
   FaChevronRight,
   FaCalendarAlt,
   FaSearch,
-  FaHeart, // --- TAMBAHAN BARU: Ikon untuk tombol like ---
+  FaHeart,
 } from "react-icons/fa";
 
 import { portofolios, techIconMap, iconColors } from "@/data/portfolioData";
@@ -38,8 +37,7 @@ import styles from "./PortofolioSection.module.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// --- Inisialisasi Firebase (Gantilah dengan konfigurasi Anda) ---
-// PENTING: Ganti semua nilai "YOUR_..." dengan kunci asli dari Firebase Console Anda!
+// --- Inisialisasi Firebase ---
 const firebaseConfig = {
   apiKey: "AIzaSyB9Gdna1ez-e9JCyRH4HfYBP7KZHPOAYsw",
   authDomain: "profile-ryanramdhan.firebaseapp.com",
@@ -50,7 +48,6 @@ const firebaseConfig = {
   measurementId: "G-GDYW5DLC8X",
 };
 
-// --- [PERBAIKAN] Fungsi untuk inisialisasi Firebase yang lebih aman ---
 const getFirebaseApp = () => {
   if (getApps().length === 0) {
     return initializeApp(firebaseConfig);
@@ -101,7 +98,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- [BARU] Komponen Skeleton untuk Loading Portofolio ---
+// --- Komponen Skeleton (Tidak Berubah) ---
 const SkeletonCard = () => (
   <div className={`${styles.cardWrapper} ${styles.skeletonWrapper}`}>
     <div className={styles.portofolioCard}>
@@ -193,17 +190,14 @@ const PortofolioSection: FC = () => {
   const [activeYear, setActiveYear] = useState<number | "All">("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
   const [db, setDb] = useState<Firestore | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // <-- Tambahkan state loading
-
+  const [isLoading, setIsLoading] = useState(true);
   const [likeCounts, setLikeCounts] = useState<{ [key: string]: number }>({});
   const [likedItems, setLikedItems] = useState<string[]>([]);
 
   useEffect(() => {
     const app = getFirebaseApp();
     const firestoreDb = getFirestore(app);
-
     setDb(firestoreDb);
 
     const localLikedItems = JSON.parse(
@@ -220,11 +214,11 @@ const PortofolioSection: FC = () => {
           newLikeCounts[doc.id] = doc.data().likes || 0;
         });
         setLikeCounts(newLikeCounts);
-        setIsLoading(false); // <-- Set loading ke false setelah data pertama diterima
+        setIsLoading(false);
       },
       (error) => {
         console.error("Error fetching likes:", error);
-        setIsLoading(false); // <-- Juga set loading false jika ada error
+        setIsLoading(false);
       }
     );
 
@@ -279,41 +273,29 @@ const PortofolioSection: FC = () => {
     setCurrentPage(1);
   };
 
-  // --- [PERBAIKAN] Fungsi handleLikeClick dengan Optimistic Update ---
   const handleLikeClick = async (portfolioId: string) => {
-    if (!db) {
-      console.error("GAGAL: Firebase belum siap.");
-      return;
-    }
+    if (!db || likedItems.includes(portfolioId)) return;
 
-    if (likedItems.includes(portfolioId)) {
-      console.warn("INFO: Item ini sudah pernah di-like.");
-      return;
-    }
-
-    // 1. Optimistic UI Update
-    // Perbarui state secara lokal SEBELUM mengirim ke Firebase
     const newLikedItems = [...likedItems, portfolioId];
     setLikedItems(newLikedItems);
-    setLikeCounts((prevCounts) => ({
-      ...prevCounts,
-      [portfolioId]: (prevCounts[portfolioId] || 0) + 1,
+    setLikeCounts((prev) => ({
+      ...prev,
+      [portfolioId]: (prev[portfolioId] || 0) + 1,
     }));
-
-    // Simpan ke localStorage
     localStorage.setItem("likedPortfolioItems", JSON.stringify(newLikedItems));
 
-    // 2. Kirim pembaruan ke Firebase di latar belakang
     try {
-      const likeDocRef = doc(db, "portfolioLikes", portfolioId);
-      await setDoc(likeDocRef, { likes: increment(1) }, { merge: true });
+      await setDoc(
+        doc(db, "portfolioLikes", portfolioId),
+        { likes: increment(1) },
+        { merge: true }
+      );
     } catch (error) {
-      console.error("GAGAL: Gagal update ke Firestore:", error);
-      // Jika gagal, kembalikan state ke semula (rollback)
-      setLikedItems(likedItems); // Kembalikan ke array liked sebelumnya
-      setLikeCounts((prevCounts) => ({
-        ...prevCounts,
-        [portfolioId]: (prevCounts[portfolioId] || 1) - 1,
+      console.error("Error updating likes:", error);
+      setLikedItems(likedItems);
+      setLikeCounts((prev) => ({
+        ...prev,
+        [portfolioId]: (prev[portfolioId] || 1) - 1,
       }));
       localStorage.setItem("likedPortfolioItems", JSON.stringify(likedItems));
     }
@@ -331,8 +313,7 @@ const PortofolioSection: FC = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     dotsClass: styles.customDotsContainer,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    customPaging: (_i: number) => <div className={styles.customPagingDot} />,
+    customPaging: () => <div className={styles.customPagingDot} />,
   };
 
   return (
@@ -349,7 +330,6 @@ const PortofolioSection: FC = () => {
           </motion.div>
         </div>
 
-        {/* --- UI Filter yang Diperbarui --- */}
         <motion.div
           className={styles.filtersContainer}
           initial={{ opacity: 0, y: 20 }}
@@ -470,7 +450,6 @@ const PortofolioSection: FC = () => {
                         })}
                       </div>
 
-                      {/* --- [PERBAIKAN] Aksi Kartu dengan konversi tipe data --- */}
                       <div className={styles.cardActions}>
                         <button
                           className={`${styles.likeButton} ${
