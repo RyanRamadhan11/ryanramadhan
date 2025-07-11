@@ -143,7 +143,8 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => (
     className={styles.animatedGradientTitle}
     variants={titleContainerVariants}
     initial="hidden"
-    whileInView="visible"
+    // whileInView="visible"
+    animate="visible"
     viewport={{ once: true, amount: 0.8 }}
   >
     {Array.from(text).map((letter, index) => (
@@ -326,7 +327,8 @@ const CertificationSection: FC = () => {
               className={styles.controlsSidebar}
               variants={sidebarVariants}
               initial="hidden"
-              whileInView="visible"
+              // whileInView="visible"
+              animate="visible"
               viewport={{ once: true }}
             >
               <motion.div

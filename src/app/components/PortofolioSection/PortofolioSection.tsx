@@ -84,8 +84,9 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
     <motion.div
       variants={titleContainerVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.8 }}
+      // whileInView="visible"
+      animate="visible"
+      viewport={{ once: true }}
     >
       <h2 className={styles.animatedGradientTitle}>
         {letters.map((letter, index) => (
@@ -322,7 +323,8 @@ const PortofolioSection: FC = () => {
         <div className={styles.titleContainer}>
           <motion.div
             initial={{ opacity: 0, y: -30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            // whileInView={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
@@ -333,7 +335,8 @@ const PortofolioSection: FC = () => {
         <motion.div
           className={styles.filtersContainer}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          // whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >

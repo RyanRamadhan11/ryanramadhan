@@ -79,8 +79,10 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
     <motion.div
       variants={titleContainerVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.8 }}
+      // whileInView="visible"
+      // viewport={{ once: true, amount: 0.8 }}
+      animate="visible"
+      viewport={{ once: true }}
     >
       <h2 className={styles.animatedGradientTitle}>
         {letters.map((letter, index) => (
