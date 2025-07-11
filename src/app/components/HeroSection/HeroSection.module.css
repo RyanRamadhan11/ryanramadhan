@@ -37,6 +37,7 @@
   margin-inline: auto;
   max-width: var(--content-max-width, 1200px);
   box-sizing: border-box;
+  /* perspective: 1500px; */
 }
 
 /*--------------------------------------------------------------
