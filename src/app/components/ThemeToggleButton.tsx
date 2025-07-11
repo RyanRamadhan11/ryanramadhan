@@ -1,8 +1,10 @@
-// src/app/components/ThemeToggleButton.tsx
+// 📁 src/app/components/ThemeToggleButton.tsx (Upgrade dengan Animasi)
+
 "use client";
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function ThemeToggleButton() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -12,31 +14,50 @@ export function ThemeToggleButton() {
     setMounted(true);
   }, []);
 
+  // [PENTING] Render placeholder atau null saat komponen belum di-mount di client
+  // untuk mencegah hydration mismatch.
   if (!mounted) {
-    // Tampilkan placeholder atau null untuk menghindari hydration error
-    // dan layout shift.
-    return <div style={{ width: "24px", height: "44px" }}></div>;
+    return <div style={{ width: "24px", height: "24px" }} />;
   }
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
 
   return (
     <button
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={toggleTheme}
       style={{
         background: "transparent",
         border: "none",
         cursor: "pointer",
         padding: "10px",
-        color: "var(--nav-color)", // Warna ikon mengikuti tema navbar
+        color: "var(--nav-color)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        overflow: "hidden", // Mencegah ikon "loncat" saat animasi
+        position: "relative",
+        width: "44px", // Beri ukuran tetap
+        height: "44px",
       }}
       aria-label="Toggle Dark Mode"
     >
-      <i
-        className={resolvedTheme === "dark" ? "bi bi-sun" : "bi bi-moon"}
-        style={{ fontSize: "20px", transition: "all .3s ease" }}
-      ></i>
+      {/* AnimatePresence untuk menangani animasi exit (saat ikon menghilang) */}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.i
+          // Key unik untuk setiap ikon agar AnimatePresence bisa mendeteksi perubahan
+          key={resolvedTheme}
+          className={
+            resolvedTheme === "dark" ? "bi bi-sun-fill" : "bi bi-moon-fill"
+          }
+          initial={{ y: -20, opacity: 0, scale: 0.8 }} // Posisi awal (dari atas, transparan, kecil)
+          animate={{ y: 0, opacity: 1, scale: 1 }} // Posisi akhir (di tengah, terlihat, ukuran normal)
+          exit={{ y: 20, opacity: 0, scale: 0.8 }} // Animasi keluar (ke bawah, transparan, kecil)
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          style={{ fontSize: "20px", position: "absolute" }} // Posisikan absolut di dalam button
+        />
+      </AnimatePresence>
     </button>
   );
 }

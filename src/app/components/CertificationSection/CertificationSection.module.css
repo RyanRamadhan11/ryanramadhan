@@ -1,14 +1,10 @@
-/* src/components/CertificationSection/CertificationSection.module.css */
-/* (Versi Final dengan Efek 3D & Gradient Shadow) */
+/* src/components/CertificationSection/CertificationSection.module.css (SUDAH DIPERBAIKI) */
 
-/* ============================================= */
-/* --- General & Layout --- */
-/* ============================================= */
 .certificationSection {
   padding: 5rem 0;
-  background-color: #121212;
   position: relative;
   overflow: hidden;
+  background-color: var(--background-color);
 }
 .certificationSection::before {
   content: "";
@@ -19,10 +15,14 @@
   height: 100%;
   background-image: radial-gradient(
       circle at 10% 20%,
-      rgba(187, 134, 252, 0.05),
+      color-mix(in srgb, var(--hero-accent-color), transparent 95%),
       transparent 30%
     ),
-    radial-gradient(circle at 90% 80%, rgba(3, 218, 198, 0.05), transparent 30%);
+    radial-gradient(
+      circle at 90% 80%,
+      color-mix(in srgb, var(--hero-highlight-color), transparent 95%),
+      transparent 30%
+    );
   pointer-events: none;
 }
 .sectionTitle {
@@ -34,7 +34,7 @@
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
 }
 .mainContentLayout {
   display: flex;
@@ -44,7 +44,7 @@
 .gridAndEmptyStateWrapper {
   flex: 1;
   position: relative;
-  min-width: 0; /* Penting agar item flex dapat menyusut dengan benar */
+  min-width: 0;
 }
 
 /* ============================================= */
@@ -58,11 +58,15 @@
   padding-bottom: 20px;
   margin-bottom: 15px;
   display: inline-block;
-  background: linear-gradient(90deg, #bb86fc 0%, #03dac6 50%, #bb86fc 100%);
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 50%,
+    var(--hero-accent-color) 100%
+  );
   background-size: 200% auto;
-  color: #fff;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientFlow 5s linear infinite;
 }
@@ -72,7 +76,7 @@
   display: block;
   width: 80px;
   height: 5px;
-  background: #03dac6;
+  background: var(--hero-highlight-color);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -111,11 +115,12 @@
   flex: 0 0 260px;
   position: sticky;
   top: 120px;
-  background: rgba(26, 26, 30, 0.7);
+  background: color-mix(in srgb, var(--surface-color), transparent 30%);
   border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  box-shadow: 0 8px 32px
+    color-mix(in srgb, var(--background-color), transparent 80%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -127,10 +132,11 @@
 }
 .controlGroup h4 {
   font-size: 1.1rem;
-  color: #ffffff;
+  color: var(--heading-color);
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--heading-color), transparent 90%);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -145,7 +151,7 @@
   right: 1rem;
   transform: translateY(-50%);
   font-size: 0.8rem;
-  color: #bb86fc;
+  color: var(--hero-accent-color);
   pointer-events: none;
   transition: transform 0.3s ease;
 }
@@ -155,9 +161,9 @@
 .sortSelect {
   width: 100%;
   padding: 0.75rem 1rem;
-  background-color: #121212;
-  color: #e0e0e0;
-  border: 1px solid #444;
+  background-color: var(--background-color);
+  color: var(--default-color);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 80%);
   border-radius: 8px;
   font-weight: 500;
   font-size: 1rem;
@@ -167,12 +173,13 @@
   appearance: none;
 }
 .sortSelect:hover {
-  border-color: #bb86fc;
+  border-color: var(--hero-accent-color);
 }
 .sortSelect:focus {
   outline: none;
-  border-color: #03dac6;
-  box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+  border-color: var(--hero-highlight-color);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 .techSearchWrapper {
   position: relative;
@@ -183,24 +190,25 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
 }
 .techSearchInput {
   width: 100%;
   padding: 0.6rem 1rem 0.6rem 2.5rem;
-  background-color: #121212;
-  border: 1px solid #444;
+  background-color: var(--background-color);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 80%);
   border-radius: 8px;
-  color: #e0e0e0;
+  color: var(--default-color);
   transition: all 0.3s ease;
 }
 .techSearchInput::placeholder {
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
 }
 .techSearchInput:focus {
   outline: none;
-  border-color: #03dac6;
-  box-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+  border-color: var(--hero-highlight-color);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 .techFilterContainer {
   display: flex;
@@ -217,32 +225,33 @@
   background: transparent;
 }
 .techFilterContainer::-webkit-scrollbar-thumb {
-  background-color: #444;
+  background-color: color-mix(in srgb, var(--heading-color), transparent 80%);
   border-radius: 10px;
 }
 .techFilterButton {
   padding: 0.4rem 0.9rem;
   font-size: 0.85rem;
   font-weight: 500;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #a0a0a0;
-  border: 1px solid #444;
+  background-color: color-mix(in srgb, var(--heading-color), transparent 95%);
+  color: var(--hero-text-color-secondary);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 80%);
   border-radius: 20px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 .techFilterButton:hover {
-  background-color: #bb86fc;
-  border-color: #bb86fc;
-  color: #121212;
+  background-color: var(--hero-accent-color);
+  border-color: var(--hero-accent-color);
+  color: var(--contrast-color);
   transform: translateY(-1px);
 }
 .activeTech {
-  background-color: #03dac6;
-  border-color: #03dac6;
-  color: #121212;
+  background-color: var(--hero-highlight-color);
+  border-color: var(--hero-highlight-color);
+  color: var(--contrast-color);
   font-weight: 700;
-  box-shadow: 0 0 15px rgba(3, 218, 198, 0.3);
+  box-shadow: 0 0 15px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 
 /* ======================================================= */
@@ -257,9 +266,9 @@
 }
 .navButton,
 .pageButton {
-  border: 1px solid #333;
-  background-color: #1e1e1e;
-  color: #ccc;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 80%);
+  background-color: var(--surface-color);
+  color: var(--default-color);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -279,18 +288,20 @@
 }
 .navButton:hover:not(:disabled),
 .pageButton:hover:not(.activePage) {
-  background-color: #bb86fc;
-  color: #121212;
-  border-color: #bb86fc;
+  background-color: var(--hero-accent-color);
+  color: var(--contrast-color);
+  border-color: var(--hero-accent-color);
   transform: scale(1.08);
-  box-shadow: 0 4px 8px rgba(187, 134, 252, 0.2);
+  box-shadow: 0 4px 8px
+    color-mix(in srgb, var(--hero-accent-color), transparent 80%);
 }
 .activePage {
-  background-color: #03dac6;
-  color: #121212;
-  border-color: #03dac6;
+  background-color: var(--hero-highlight-color);
+  color: var(--contrast-color);
+  border-color: var(--hero-highlight-color);
   transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(3, 218, 198, 0.7);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 30%);
 }
 .navButton:disabled {
   opacity: 0.3;
@@ -306,29 +317,34 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.4rem 0.8rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid #444;
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 80%
+  );
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 80%);
+  color: var(--hero-text-color-secondary);
   border-radius: 8px;
-  color: #a0a0a0;
   transition: all 0.2s ease-in-out;
   width: auto;
 }
 .pageInputContainer:focus-within {
-  border-color: #03dac6;
-  box-shadow: 0 0 10px rgba(3, 218, 198, 0.2);
+  border-color: var(--hero-highlight-color);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
 }
 .pageInputContainer span {
   font-size: 0.9rem;
   font-weight: 500;
 }
 .totalPagesText {
-  color: #ccc;
+  color: var(--default-color);
 }
 .paginationInput {
   width: 45px;
   background-color: transparent;
   border: none;
-  color: #e0e0e0;
+  color: var(--heading-color);
   font-weight: bold;
   text-align: center;
   padding: 0.3rem 0;
@@ -336,12 +352,12 @@
   appearance: textfield;
 }
 .paginationInput::placeholder {
-  color: #666;
+  color: var(--hero-text-color-secondary);
   font-weight: bold;
 }
 .paginationInput:focus {
   outline: none;
-  color: #03dac6;
+  color: var(--hero-highlight-color);
 }
 .paginationInput::-webkit-outer-spin-button,
 .paginationInput::-webkit-inner-spin-button {
@@ -366,7 +382,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
 }
 .noResults svg {
   font-size: 3rem;
@@ -376,14 +392,19 @@
   perspective: 1000px;
 }
 .certificationCard {
-  background: linear-gradient(145deg, #2a2a2e, #1a1a1e);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--surface-color), #000 10%),
+    var(--surface-color)
+  );
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  box-shadow: 0 8px 24px
+    color-mix(in srgb, var(--background-color), transparent 70%);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
     box-shadow 0.4s ease-out, border-color 0.4s ease-out;
   transform-style: preserve-3d;
@@ -391,9 +412,12 @@
 }
 .certificationCard:hover {
   transform: translateY(-10px) rotateX(5deg) rotateY(-3deg);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    -10px -10px 20px rgba(187, 134, 252, 0.1),
-    10px 10px 20px rgba(3, 218, 198, 0.1);
+  box-shadow: 0 25px 50px -12px color-mix(in srgb, var(--background-color), transparent
+          50%),
+    -10px -10px 20px
+      color-mix(in srgb, var(--hero-accent-color), transparent 90%),
+    10px 10px 20px
+      color-mix(in srgb, var(--hero-highlight-color), transparent 90%);
 }
 .imageContainer {
   position: relative;
@@ -411,8 +435,8 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
+  background: color-mix(in srgb, var(--background-color), transparent 40%);
+  color: var(--heading-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -437,16 +461,16 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   margin-bottom: 0.5rem;
 }
 .issuer svg {
-  color: #bb86fc;
+  color: var(--hero-accent-color);
 }
 .cardContent h3 {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--heading-color);
   line-height: 1.4;
   margin-bottom: 1rem;
   min-height: 55px; /* Menjaga tinggi konsisten */
@@ -465,13 +489,15 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
+  color: var(--default-color);
 }
 .techIcon:hover {
   transform: scale(1.2) rotate(5deg);
+  color: var(--accent-color);
 }
 .noTech {
   font-size: 0.9rem;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   opacity: 0.6;
   font-style: italic;
 }
@@ -481,12 +507,13 @@
   align-items: center;
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid
+    color-mix(in srgb, var(--heading-color), transparent 90%);
 }
 .date {
   font-size: 0.8rem;
   font-style: italic;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -495,13 +522,13 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  color: #bb86fc;
+  color: var(--hero-accent-color);
   font-weight: 600;
   text-decoration: none;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 .credentialLink:hover {
-  color: #03dac6;
+  color: var(--hero-highlight-color);
   transform: translateY(-2px);
 }
 
@@ -513,7 +540,7 @@
   transition: opacity 0.3s ease-in-out;
 }
 .skeletonElement {
-  background-color: #2a2a2e;
+  background-color: var(--surface-color);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -528,7 +555,7 @@
   background: linear-gradient(
     to right,
     transparent 0%,
-    rgba(255, 255, 255, 0.08) 50%,
+    color-mix(in srgb, var(--heading-color), transparent 92%) 50%,
     transparent 100%
   );
   animation: shimmer 2.5s infinite;
@@ -572,7 +599,11 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 15%
+  );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -595,7 +626,7 @@
   right: 1.5rem;
   background: transparent;
   border: none;
-  color: #fff;
+  color: var(--heading-color);
   font-size: 2.5rem;
   cursor: pointer;
   z-index: 2001;
@@ -604,7 +635,7 @@
 @media (max-width: 991px) {
   .mainContentLayout {
     flex-direction: column;
-    align-items: stretch; /* [PERBAIKAN KUNCI] Memastikan item (sidebar & grid) meregang penuh */
+    align-items: stretch;
   }
   .controlsSidebar {
     position: static;
@@ -614,7 +645,6 @@
 }
 
 @media (max-width: 767px) {
-  /* [PERBAIKAN FINAL] Menggunakan grid-template-columns: 1fr untuk memastikan lebar penuh */
   .certificationGrid {
     grid-template-columns: 1fr;
     gap: 2rem;

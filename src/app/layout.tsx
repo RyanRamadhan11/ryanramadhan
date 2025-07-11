@@ -1,4 +1,4 @@
-// 📁 src/app/layout.tsx (Benar - Server Component)
+// 📁 src/app/layout.tsx (Disempurnakan)
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -8,7 +8,6 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// --- DI SINI TEMPAT YANG BENAR UNTUK METADATA ---
 export const metadata: Metadata = {
   title: {
     template: "%s | Ryan Ramadhan",
@@ -25,10 +24,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      {/* [WAJIB] Tambahkan link untuk Bootstrap Icons di sini.
+        Ini akan membuat ikon matahari dan bulan muncul di tombol tema.
+      */}
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+      </head>
       <body className={inter.className}>
-        {/* Semua logika client (preloader, theme, dll) ada di dalam komponen ini */}
         <ClientLayout>{children}</ClientLayout>
-
         <Script
           src="https://www.google.com/recaptcha/api.js"
           strategy="afterInteractive"

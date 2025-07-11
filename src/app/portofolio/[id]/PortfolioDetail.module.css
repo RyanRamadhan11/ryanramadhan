@@ -1,5 +1,4 @@
-/* 📁 src/app/portofolio/[id]/PortfolioDetail.module.css */
-/* (Versi Final dengan Fitur Modern & Sticky Column) */
+/* src/app/portofolio/[id]/PortfolioDetail.module.css (SUDAH DIPERBAIKI) */
 
 @keyframes animateGradient {
   0% {
@@ -16,7 +15,8 @@
 .detailContainer {
   padding: 8rem 0 6rem;
   min-height: 100vh;
-  color: #e0e0e0;
+  color: var(--default-color);
+  background-color: var(--background-color);
 }
 
 .header {
@@ -33,24 +33,25 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
-  background-color: #25252a;
+  background-color: var(--surface-color);
   border-radius: 8px;
   text-decoration: none;
-  color: #e0e0e0;
+  color: var(--default-color);
   font-weight: 600;
   transition: all 0.3s ease;
-  border: 1px solid #444;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 85%);
 }
 .backButton:hover {
-  background-color: #03dac6;
-  color: #121212;
+  background-color: var(--hero-highlight-color);
+  color: var(--contrast-color);
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(3, 218, 198, 0.2);
+  box-shadow: 0 4px 15px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 80%);
 }
 
 .breadcrumbs {
   font-size: 0.9rem;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   display: flex;
   align-items: center;
 }
@@ -59,7 +60,7 @@
 }
 
 .current {
-  color: #fff;
+  color: var(--heading-color);
   font-weight: 600;
 }
 
@@ -67,7 +68,6 @@
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 4rem;
-  /* Tambahkan ini agar sticky positioning berfungsi dengan benar */
   align-items: flex-start;
 }
 
@@ -81,7 +81,12 @@
   font-weight: 800;
   margin-bottom: 1.5rem;
   line-height: 1.2;
-  background-image: linear-gradient(90deg, #03dac6, #8f75ff, #03dac6);
+  background-image: linear-gradient(
+    90deg,
+    var(--hero-highlight-color),
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
+  );
   background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
@@ -92,7 +97,7 @@
 .description {
   font-size: 1.1rem;
   line-height: 1.8;
-  color: #c5c5c5;
+  color: var(--default-color);
   margin-bottom: 2.5rem;
 }
 
@@ -103,37 +108,38 @@
 }
 
 .infoBox {
-  background-color: #25252a;
+  background-color: var(--surface-color);
   padding: 1rem 1.5rem;
   border-radius: 12px;
   display: flex;
   align-items: center;
   gap: 1rem;
-  border: 1px solid #333;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .infoBox:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(3, 218, 198, 0.15);
-  border-color: #03dac6;
+  box-shadow: 0 8px 25px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 85%);
+  border-color: var(--hero-highlight-color);
 }
 
 .infoBoxIcon {
   font-size: 2.2rem;
-  color: #03dac6;
+  color: var(--hero-highlight-color);
 }
 
 .infoBoxValue {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--heading-color);
   display: block;
 }
 
 .infoBoxLabel {
   font-size: 0.8rem;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   text-transform: uppercase;
 }
 
@@ -152,7 +158,7 @@
   align-items: center;
   gap: 0.6rem;
   border: none;
-  color: #fff;
+  color: var(--contrast-color);
   background-size: 200% auto;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -161,20 +167,20 @@
 .button:hover {
   background-position: right center;
   transform: translateY(-3px);
-  color: #121212;
 }
 
 .liveDemo {
   background-image: linear-gradient(
     to right,
-    #03dac6 0%,
-    #6200ee 51%,
-    #03dac6 100%
+    var(--hero-highlight-color) 0%,
+    var(--hero-accent-color) 51%,
+    var(--hero-highlight-color) 100%
   );
 }
 
 .liveDemo:hover {
-  box-shadow: 0 7px 20px rgba(3, 218, 198, 0.35);
+  box-shadow: 0 7px 20px
+    color-mix(in srgb, var(--hero-highlight-color), transparent 65%);
 }
 
 .github {
@@ -199,8 +205,10 @@
 .techTitle {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid
+    color-mix(in srgb, var(--heading-color), transparent 90%);
   padding-bottom: 0.5rem;
+  color: var(--heading-color);
 }
 
 .techGrid {
@@ -215,31 +223,31 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem;
-  background-color: #25252a;
+  background-color: var(--surface-color);
   border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 500;
   transition: transform 0.2s ease;
-  border: 1px solid #333;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  color: var(--default-color);
 }
 .techItem:hover {
   transform: translateY(-5px);
-  background-color: #2f2f35;
+  background-color: color-mix(in srgb, var(--surface-color), #000 5%);
 }
 .techItem svg {
   font-size: 2.5rem;
 }
 
-/* --- FITUR BARU: STICKY COLUMN --- */
+/* --- STICKY COLUMN --- */
 .rightColumn {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   min-width: 0;
-  /* Membuat kolom ini "menempel" saat scroll */
   position: sticky;
-  top: 100px; /* Jarak dari atas viewport */
-  align-self: flex-start; /* Penting untuk sticky di dalam grid */
+  top: 100px;
+  align-self: flex-start;
 }
 
 .previewContainer {
@@ -248,14 +256,16 @@
   aspect-ratio: 16 / 10;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  border: 1px solid #333;
+  box-shadow: 0 10px 30px
+    color-mix(in srgb, var(--background-color), transparent 70%);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
 .previewContainer:hover {
   transform: scale(1.02);
-  box-shadow: 10px 15px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 10px 15px 40px
+    color-mix(in srgb, var(--background-color), transparent 60%);
 }
 
 .previewImage {
@@ -263,7 +273,6 @@
   transition: transform 0.4s ease;
 }
 
-/* --- FITUR BARU: STYLE UNTUK VIDEO --- */
 .video {
   width: 100%;
   height: 100%;
@@ -276,8 +285,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #25252a;
-  color: #a0a0a0;
+  background-color: var(--surface-color);
+  color: var(--hero-text-color-secondary);
   border-radius: 12px;
 }
 
@@ -292,7 +301,7 @@
 
 .swiperContainer :global(.swiper-button-next),
 .swiperContainer :global(.swiper-button-prev) {
-  color: #03dac6;
+  color: var(--hero-highlight-color);
   transition: opacity 0.3s ease;
 }
 
@@ -301,28 +310,28 @@
 }
 
 .swiperContainer :global(.swiper-pagination-bullet) {
-  background: #888;
+  background: var(--hero-text-color-secondary);
   opacity: 0.8;
 }
 
 .swiperContainer :global(.swiper-pagination-bullet-active) {
-  background: #03dac6;
+  background: var(--hero-highlight-color);
   opacity: 1;
 }
 
 .featuresSection {
-  background-color: #25252a;
+  background-color: var(--surface-color);
   padding: 2rem;
   border-radius: 12px;
-  border: 1px solid #333;
-  border-top: 3px solid #03dac6;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  border-top: 3px solid var(--hero-highlight-color);
 }
 
 .featuresTitle {
   font-size: 1.5rem;
   margin-top: 0;
   margin-bottom: 1.5rem;
-  color: #fff;
+  color: var(--heading-color);
 }
 
 .featuresList {
@@ -338,32 +347,34 @@
   padding-left: 1.5rem;
   position: relative;
   line-height: 1.6;
+  color: var(--default-color);
 }
 
 .featuresList li::before {
   content: "✓";
   position: absolute;
   left: 0;
-  color: #03dac6;
+  color: var(--hero-highlight-color);
   font-weight: bold;
 }
 
-/* --- FITUR BARU: STYLE UNTUK BAGIAN CHALLENGES --- */
+/* --- BAGIAN CHALLENGES --- */
 .challengesSection {
   margin-top: 2rem;
   padding: 2rem;
-  background-color: rgba(37, 37, 42, 0.5); /* Sedikit transparan */
+  background-color: color-mix(in srgb, var(--surface-color), transparent 50%);
   border-radius: 12px;
-  border: 1px solid #333;
-  backdrop-filter: blur(5px); /* Efek glassmorphism */
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  backdrop-filter: blur(5px);
 }
 
 .challengesTitle {
   font-size: 1.5rem;
   margin-top: 0;
   margin-bottom: 2rem;
-  color: #fff;
-  border-bottom: 2px solid #333;
+  color: var(--heading-color);
+  border-bottom: 2px solid
+    color-mix(in srgb, var(--heading-color), transparent 90%);
   padding-bottom: 0.5rem;
 }
 
@@ -381,6 +392,7 @@
   font-size: 1.1rem;
   font-weight: bold;
   margin-bottom: 0.75rem;
+  color: var(--heading-color);
 }
 
 .challengeIcon {
@@ -388,24 +400,23 @@
 }
 
 .solutionIcon {
-  color: #03dac6; /* Teal untuk solusi */
+  color: var(--hero-highlight-color);
 }
 
 .challengeBlock p {
   line-height: 1.7;
-  color: #c5c5c5;
+  color: var(--default-color);
   margin: 0;
-  padding-left: 2.25rem; /* Sejajar dengan teks header */
-  border-left: 2px solid #444;
+  padding-left: 2.25rem;
+  border-left: 2px solid
+    color-mix(in srgb, var(--heading-color), transparent 85%);
 }
-/* ------------------------------------------- */
 
 @media (max-width: 992px) {
   .mainContent {
     grid-template-columns: 1fr;
   }
   .rightColumn {
-    /* Non-aktifkan sticky di mobile */
     position: static;
     order: -1;
   }

@@ -1,30 +1,36 @@
-/* src/components/Footer/Footer.module.css */
+/* src/components/Footer/Footer.module.css (SUDAH DIPERBAIKI) */
+
 .footer {
   width: 100%;
-  padding: 3rem 1rem; /* Padding lebih besar untuk konten */
-  background-color: #0d0d1a; /* Warna background sangat gelap */
-  color: #e0e0e0; /* Warna teks dasar terang */
+  padding: 3rem 1rem;
+  /* [DIUBAH] Menggunakan variabel untuk background dan warna teks */
+  background-color: var(--contrast-color);
+  color: var(--default-color);
   text-align: center;
-  margin-top: 6rem; /* Jarak dari konten di atasnya */
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.6); /* Shadow lebih tebal di bagian atas */
-  border-top: 2px solid rgba(3, 218, 198, 0.2); /* Garis teal yang lebih tebal */
+  margin-top: 6rem;
+  /* [DIUBAH] Shadow dan border yang adaptif */
+  box-shadow: 0 -5px 20px color-mix(in srgb, var(--heading-color), transparent
+        95%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--heading-color), transparent 90%);
   position: relative;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .footerContent {
-  max-width: 1200px; /* Batasi lebar konten footer */
-  margin: 0 auto; /* Tengahkan konten footer */
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-/* Social Links Styling - SUDAH DIPERBAIKI */
+/* Social Links Styling */
 .socialLinks {
-  margin-bottom: 1.5rem; /* Jarak dari motto */
+  margin-bottom: 1.5rem;
   display: flex;
-  gap: 1.5rem; /* Jarak antar ikon */
+  gap: 1.5rem;
 }
 
 .socialLinks a {
@@ -34,64 +40,58 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  /* 'color' dihapus dari sini agar tidak menimpa warna asli ikon SVG */
-  font-size: 1.5rem; /* Ukuran ini akan diwarisi oleh ikon SVG */
+  /* [DIUBAH] Border adaptif */
+  border: 2px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  font-size: 1.5rem;
   transition: all 0.3s ease;
   text-decoration: none;
+  color: var(--default-color); /* [DIUBAH] Warna ikon default */
 }
 
 .socialLinks a:hover {
-  background-color: var(--hero-highlight-color);
-  border-color: var(--hero-highlight-color);
+  /* [DIUBAH] Warna hover menggunakan variabel aksen */
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color); /* [DIUBAH] Warna ikon saat hover */
   transform: translateY(-5px);
   box-shadow: 0 5px 15px
-    color-mix(in srgb, var(--hero-highlight-color), transparent 60%);
-}
-
-/* KUNCI UTAMA: Atur warna ikon SVG secara terpisah */
-.socialLinks a svg {
-  transition: color 0.3s ease;
-  /* Di keadaan normal, biarkan warna asli dari SVG. */
-  /* `color` tidak di-set di sini. */
-}
-
-.socialLinks a:hover svg {
-  /* Saat hover, barulah kita beri warna sesuai tema hover */
-  color: var(--hero-background-dark, #1a1a2e);
+    color-mix(in srgb, var(--accent-color), transparent 60%);
 }
 
 /* Motto/Slogan Styling */
 .motto {
-  margin-bottom: 1rem; /* Jarak dari copyright */
+  margin-bottom: 1rem;
   font-size: 1.1rem;
-  color: var(--hero-accent-color, #bb86fc); /* Warna ungu untuk motto */
+  /* [DIUBAH] Warna motto menggunakan variabel aksen hero */
+  color: var(--hero-accent-color);
   font-weight: 500;
   line-height: 1.5;
-  text-shadow: 0 0 5px rgba(187, 134, 252, 0.3); /* Sedikit glow pada motto */
+  text-shadow: 0 0 10px
+    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
 }
 
 /* Copyright Styling */
 .copyright {
-  margin: 0; /* Hapus margin default pada paragraf */
-  font-size: 0.9rem; /* Ukuran font sedikit lebih kecil */
-  color: #a0a0a0; /* Sedikit lebih abu-abu untuk teks copyright */
+  margin: 0;
+  font-size: 0.9rem;
+  /* [DIUBAH] Warna copyright menggunakan variabel teks sekunder */
+  color: var(--hero-text-color-secondary);
   line-height: 1.5;
 }
 
 /* Responsivitas */
 @media (min-width: 768px) {
   .footer {
-    padding: 3rem 2rem; /* Padding samping desktop */
+    padding: 3rem 2rem;
   }
   .socialLinks {
-    margin-bottom: 2rem; /* Jarak lebih besar di desktop */
+    margin-bottom: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   .socialLinks {
-    gap: 1rem; /* Kurangi jarak antar ikon di layar sangat kecil */
+    gap: 1rem;
   }
   .socialLinks a {
     width: 40px;

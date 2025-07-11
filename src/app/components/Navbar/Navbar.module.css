@@ -1,15 +1,16 @@
-/* src/components/Navbar/Navbar.module.css */
+/* src/components/Navbar/Navbar.module.css (SUDAH DIPERBAIKI) */
 
 .navbar {
   width: 100%;
-  /* [PERBAIKAN] padding-block dihapus agar tinggi navbar benar-benar 80px */
-  background-color: rgba(13, 13, 26, 0.9);
+  /* [DIUBAH] Menggunakan variabel --surface-color yang lebih sesuai untuk latar */
+  background-color: color-mix(in srgb, var(--surface-color), transparent 15%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 8px
+    color-mix(in srgb, var(--heading-color), transparent 90%);
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +22,7 @@
 
 .navbarContentWrapper {
   width: 100%;
-  max-width: var(--content-max-width);
+  max-width: var(--content-max-width, 1200px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -59,7 +60,7 @@
 }
 
 .navItem a {
-  color: var(--nav-color, #e0e0e0);
+  color: var(--nav-color);
   text-decoration: none;
   font-size: 1.05rem;
   font-weight: 500;
@@ -76,13 +77,13 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  background-color: var(--nav-hover-color, #bb86fc);
+  background-color: var(--nav-hover-color);
   transition: width 0.3s ease;
 }
 
 .navItem a:hover,
 .navItem a.active {
-  color: var(--nav-hover-color, #bb86fc);
+  color: var(--nav-hover-color);
 }
 
 .navItem a:hover::after,
@@ -115,7 +116,7 @@
   display: block;
   width: 25px;
   height: 3px;
-  background-color: var(--nav-color, #e0e0e0);
+  background-color: var(--nav-color);
   margin: 5px 0;
   transition: all 0.3s ease-in-out;
   border-radius: 2px;
@@ -161,12 +162,12 @@
     right: -100%;
     width: min(75vw, 320px);
     height: 100vh;
-    background-color: var(--nav-mobile-background-color, #0d0d1a);
+    background-color: var(--nav-mobile-background-color);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 0;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
     transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     z-index: 1010;
     padding: 0;
@@ -189,11 +190,13 @@
     display: block;
     padding: 1rem 0;
     width: 100%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--heading-color), transparent 95%);
   }
 
   .navItem:first-child a {
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid
+      color-mix(in srgb, var(--heading-color), transparent 95%);
   }
 
   .navItem a::after {
@@ -201,8 +204,9 @@
   }
 
   .navItem a.active {
-    background-color: rgba(3, 218, 198, 0.1);
-    color: var(--hero-highlight-color);
+    /* [DIHAPUS] Latar belakang dihapus agar lebih bersih */
+    /* background-color: color-mix(in srgb, var(--accent-color), transparent 90%); */
+    color: var(--accent-color);
   }
 
   .themeToggleMobile {
@@ -211,13 +215,14 @@
     align-items: center;
     margin-top: 2rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid
+      color-mix(in srgb, var(--heading-color), transparent 90%);
     width: 80%;
     text-align: center;
   }
 
   .themeToggleMobile p {
-    color: #a0a0a0;
+    color: var(--default-color);
     font-size: 0.9rem;
     margin-bottom: 1rem;
     text-transform: uppercase;

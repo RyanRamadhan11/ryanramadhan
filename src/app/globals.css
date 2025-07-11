@@ -10,50 +10,55 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Raleway", sans-serif;
   --nav-font: "Poppins", sans-serif;
+
+  --content-max-width: 1200px;
+  --content-padding-x: 2rem;
+  --navbar-height: 5rem;
 }
 
 /* * ==========================================
   * WARNA UNTUK LIGHT & DARK MODE
   * ==========================================
-  */
+*/
 
-/* [DEFAULT] Variabel Warna untuk Light Mode */
-:root,
 [data-theme="light"] {
-  --background-color: #ffffff;
-  --default-color: #2e2e2e;
-  --heading-color: #222222;
-  --accent-color: #34b7a7;
-  --surface-color: #f8f9fa;
-  --contrast-color: #ffffff;
+  --button-color: #d8d8d8;
+  --button2-color: #06073a;
+  --headingb-color: #000000;
+  --background-color: #f8f9fa; /* Latar belakang sedikit abu-abu, lebih lembut dari putih total */
+  --surface-color: #ffffff; /* Warna untuk kartu, navbar, dll. */
+  --default-color: #495057; /* Warna teks utama yang nyaman dibaca */
+  --heading-color: #212529; /* Warna judul, lebih gelap dan tegas */
+  --accent-color: #0d6efd; /* Warna aksen biru yang modern dan profesional */
+  --contrast-color: #ffffff; /* Warna teks di atas elemen dengan warna aksen */
 
   /* Nav Menu Colors */
-  --nav-color: #444444;
-  --nav-hover-color: #34b7a7;
-  --nav-mobile-background-color: #ffffff;
+  --nav-color: #495057; /* Warna link nav */
+  --nav-hover-color: #0d6efd; /* Warna hover link nav (biru) */
+  --nav-mobile-background-color: #ffffff; /* BG nav mobile */
   --nav-dropdown-background-color: #ffffff;
-  --nav-dropdown-color: #444444;
-  --nav-dropdown-hover-color: #34b7a7;
+  --nav-dropdown-color: #495057;
+  --nav-dropdown-hover-color: #0d6efd;
 
   /* Hero Section & Global Colors */
-  --content-max-width: 1200px;
-  --content-padding-x: 2rem;
-  --navbar-height: 5rem;
-  --hero-highlight-color: #03dac6;
-  --hero-accent-color: #bb86fc;
-  --hero-text-color-primary: #e0e0e0;
-  --hero-text-color-secondary: #a0a0a0;
-  --hero-background-dark: #1a1a2e;
+  --hero-highlight-color: #264472; /* Highlight biru */
+  --hero-accent-color: #6f42c1; /* Aksen ungu yang lebih soft */
+  --hero-text-color-primary: #212529; /* Teks utama hero (gelap) */
+  --hero-text-color-secondary: #6c757d; /* Teks sekunder/tagline hero (abu-abu) */
+  --hero-background-dark: #1a1a2e; /* Ini tetap untuk referensi jika ada elemen gelap */
   --hero-surface-dark: #1f1f3a;
 }
 
-/* Variabel Warna untuk Dark Mode */
+/* Variabel Warna untuk Dark Mode (Sedikit Penyesuaian) */
 [data-theme="dark"] {
-  --background-color: #121212;
+  --background-color: #000000;
   --default-color: #e0e0e0;
   --heading-color: #ffffff;
+  --button-color: #280331;
+  --button2-color: #06073a;
+  --headingb-color: #ffffff;
   --accent-color: #03dac6; /* Teal yang lebih cerah */
-  --surface-color: #1e1e1e;
+  --surface-color: #000000;
   --contrast-color: #000000;
 
   /* Nav Menu Colors */

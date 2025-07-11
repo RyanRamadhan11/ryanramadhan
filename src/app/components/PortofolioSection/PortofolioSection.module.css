@@ -1,10 +1,9 @@
-/*
-// 📁 src/components/PortofolioSection/PortofolioSection.module.css
-*/
+/* src/components/PortofolioSection/PortofolioSection.module.css (SUDAH DIPERBAIKI) */
 
 .portofolioSection {
   padding: 5rem 0;
-  background-color: #121212;
+  background-color: var(--background-color);
+  position: relative;
 }
 
 .titleContainer {
@@ -21,9 +20,13 @@
   margin-bottom: 15px;
   font-family: var(--font-jetbrains, sans-serif);
   display: inline-block;
-  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 50%,
+    var(--hero-accent-color) 100%
+  );
   background-size: 200% auto;
-  color: #fff;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -36,7 +39,7 @@
   display: block;
   width: 80px;
   height: 5px;
-  background: #c427c9;
+  background: var(--hero-accent-color);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -53,7 +56,7 @@
   }
 }
 
-/* --- [BARU] Kontainer Filter Modern --- */
+/* --- Kontainer Filter Modern --- */
 .filtersContainer {
   display: flex;
   justify-content: center;
@@ -62,17 +65,18 @@
   gap: 1.5rem;
   margin: 2rem auto 3.5rem auto;
   padding: 1rem 1.5rem;
-  background: rgba(30, 30, 36, 0.5);
+  background: color-mix(in srgb, var(--surface-color), transparent 50%);
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  box-shadow: 0 8px 32px
+    color-mix(in srgb, var(--background-color), transparent 60%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   max-width: 90%;
   width: fit-content;
 }
 
-/* --- [BARU] Wrapper & Input Pencarian --- */
+/* --- Wrapper & Input Pencarian --- */
 .searchWrapper {
   position: relative;
   display: flex;
@@ -80,11 +84,15 @@
 }
 
 .searchInput {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #e0e0e0;
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
+  color: var(--default-color);
   padding: 0.75rem 1.5rem 0.75rem 2.8rem;
   border-radius: 12px;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   font-weight: 500;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -93,21 +101,24 @@
 
 .searchInput:focus {
   outline: none;
-  border-color: var(--hero-accent-color);
-  background-color: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 3px
-    color-mix(in srgb, var(--hero-accent-color), transparent 80%);
+  border-color: var(--accent-color);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 30%
+  );
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color), transparent 80%);
 }
 
 .searchIcon {
   position: absolute;
   left: 1rem;
-  color: #888;
+  color: var(--hero-text-color-secondary);
   font-size: 1.1rem;
   pointer-events: none;
 }
 
-/* --- [BARU] Grup Filter Kategori --- */
+/* --- Grup Filter Kategori --- */
 .filterGroup {
   display: flex;
   align-items: center;
@@ -116,7 +127,11 @@
 .filterContainer {
   display: flex;
   gap: 0.5rem;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
   padding: 0.5rem;
   border-radius: 12px;
 }
@@ -125,7 +140,7 @@
   padding: 0.6rem 1.5rem;
   border: none;
   background-color: transparent;
-  color: #ccc;
+  color: var(--default-color);
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
@@ -134,18 +149,22 @@
 }
 
 .filterButton:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background-color: color-mix(in srgb, var(--heading-color), transparent 90%);
+  color: var(--heading-color);
 }
 
 .filterButton.active {
-  color: #121212;
-  background: linear-gradient(90deg, #c427c9, #03dac6);
+  color: var(--contrast-color);
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color),
+    var(--hero-highlight-color)
+  );
   box-shadow: 0 4px 15px
     color-mix(in srgb, var(--hero-accent-color), transparent 70%);
 }
 
-/* --- [BARU] Wrapper & Dropdown Tahun --- */
+/* --- Wrapper & Dropdown Tahun --- */
 .yearFilterWrapper {
   position: relative;
   display: flex;
@@ -156,11 +175,15 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #e0e0e0;
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 20%
+  );
+  color: var(--default-color);
   padding: 0.75rem 2.5rem 0.75rem 1.2rem;
   border-radius: 12px;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
   font-weight: 500;
   font-size: 1rem;
   cursor: pointer;
@@ -179,12 +202,8 @@
 }
 
 .yearDropdown option {
-  background-color: #1e1e24;
-  color: #e0e0e0;
-}
-
-.yearIcon {
-  display: none;
+  background-color: var(--surface-color);
+  color: var(--default-color);
 }
 
 /* --- Media Query untuk Filter --- */
@@ -204,12 +223,12 @@
   }
 }
 
-/* --- [BARU] Gaya untuk Skeleton Loader --- */
+/* --- Gaya untuk Skeleton Loader --- */
 .skeletonWrapper {
   pointer-events: none;
 }
 .skeletonElement {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: color-mix(in srgb, var(--heading-color), transparent 92%);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
@@ -224,7 +243,7 @@
   background: linear-gradient(
     to right,
     transparent 0%,
-    rgba(255, 255, 255, 0.1) 50%,
+    color-mix(in srgb, var(--heading-color), transparent 90%) 50%,
     transparent 100%
   );
   animation: shimmer 1.5s infinite;
@@ -308,7 +327,7 @@
 }
 
 .portofolioCard {
-  background: #1e1e24;
+  background: var(--surface-color);
   border-radius: 15px;
   overflow: hidden;
   display: flex;
@@ -317,12 +336,13 @@
   position: relative;
   z-index: 1;
   transition: transform 0.4s ease;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 92%);
 }
 
 .cardWrapper:hover .portofolioCard {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 40px
+    color-mix(in srgb, var(--background-color), transparent 70%);
 }
 
 .carousel {
@@ -330,7 +350,6 @@
   height: 220px;
   position: relative;
 }
-
 .imageContainer {
   width: 100%;
   height: 220px;
@@ -341,18 +360,13 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(30, 30, 36, 0.8) 0%,
-    transparent 60%
-  );
+  background: linear-gradient(to top, var(--surface-color) 0%, transparent 60%);
   z-index: 2;
 }
 
 .carouselImage {
   transition: transform 0.5s ease-in-out;
 }
-
 .cardWrapper:hover .carouselImage {
   transform: scale(1.1);
 }
@@ -388,7 +402,7 @@
     var(--hero-accent-color),
     transparent 85%
   );
-  color: var(--hero-accent-color, #03dac6);
+  color: var(--hero-accent-color);
   border: 1px solid
     color-mix(in srgb, var(--hero-accent-color), transparent 70%);
 }
@@ -401,20 +415,20 @@
     var(--hero-highlight-color),
     transparent 85%
   );
-  color: var(--hero-highlight-color, #c427c9);
+  color: var(--hero-highlight-color);
   border: 1px solid
     color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 .header h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #f0f0f0;
+  color: var(--heading-color);
   margin: 0;
   line-height: 1.3;
 }
 .portofolioContent p {
   font-size: 0.95rem;
-  color: #a0a0a0;
+  color: var(--default-color);
   margin-bottom: 1.5rem;
   line-height: 1.6;
   flex-grow: 1;
@@ -429,14 +443,15 @@
   font-size: 1.7rem;
   cursor: help;
   transition: all 0.3s ease;
-  color: #888;
+  color: var(--hero-text-color-secondary);
 }
 .techIcon:hover {
   transform: scale(1.2) translateY(-2px);
   filter: drop-shadow(0 0 5px currentColor);
+  color: var(--accent-color);
 }
 
-/* --- [BARU] Styling untuk Aksi Kartu --- */
+/* --- Aksi Kartu --- */
 .cardActions {
   display: flex;
   justify-content: space-between;
@@ -450,8 +465,8 @@
   gap: 0.6rem;
   padding: 0.7rem 1.2rem;
   border-radius: 50px;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: #ccc;
+  background-color: color-mix(in srgb, var(--heading-color), transparent 92%);
+  color: var(--default-color);
   border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -459,20 +474,19 @@
 }
 
 .likeButton:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.2);
+  background-color: color-mix(in srgb, var(--heading-color), transparent 85%);
+  border-color: color-mix(in srgb, var(--heading-color), transparent 80%);
 }
 
+/* Warna like button biarkan hardcoded karena spesifik */
 .likeButton.liked {
   color: #ff4785;
   background-color: rgba(255, 71, 133, 0.1);
   border-color: rgba(255, 71, 133, 0.3);
 }
-
 .likeButton.liked:hover {
   background-color: rgba(255, 71, 133, 0.2);
 }
-
 .likeButton svg {
   font-size: 1.1rem;
 }
@@ -483,21 +497,18 @@
   gap: 0.7rem;
   padding: 0.7rem 1.4rem;
   border-radius: 50px;
-  color: #f0f0f0;
+  color: var(--headingb-color);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
   border: none;
-  background: linear-gradient(
-    90deg,
-    var(--hero-highlight-color),
-    var(--hero-accent-color)
-  );
+  background: linear-gradient(90deg, var(--button-color), var(--button2-color));
   background-size: 200% auto;
   transition: all 0.4s ease;
 }
 
 .detailLink:hover {
+  color: white;
   background-position: right center;
   transform: scale(1.05);
   box-shadow: 0 5px 20px
@@ -522,10 +533,9 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: color-mix(in srgb, var(--heading-color), transparent 60%);
   transition: all 0.3s ease;
 }
-
 .customDotsContainer li {
   cursor: pointer;
 }
@@ -541,8 +551,12 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.4);
-  color: #fff;
+  background-color: color-mix(
+    in srgb,
+    var(--background-color),
+    transparent 60%
+  );
+  color: var(--heading-color);
   display: flex !important;
   align-items: center;
   justify-content: center;
@@ -560,8 +574,8 @@
   right: 10px;
 }
 .slickArrow:hover {
-  background-color: var(--hero-accent-color, #03dac6);
-  color: #121212;
+  background-color: var(--accent-color);
+  color: var(--contrast-color);
   transform: translateY(-50%) scale(1.1);
 }
 .paginationContainer {
@@ -570,22 +584,22 @@
   align-items: center;
   gap: 1rem;
   margin-top: 3rem;
-  color: #ccc;
+  color: var(--default-color);
 }
 .paginationContainer button {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  border: 1px solid #444;
-  background-color: #25252a;
-  color: #ccc;
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 70%);
+  background-color: var(--surface-color);
+  color: var(--default-color);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 .paginationContainer button:hover:not(:disabled) {
-  background-color: var(--hero-accent-color, #03dac6);
-  border-color: var(--hero-accent-color, #03dac6);
-  color: #121212;
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
 }
 .paginationContainer button:disabled {
   opacity: 0.5;
@@ -593,7 +607,7 @@
 }
 .noResults {
   text-align: center;
-  color: #888;
+  color: var(--hero-text-color-secondary);
   margin-top: 4rem;
   font-size: 1.1rem;
 }

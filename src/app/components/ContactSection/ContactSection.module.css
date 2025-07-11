@@ -1,8 +1,7 @@
-/* src/components/ContactSection/ContactSection.module.css */
+/* src/components/ContactSection/ContactSection.module.css (SUDAH DIPERBAIKI) */
 
 .contactSection {
   padding: 5rem 0;
-  background-color: var(--background-color, #121212);
   position: relative;
   overflow: hidden;
 }
@@ -16,7 +15,7 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(187, 134, 252, 0.05),
+    color-mix(in srgb, var(--hero-accent-color), transparent 95%),
     transparent 40%
   );
   animation: backgroundGlow 15s linear infinite;
@@ -38,14 +37,6 @@
   z-index: 1;
 }
 
-.sectionTitle h2 {
-  font-size: clamp(2.5rem, 5vw, 3rem);
-  font-weight: 800;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .animatedGradientTitle {
   font-size: clamp(2.2rem, 5vw, 2.8rem);
   font-weight: 800;
@@ -54,25 +45,26 @@
   margin-bottom: 15px;
   font-family: var(--font-jetbrains, sans-serif);
   display: inline-block;
-
-  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
-  background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-color) 0%,
+    var(--hero-highlight-color) 50%,
+    var(--hero-accent-color) 100%
+  );
   background-size: 200% auto;
-  color: #fff;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientFlow 5s linear infinite;
 }
 
-/* Underline untuk judul */
 .animatedGradientTitle::after {
   content: "";
   position: absolute;
   display: block;
   width: 80px;
   height: 5px;
-  background: #c427c9; /* Warna underline juga di-hardcode */
+  background: var(--hero-accent-color);
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -80,7 +72,6 @@
   opacity: 0.8;
 }
 
-/* Keyframes untuk gradasi bergerak */
 @keyframes gradientFlow {
   0% {
     background-position: 200% center;
@@ -95,8 +86,7 @@
   line-height: 1.7;
   max-width: 600px;
   margin: 1rem auto 0;
-  color: var(--default-color);
-  opacity: 0.8;
+  color: var(--hero-text-color-secondary);
 }
 
 .contactGrid {
@@ -118,7 +108,8 @@
   margin-bottom: 1rem;
 }
 .contactInfo p {
-  opacity: 0.8;
+  color: var(--default-color);
+  opacity: 0.9;
   line-height: 1.6;
   margin-bottom: 2rem;
 }
@@ -147,7 +138,7 @@
 }
 .socialLinks a {
   font-size: 1.8rem;
-  color: #a0a0a0;
+  color: var(--hero-text-color-secondary);
   transition: color 0.3s ease, transform 0.3s ease;
 }
 .socialLinks a:hover {
@@ -159,13 +150,14 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  background-color: rgba(30, 30, 30, 0.7);
+  background-color: color-mix(in srgb, var(--surface-color), transparent 30%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 2.5rem;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 90%);
+  box-shadow: 0 10px 30px
+    color-mix(in srgb, var(--background-color), transparent 80%);
 }
 
 .inputGroup {
@@ -175,10 +167,10 @@
 .inputGroup textarea {
   width: 100%;
   padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid #444;
+  background-color: var(--background-color);
+  border: 1px solid color-mix(in srgb, var(--heading-color), transparent 85%);
   border-radius: 8px;
-  color: #fff;
+  color: var(--heading-color);
   font-size: 1rem;
   font-family: var(--default-font);
   transition: border-color 0.3s ease;
@@ -191,15 +183,15 @@
   position: absolute;
   left: 1rem;
   top: 1rem;
-  color: #aaa;
+  color: var(--hero-text-color-secondary);
   pointer-events: none;
   transition: all 0.3s ease;
-  background-color: #25252a; /* Sesuaikan dengan warna background form */
+  background-color: var(--background-color);
 }
 .inputGroup input:focus + label,
-.inputGroup input:valid + label,
+.inputGroup input:not(:placeholder-shown) + label,
 .inputGroup textarea:focus + label,
-.inputGroup textarea:valid + label {
+.inputGroup textarea:not(:placeholder-shown) + label {
   top: -0.6rem;
   left: 0.8rem;
   font-size: 0.8rem;
@@ -210,6 +202,11 @@
 .inputGroup textarea:focus {
   outline: none;
   border-color: var(--hero-accent-color);
+}
+/* Add a placeholder to make the label animation work */
+.inputGroup input::placeholder,
+.inputGroup textarea::placeholder {
+  color: transparent;
 }
 
 .submitButton {
@@ -222,7 +219,7 @@
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--hero-background-dark, #121212);
+  color: var(--contrast-color);
   cursor: pointer;
   background-image: linear-gradient(
     to right,
@@ -261,7 +258,11 @@
   font-weight: 600;
 }
 .successMessage {
-  background-color: rgba(3, 218, 198, 0.15);
+  background-color: color-mix(
+    in srgb,
+    var(--hero-highlight-color),
+    transparent 85%
+  );
   color: var(--hero-highlight-color);
 }
 .errorMessage {
@@ -269,7 +270,6 @@
   color: #ff5252;
 }
 
-/* --- [BARU] Wrapper untuk reCAPTCHA agar bisa di-scale --- */
 .recaptchaWrapper {
   display: flex;
   justify-content: center;
@@ -292,10 +292,6 @@
 }
 
 @media (max-width: 767px) {
-  .inputGroup {
-    width: 90%;
-  }
-
   .contactSection {
     padding: 4rem 1rem;
   }
@@ -303,10 +299,8 @@
     padding: 2rem 1.5rem;
   }
   .socialLinks {
-    gap: 1.5rem; /* Jarak ikon sosial diperbesar sedikit */
+    gap: 1.5rem;
   }
-
-  /* [DIUBAH] Membuat info kontak rata kiri di mobile agar rapi */
   .contactInfo {
     text-align: left;
   }
@@ -316,21 +310,16 @@
   }
 }
 
-/* [BARU] Media query khusus untuk layar sangat sempit (di bawah 420px) */
 @media (max-width: 420px) {
   .contactForm {
     padding: 1.5rem 1rem;
   }
-
-  /* Trik untuk scale reCAPTCHA */
   .recaptchaWrapper {
     width: 100%;
     transform: scale(0.9);
     transform-origin: 0 0;
-    height: 70px; /* Sesuaikan tinggi agar tidak ada space kosong */
+    height: 70px;
   }
-
-  /* Tombol send tidak lagi full-width */
   .submitButton {
     align-self: center;
     width: fit-content;

@@ -1,3 +1,5 @@
+/* src/app/components/HeroSection/HeroSection.module.css (SUDAH DIPERBAIKI) */
+
 /* Keyframes untuk kursor dan animasi border */
 @keyframes blink-caret {
   from,
@@ -9,7 +11,6 @@
   }
 }
 
-/* [PERUBAHAN] Animasi baru untuk border gradasi */
 @keyframes glowing-border {
   0% {
     background-position: 0% 50%;
@@ -34,7 +35,7 @@
   overflow-x: hidden;
   color: var(--hero-text-color-primary);
   margin-inline: auto;
-  max-width: var(--content-max-width);
+  max-width: var(--content-max-width, 1200px);
   box-sizing: border-box;
 }
 
@@ -53,9 +54,10 @@
   margin: 0;
   line-height: 1.1;
   font-family: var(--font-jetbrains, sans-serif);
+  /* [DIUBAH] Gradien ini sekarang akan terlihat bagus di kedua tema */
   background-image: linear-gradient(
     to right,
-    #c427c9,
+    var(--hero-accent-color),
     var(--hero-highlight-color)
   );
   -webkit-background-clip: text;
@@ -72,8 +74,9 @@
   padding-bottom: 1rem;
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 500;
+  /* [DIUBAH] Menggunakan variabel untuk teks utama */
   color: var(--hero-text-color-primary);
-  min-height: 2.5rem;
+  min-height: 2.5rem; /* Memberi ruang agar layout tidak "loncat" */
   margin: 0.5rem 0 0.5rem;
 }
 
@@ -110,8 +113,9 @@
 }
 
 .statCard {
-  background: rgba(196, 39, 201, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* [DIUBAH] Background & border yang adaptif */
+  background: color-mix(in srgb, var(--accent-color), transparent 92%);
+  border: 1px solid color-mix(in srgb, var(--accent-color), transparent 85%);
   border-radius: 12px;
   padding: 1rem 1.5rem;
   text-align: center;
@@ -121,20 +125,20 @@
 }
 
 .statCard:hover {
-  background: rgba(6, 182, 212, 0.2);
+  background: color-mix(in srgb, var(--accent-color), transparent 88%);
   transform: translateY(-5px);
 }
 
 .statCardNumber {
-  font-size: clamp(1rem, 5vw, 1.5rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 700;
-  color: var(--hero-highlight-color);
+  color: var(--accent-color);
   line-height: 1;
   font-family: var(--font-jetbrains, sans-serif);
 }
 
 .statCardDescription {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--hero-text-color-secondary);
   margin-top: 0.5rem;
   letter-spacing: 0.05em;
@@ -198,11 +202,10 @@
     var(--hero-accent-color) 100%
   );
   background-size: 200% auto;
-  color: var(--hero-background-dark);
+  color: var(--contrast-color);
 }
 .button:hover {
   background-position: right center;
-  color: black;
   transform: translateY(-3px);
   box-shadow: 0 7px 20px
       color-mix(in srgb, var(--hero-accent-color), transparent 60%),
@@ -215,7 +218,7 @@
 }
 .buttonSecondary:hover {
   background-color: var(--hero-highlight-color);
-  color: var(--hero-background-dark);
+  color: var(--contrast-color);
   transform: translateY(-3px);
   box-shadow: 0 7px 20px
       color-mix(in srgb, var(--hero-highlight-color), transparent 70%),
@@ -223,34 +226,34 @@
 }
 
 /*--------------------------------------------------------------
-# [PERUBAHAN] Profile Image dengan Efek Glowing
+# Profile Image
 --------------------------------------------------------------*/
 .profileImageWrapper {
   position: relative;
   z-index: 1;
-  border-radius: 20px; /* Sudut lebih bulat */
-  padding: 3px; /* Ketebalan border */
+  border-radius: 20px;
+  padding: 3px;
   max-width: 450px;
   width: 90%;
   aspect-ratio: 1 / 1;
-  background: linear-gradient(45deg, #f02d7d, #0f87ff); /* Gradasi border */
-  box-shadow: 0 0 30px rgba(240, 45, 125, 0.4), 0 0 30px rgba(15, 135, 255, 0.4); /* Shadow sesuai gradasi */
-  animation: glowing-border 8s ease-in-out infinite; /* Terapkan animasi baru */
-  background-size: 200% 200%; /* Ukuran background lebih besar untuk animasi */
+  background: linear-gradient(45deg, #f02d7d, #0f87ff);
+  box-shadow: 0 0 30px rgba(240, 45, 125, 0.4), 0 0 30px rgba(15, 135, 255, 0.4);
+  animation: glowing-border 8s ease-in-out infinite;
+  background-size: 200% 200%;
 }
 
 .profileImage {
   position: relative;
   z-index: 2;
   object-fit: cover;
-  border-radius: 18px; /* Sesuaikan agar pas dengan wrapper */
+  border-radius: 18px;
   width: 100%;
   height: 100%;
 }
 
 .windowControls {
   position: absolute;
-  top: 15px; /* Sesuaikan posisi agar di dalam padding */
+  top: 15px;
   left: 15px;
   display: flex;
   gap: 8px;
@@ -271,6 +274,7 @@
 .green {
   background-color: #27c93f;
 }
+
 .macbookLogo {
   position: absolute;
   top: 15px;
@@ -313,7 +317,6 @@
     padding-right: 0;
   }
   .callToAction,
-  .socialIcons,
   .statsContainer,
   .frameworkIcons {
     justify-content: center;
@@ -352,11 +355,10 @@
     flex-direction: row;
     text-align: left;
     justify-content: space-between;
-    padding-top: var(--navbar-height);
-    padding-bottom: var(--navbar-height);
+    padding-top: var(--navbar-height, 80px);
+    padding-bottom: var(--navbar-height, 80px);
   }
   .callToAction,
-  .socialIcons,
   .statsContainer,
   .frameworkIcons {
     justify-content: flex-start;
