@@ -11,6 +11,8 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-visually-hidden": "^1.2.3",
+    "@react-three/drei": "^10.5.0",
+    "@react-three/fiber": "^9.2.0",
     "axios": "^1.10.0",
     "cmdk": "^1.1.1",
     "firebase": "^11.10.0",
@@ -25,7 +27,8 @@
     "react-slick": "^0.30.3",
     "react-vertical-timeline-component": "^3.5.3",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.2.8"
+    "swiper": "^11.2.8",
+    "three": "^0.178.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

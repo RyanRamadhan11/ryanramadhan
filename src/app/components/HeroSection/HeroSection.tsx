@@ -16,10 +16,11 @@ import {
   SiNextdotjs,
   SiSpring,
   SiLaravel,
-  SiReact, // <-- [DITAMBAHKAN] Ikon untuk React & React Native
-  SiDotnet, // <-- [DITAMBAHKAN] Ikon untuk .NET
+  SiReact,
+  SiDotnet,
 } from "react-icons/si";
 import styles from "./HeroSection.module.css";
+import Background3D from "./Background3D";
 
 // Data untuk teks animasi
 const roles = [
@@ -29,7 +30,7 @@ const roles = [
   "Tech Enthusiast",
 ];
 
-// [DIPERBARUI] Data untuk highlight framework dengan ikon baru
+// Data untuk highlight framework dengan ikon baru
 const frameworks = [
   { name: "Laravel", icon: SiLaravel, color: "#FF2D20" },
   { name: "React JS", icon: SiReact, color: "#61DAFB" },
@@ -124,13 +125,13 @@ const HeroSection: FC = () => {
     return () => clearTimeout(typer);
   }, [displayedText, isDeleting, currentRoleIndex]);
 
-  // --- [FITUR BARU] Logika untuk Efek 3D Tilt Interaktif ---
+  // --- Logika untuk Efek 3D Tilt Interaktif ---
   const heroRef = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-200, 200], [15, -15]); // Semakin besar rentang, semakin kecil efeknya
-  const rotateY = useTransform(x, [-200, 200], [-15, 15]);
+  const rotateX = useTransform(y, [-200, 200], [10, -10]);
+  const rotateY = useTransform(x, [-200, 200], [-10, 10]);
 
   const handleMouseMove = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
@@ -148,133 +149,143 @@ const HeroSection: FC = () => {
   };
 
   return (
+    // .hero sekarang menjadi container full-width untuk background
     <section
       ref={heroRef}
       className={styles.hero}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className={styles.heroContent}>
-        {/* --- Blok Teks Perkenalan --- */}
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <span className={styles.hello}>Hello, I&apos;m </span>
-          <br />
-          <span className={styles.highlight}>Ryan Ramadhan</span>.
-        </motion.h1>
+      <Background3D />
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className={styles.roleLine}
-        >
-          Crafting digital experiences as a <br />
-          <span className={styles.animatedRole}>{displayedText}</span>
-          <span className={styles.cursor}>|</span>
-        </motion.p>
+      {/* .heroInner membungkus semua konten agar tetap di tengah */}
+      <div className={styles.heroInner}>
+        <div className={styles.heroContent}>
+          {/* --- Blok Teks Perkenalan --- */}
+          <motion.h1
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className={styles.hello}>Hello, I&apos;m </span>
+            <br />
+            <span className={styles.highlight}>Ryan Ramadhan</span>.
+          </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className={styles.tagline}
-        >
-          Building innovative solutions, one line of code at a time.
-        </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className={styles.roleLine}
+          >
+            Crafting digital experiences as a <br />
+            <span className={styles.animatedRole}>{displayedText}</span>
+            <span className={styles.cursor}>|</span>
+          </motion.p>
 
-        {/* --- Blok Statistik dengan Kartu Animasi --- */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className={styles.tagline}
+          >
+            Building innovative solutions, one line of code at a time.
+          </motion.p>
+
+          {/* --- Blok Statistik dengan Kartu Animasi --- */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className={styles.statsContainer}
+          >
+            <AnimatedStatCard
+              value={25}
+              suffix="+"
+              label="Projects Completed"
+            />
+            <AnimatedStatCard
+              value={3}
+              suffix="+ Years"
+              label="Professional Experience"
+            />
+          </motion.div>
+
+          {/* --- Blok Framework Highlight --- */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className={styles.frameworkHighlight}
+          >
+            <h4 className={styles.highlightTitle}>My Go-To Tech:</h4>
+            <div className={styles.frameworkIcons}>
+              {frameworks.map((fw) => (
+                <div
+                  key={fw.name}
+                  className={styles.frameworkIconWrapper}
+                  title={fw.name}
+                  style={{ "--icon-color": fw.color } as React.CSSProperties}
+                >
+                  <fw.icon className={styles.frameworkIcon} />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* --- Blok Tombol Call to Action --- */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            className={styles.callToAction}
+          >
+            <Link href="/portofolio" className={styles.button}>
+              Explore My Projects <FiArrowRight />
+            </Link>
+            <Link href="/contact" className={styles.buttonSecondary}>
+              Let&apos;s Connect <FiLink />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* --- Blok Foto Profil dengan Efek 3D --- */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className={styles.statsContainer}
+          className={styles.profileImageWrapper}
+          style={{
+            rotateX,
+            rotateY,
+            transformStyle: "preserve-3d",
+          }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
         >
-          <AnimatedStatCard value={25} suffix="+" label="Projects Completed" />
-          <AnimatedStatCard
-            value={3}
-            suffix="+ Years"
-            label="Professional Experience"
+          <div
+            className={styles.windowControls}
+            style={{ transform: "translateZ(40px)" }}
+          >
+            <span className={`${styles.dot} ${styles.red}`}></span>
+            <span className={`${styles.dot} ${styles.yellow}`}></span>
+            <span className={`${styles.dot} ${styles.green}`}></span>
+          </div>
+          <Image
+            src="/images/ryan.jpg"
+            alt="Ryan Ramadhan Profile Picture"
+            width={400}
+            height={400}
+            className={styles.profileImage}
+            priority
+            style={{ transform: "translateZ(20px)" }}
           />
-        </motion.div>
-
-        {/* --- Blok Framework Highlight --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className={styles.frameworkHighlight}
-        >
-          <h4 className={styles.highlightTitle}>My Go-To Tech:</h4>
-          <div className={styles.frameworkIcons}>
-            {frameworks.map((fw) => (
-              <div
-                key={fw.name}
-                className={styles.frameworkIconWrapper}
-                title={fw.name}
-                style={{ "--icon-color": fw.color } as React.CSSProperties}
-              >
-                <fw.icon className={styles.frameworkIcon} />
-              </div>
-            ))}
+          <div
+            className={styles.macbookLogo}
+            style={{ transform: "translateZ(40px)" }}
+          >
+            <i className="bi bi-code-slash"></i>
           </div>
         </motion.div>
-
-        {/* --- Blok Tombol Call to Action --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.0 }}
-          className={styles.callToAction}
-        >
-          <Link href="/portofolio" className={styles.button}>
-            Explore My Projects <FiArrowRight />
-          </Link>
-          <Link href="/contact" className={styles.buttonSecondary}>
-            Let&apos;s Connect <FiLink />
-          </Link>
-        </motion.div>
       </div>
-
-      {/* --- [DIPERBARUI] Blok Foto Profil dengan Efek 3D --- */}
-      <motion.div
-        className={styles.profileImageWrapper}
-        style={{
-          rotateX,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-      >
-        <div
-          className={styles.windowControls}
-          style={{ transform: "translateZ(40px)" }}
-        >
-          <span className={`${styles.dot} ${styles.red}`}></span>
-          <span className={`${styles.dot} ${styles.yellow}`}></span>
-          <span className={`${styles.dot} ${styles.green}`}></span>
-        </div>
-        <Image
-          src="/images/ryan.jpg"
-          alt="Ryan Ramadhan Profile Picture"
-          width={400}
-          height={400}
-          className={styles.profileImage}
-          priority
-          style={{ transform: "translateZ(20px)" }}
-        />
-        <div
-          className={styles.macbookLogo}
-          style={{ transform: "translateZ(40px)" }}
-        >
-          <i className="bi bi-code-slash"></i>
-        </div>
-      </motion.div>
     </section>
   );
 };

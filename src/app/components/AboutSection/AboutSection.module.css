@@ -105,6 +105,8 @@
   padding: 3px;
   background: linear-gradient(45deg, #d400ff, #ff0080, #ff8c00, #4affff);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  /* Tambahkan baris ini untuk kompatibilitas */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   animation: gradientSpin 4s linear infinite;
 }
