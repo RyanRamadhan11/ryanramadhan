@@ -1,6 +1,7 @@
+// /src/app/components/CommandPalette/CommandPalette.tsx
 "use client";
 
-import React, { useEffect } from "react"; // Impor useEffect
+import React, { useEffect, useCallback } from "react"; // Impor useCallback
 import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -34,17 +35,20 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const { setTheme } = useTheme();
   const router = useRouter();
 
-  const runCommand = (callback: () => void) => {
-    setOpen(false);
-    callback();
-  };
+  // [PERBAIKAN] Bungkus runCommand dengan useCallback
+  const runCommand = useCallback(
+    (callback: () => void) => {
+      setOpen(false);
+      callback();
+    },
+    [setOpen]
+  );
 
-  // ++ Tambahkan hook useEffect untuk shortcut tema
+  // Hook useEffect untuk shortcut tema
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (!open) return; // Hanya berjalan jika palette terbuka
+      if (!open) return;
 
-      // Ubah tema berdasarkan tombol yang ditekan
       if (e.key === "l") {
         runCommand(() => setTheme("light"));
       } else if (e.key === "d") {
@@ -55,17 +59,16 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     };
 
     document.addEventListener("keydown", handleKeyDown);
-    // Membersihkan event listener saat komponen tidak lagi digunakan
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open, setOpen, setTheme]); // Tambahkan dependensi
+    // [PERBAIKAN] Tambahkan runCommand ke dalam dependency array
+  }, [open, runCommand, setTheme]);
 
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* Bagian 1: Overlay Gelap di Latar Belakang */}
           <motion.div
             className={styles.commandOverlay}
             onClick={() => setOpen(false)}
@@ -74,8 +77,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           />
-
-          {/* Bagian 2: Wrapper untuk Centering dengan Flexbox */}
           <div className={styles.dialogWrapper}>
             <motion.div
               initial={{ opacity: 0, y: -20, scale: 0.98 }}
@@ -83,7 +84,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
               exit={{ opacity: 0, y: 20, scale: 0.98 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              {/* Bagian 3: Dialog Command Palette itu sendiri */}
               <Command.Dialog
                 open={open}
                 onOpenChange={setOpen}
@@ -104,7 +104,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     No results found.
                   </Command.Empty>
 
-                  {/* === NAVIGATION === */}
                   <Command.Group
                     heading="Navigation"
                     className={styles.commandGroup}
@@ -157,7 +156,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     </Command.Item>
                   </Command.Group>
 
-                  {/* === THEME SWITCH === */}
                   <Command.Group
                     heading="Switch Theme"
                     className={styles.commandGroup}
@@ -188,7 +186,6 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     </Command.Item>
                   </Command.Group>
 
-                  {/* === SOCIAL MEDIA === */}
                   <Command.Group
                     heading="Social Media"
                     className={styles.commandGroup}

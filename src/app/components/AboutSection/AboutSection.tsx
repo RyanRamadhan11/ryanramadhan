@@ -13,6 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./AboutSection.module.css";
 
+import { IconType } from "react-icons";
+
 // --- Icons ---
 import {
   DiPhp,
@@ -96,7 +98,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
 };
 
 // --- Data ---
-const masterTechData: { [key: string]: { icon: React.ElementType } } = {
+const masterTechData: { [key: string]: { icon: IconType } } = {
   PHP: { icon: DiPhp },
   Javascript: { icon: DiJavascript1 },
   Java: { icon: DiJava },
