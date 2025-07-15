@@ -1,6 +1,6 @@
 // src/app/resume/page.tsx
 
-import ResumeSection from "../components/ResumeSection/ResumeSection";
+import ResumeSection from "../../components/ResumeSection/ResumeSection";
 import type { Metadata } from "next";
 
 // Opsional: Untuk metadata SEO

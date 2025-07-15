@@ -1,6 +1,6 @@
 // src/app/about/page.tsx
 
-import AboutSection from "../components/AboutSection/AboutSection";
+import AboutSection from "../../components/AboutSection/AboutSection";
 
 export default function AboutPage() {
   return <AboutSection />;
