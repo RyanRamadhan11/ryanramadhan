@@ -1,4 +1,5 @@
-/* Keyframes untuk kursor dan animasi border */
+/* src/components/HeroSection/HeroSection.module.css */
+
 @keyframes blink-caret {
   from,
   to {
@@ -21,9 +22,7 @@
   }
 }
 
-/*--------------------------------------------------------------
-# Hero Section Base
---------------------------------------------------------------*/
+/* Hero Section Base */
 .hero {
   width: 100%; /* Paksa section untuk full-width */
   min-height: 100vh;
@@ -46,12 +45,10 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  z-index: 1; /* Pastikan konten di atas background */
+  z-index: 1;
 }
 
-/*--------------------------------------------------------------
-# Hero Content
---------------------------------------------------------------*/
+/* Hero Content */
 .heroContent {
   width: 100%;
   max-width: 700px;
@@ -83,7 +80,7 @@
   font-size: clamp(1.4rem, 4vw, 2rem);
   font-weight: 500;
   color: var(--hero-text-color-primary);
-  min-height: 2.5rem; /* Memberi ruang agar layout tidak "loncat" */
+  min-height: 2.5rem;
   margin: 0.5rem 0 0.5rem;
 }
 
@@ -110,9 +107,7 @@
   margin: 0 0 2rem;
 }
 
-/*--------------------------------------------------------------
-# Stats, Frameworks, CTA
---------------------------------------------------------------*/
+/* Stats, Frameworks, CTA */
 .statsContainer {
   display: flex;
   gap: 1rem;
@@ -232,9 +227,7 @@
     0 0 30px rgba(0, 0, 0, 0.2) inset;
 }
 
-/*--------------------------------------------------------------
-# Profile Image
---------------------------------------------------------------*/
+/* Profile Image */
 .profileImageWrapper {
   position: relative;
   border-radius: 20px;
@@ -306,11 +299,8 @@
   color: var(--hero-highlight-color);
 }
 
-/*--------------------------------------------------------------
-# Responsive Styles
---------------------------------------------------------------*/
+/* Responsive Styles */
 @media (max-width: 991px) {
-  /* Aturan responsif sekarang diterapkan ke .heroInner */
   .heroInner {
     flex-direction: column-reverse;
     text-align: center;

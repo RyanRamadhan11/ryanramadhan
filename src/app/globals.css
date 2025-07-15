@@ -1,8 +1,5 @@
 /* src/app/globals.css */
 
-/*--------------------------------------------------------------
-# Font & Color Variables
---------------------------------------------------------------*/
 /* Fonts */
 :root {
   --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
@@ -16,19 +13,15 @@
   --navbar-height: 5rem;
 }
 
-/* * ==========================================
-  * WARNA UNTUK LIGHT & DARK MODE
-  * ==========================================
-*/
-
+/* WARNA UNTUK LIGHT & DARK MODE */
 [data-theme="light"] {
   --button-color: #d8d8d8;
   --button2-color: #06073a;
   --headingb-color: #000000;
-  --background-color: #f8f9fa; /* Latar belakang sedikit abu-abu, lebih lembut dari putih total */
+  --background-color: #f8f9fa; /* Latar belakang sedikit abu-abu */
   --surface-color: #ffffff; /* Warna untuk kartu, navbar, dll. */
-  --default-color: #495057; /* Warna teks utama yang nyaman dibaca */
-  --heading-color: #212529; /* Warna judul, lebih gelap dan tegas */
+  --default-color: #495057; /* Warna teks utama */
+  --heading-color: #212529; /* Warna judul,*/
   --accent-color: #0d6efd; /* Warna aksen biru yang modern dan profesional */
   --contrast-color: #ffffff; /* Warna teks di atas elemen dengan warna aksen */
 
@@ -42,14 +35,14 @@
 
   /* Hero Section & Global Colors */
   --hero-highlight-color: #264472; /* Highlight biru */
-  --hero-accent-color: #6f42c1; /* Aksen ungu yang lebih soft */
+  --hero-accent-color: #6f42c1; /* Aksen ungu */
   --hero-text-color-primary: #212529; /* Teks utama hero (gelap) */
   --hero-text-color-secondary: #6c757d; /* Teks sekunder/tagline hero (abu-abu) */
   --hero-background-dark: #1a1a2e; /* Ini tetap untuk referensi jika ada elemen gelap */
   --hero-surface-dark: #1f1f3a;
 }
 
-/* Variabel Warna untuk Dark Mode (Sedikit Penyesuaian) */
+/* Variabel Warna untuk Dark Mode */
 [data-theme="dark"] {
   --background-color: #000000;
   --default-color: #e0e0e0;
@@ -57,7 +50,7 @@
   --button-color: #280331;
   --button2-color: #06073a;
   --headingb-color: #ffffff;
-  --accent-color: #03dac6; /* Teal yang lebih cerah */
+  --accent-color: #03dac6;
   --surface-color: #000000;
   --contrast-color: #000000;
 
@@ -69,9 +62,9 @@
   --nav-dropdown-color: #e0e0e0;
   --nav-dropdown-hover-color: #03dac6;
 
-  /* Hero Section Colors (tetap sama atau disesuaikan) */
+  /* Hero Section Colors  */
   --hero-highlight-color: #03dac6;
-  --hero-accent-color: #bb86fc; /* Ungu yang lebih soft */
+  --hero-accent-color: #bb86fc;
   --hero-text-color-primary: #e0e0e0;
   --hero-text-color-secondary: #a0a0a0;
   --hero-background-dark: #1a1a2e;
@@ -83,13 +76,6 @@
   scroll-behavior: smooth;
 }
 
-/* body {
-  color: var(--default-color);
-  background-color: var(--background-color);
-  font-family: var(--default-font);
-  transition: background-color 0.3s ease, color 0.3s ease;
-} */
-
 /* 1. Mencegah horizontal scroll secara paksa di seluruh halaman */
 html,
 body {
@@ -97,7 +83,7 @@ body {
   width: 100%;
 }
 
-/* 2. Mengubah cara browser menghitung lebar elemen (Best Practice) */
+/* 2. Mengubah cara browser menghitung lebar elemen  */
 html {
   box-sizing: border-box;
 }
@@ -136,7 +122,6 @@ h6 {
   font-family: var(--heading-font);
 }
 
-/* ... (Kode .php-email-form, .header, .footer, #preloader, .scroll-top tidak berubah) ... */
 .php-email-form .error-message {
   display: none;
   background: #df1529;
@@ -334,9 +319,7 @@ h6 {
   bottom: 15px;
 }
 
-/*--------------------------------------------------------------
-  # Global Page Titles & Breadcrumbs
-  --------------------------------------------------------------*/
+/* Global Page Titles & Breadcrumbs */
 .page-title {
   color: var(--default-color);
   background-color: var(--background-color);
@@ -368,18 +351,15 @@ h6 {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-/*--------------------------------------------------------------
-  # Global Section Titles
-  --------------------------------------------------------------*/
+/*  Global Section Titles */
 .section-title {
   text-align: center;
   padding-bottom: 60px;
   position: relative;
 }
 
-/* [PENINGKATAN] Membuat judul section responsif */
 .section-title h2 {
-  font-size: clamp(2rem, 5vw, 2.5rem); /* Ukuran min, preferensi, ukuran max */
+  font-size: clamp(2rem, 5vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 20px;
   padding-bottom: 20px;
@@ -390,9 +370,7 @@ h6 {
   margin-bottom: 0;
 }
 
-/*--------------------------------------------------------------
-  # Page Container
-  --------------------------------------------------------------*/
+/* Page Container */
 .page-container {
   width: 100%;
   max-width: var(--content-max-width);
@@ -402,9 +380,7 @@ h6 {
   padding-right: var(--content-padding-x);
 }
 
-/* =================================================================== */
-/* --- [PERBAIKAN] ATURAN RESPONSIF GLOBAL --- */
-/* =================================================================== */
+/* --- RESPONSIF GLOBAL --- */
 
 @media screen and (max-width: 768px) {
   /* Disable aos animation delay on mobile devices */
@@ -412,7 +388,6 @@ h6 {
     transition-delay: 0 !important;
   }
 
-  /* [PERBAIKAN UTAMA] Kurangi padding horizontal container di mobile */
   .page-container {
     padding-left: 1rem;
     padding-right: 1rem;

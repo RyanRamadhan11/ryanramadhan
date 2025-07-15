@@ -1,4 +1,4 @@
-/* src/app/portofolio/[id]/PortfolioDetail.module.css (SUDAH DIPERBAIKI) */
+/* src/app/portofolio/[id]/PortfolioDetail.module.css  */
 
 @keyframes animateGradient {
   0% {
@@ -396,7 +396,7 @@
 }
 
 .challengeIcon {
-  color: #ffc107; /* Kuning untuk tantangan */
+  color: #ffc107;
 }
 
 .solutionIcon {

@@ -207,7 +207,6 @@ const ContactSection: FC = () => {
               <label htmlFor="message">Your Message</label>
             </div>
 
-            {/* [DIUBAH] reCAPTCHA dibungkus dengan div baru */}
             <div className={styles.recaptchaWrapper}>
               <div
                 className="g-recaptcha"

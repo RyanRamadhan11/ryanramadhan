@@ -1,4 +1,4 @@
-/* src/components/ResumeSection/ResumeSection.module.css (Versi Lengkap dan Final) */
+/* src/components/ResumeSection/ResumeSection.module.css  */
 
 .resumeSection {
   padding: 6rem 0;
@@ -130,15 +130,15 @@
   box-shadow: 0 0 15px var(--hero-accent-color);
 }
 
-/* [TAMBAHAN] Wrapper untuk setiap kata agar spasi antar kata tetap ada */
+/* Wrapper untuk setiap kata agar spasi antar kata tetap ada */
 .wordWrapper:not(:last-child)::after {
-  content: "\00a0"; /* Ini adalah karakter spasi */
+  content: "\00a0";
 }
 
-/* [TAMBAHAN] Style untuk huruf pertama setiap kata */
+/*  Style untuk huruf pertama setiap kata */
 .firstLetter {
-  font-weight: 900; /* Lebih tebal */
-  font-size: 1.05em; /* Sedikit lebih besar */
+  font-weight: 900;
+  font-size: 1.05em;
 }
 
 /* --- Filter Buttons --- */

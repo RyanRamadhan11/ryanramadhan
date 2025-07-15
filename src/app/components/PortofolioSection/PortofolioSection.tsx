@@ -1,7 +1,5 @@
-/*
-// 📁 src/components/PortofolioSection/PortofolioSection.tsx
-// (Tidak ada perubahan logika, hanya memastikan struktur sudah benar)
-*/
+// src/components/PortofolioSection/PortofolioSection.tsx
+
 "use client";
 
 import React, { FC, useState, useMemo, useEffect } from "react";
@@ -58,7 +56,7 @@ const getFirebaseApp = () => {
 
 type Category = "All" | "Frontend" | "Backend" | "Mobile" | "Desktop";
 
-// --- Komponen Judul Animasi (Tidak Berubah) ---
+// --- Komponen Judul Animasi ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -99,7 +97,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- Komponen Skeleton (Tidak Berubah) ---
+// --- Komponen Skeleton ---
 const SkeletonCard = () => (
   <div className={`${styles.cardWrapper} ${styles.skeletonWrapper}`}>
     <div className={styles.portofolioCard}>
@@ -155,7 +153,7 @@ const filterCategories: Category[] = [
   "Desktop",
 ];
 
-// --- Komponen Panah Carousel (Tidak Berubah) ---
+// --- Komponen Panah Carousel  ---
 interface ArrowProps {
   className?: string;
   style?: React.CSSProperties;

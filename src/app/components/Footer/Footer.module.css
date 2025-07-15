@@ -1,9 +1,8 @@
-/* src/components/Footer/Footer.module.css (SUDAH DIPERBAIKI) */
+/* src/components/Footer/Footer.module.css */
 
 .footer {
   width: 100%;
   padding: 3rem 1rem;
-  /* [DIUBAH] Menggunakan variabel untuk background dan warna teks */
   background-color: var(--contrast-color);
   color: var(--default-color);
   text-align: center;
@@ -40,19 +39,18 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  /* [DIUBAH] Border adaptif */
+  /* Border adaptif */
   border: 2px solid color-mix(in srgb, var(--default-color), transparent 80%);
   font-size: 1.5rem;
   transition: all 0.3s ease;
   text-decoration: none;
-  color: var(--default-color); /* [DIUBAH] Warna ikon default */
+  color: var(--default-color);
 }
 
 .socialLinks a:hover {
-  /* [DIUBAH] Warna hover menggunakan variabel aksen */
   background-color: var(--accent-color);
   border-color: var(--accent-color);
-  color: var(--contrast-color); /* [DIUBAH] Warna ikon saat hover */
+  color: var(--contrast-color);
   transform: translateY(-5px);
   box-shadow: 0 5px 15px
     color-mix(in srgb, var(--accent-color), transparent 60%);
@@ -62,7 +60,6 @@
 .motto {
   margin-bottom: 1rem;
   font-size: 1.1rem;
-  /* [DIUBAH] Warna motto menggunakan variabel aksen hero */
   color: var(--hero-accent-color);
   font-weight: 500;
   line-height: 1.5;
@@ -74,7 +71,6 @@
 .copyright {
   margin: 0;
   font-size: 0.9rem;
-  /* [DIUBAH] Warna copyright menggunakan variabel teks sekunder */
   color: var(--hero-text-color-secondary);
   line-height: 1.5;
 }

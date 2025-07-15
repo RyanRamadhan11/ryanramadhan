@@ -1,5 +1,4 @@
 // src/app/projects/page.tsx
-// HAPUS BARIS INI: "use client";
 
 import PortofolioSection from "../components/PortofolioSection/PortofolioSection";
 

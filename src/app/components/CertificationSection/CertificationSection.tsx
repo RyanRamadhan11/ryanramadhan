@@ -1,5 +1,4 @@
 // 📁 src/components/CertificationSection/CertificationSection.tsx
-// (Data telah dipisah)
 
 "use client";
 
@@ -48,12 +47,11 @@ import {
 import { GrCertificate } from "react-icons/gr";
 
 import styles from "./CertificationSection.module.css";
-// [BARU] Impor data dan tipe dari file terpisah
+
+// Impor data dan tipe dari file terpisah
 import { certificationsData } from "@/data/certificationData";
 
-// --- Hapus 'interface Certification' dan 'const certificationsData' dari sini ---
-
-// --- Mapping Ikon (tidak ada perubahan) ---
+// --- Mapping Ikon ---
 const techIconMap: { [key: string]: IconType } = {
   React: DiReact,
   "React Native": DiReact,
@@ -109,7 +107,6 @@ const iconColors: { [key: string]: string } = {
 
 const ITEMS_PER_PAGE = 4;
 
-// ... sisa kode komponen tetap sama persis seperti sebelumnya ...
 const generateSlidingPageNumbers = (
   totalPages: number,
   currentPage: number

@@ -1,7 +1,8 @@
 // /src/app/components/CommandPalette/CommandPalette.tsx
+
 "use client";
 
-import React, { useEffect, useCallback } from "react"; // Impor useCallback
+import React, { useEffect, useCallback } from "react";
 import { Command } from "cmdk";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
@@ -35,7 +36,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   const { setTheme } = useTheme();
   const router = useRouter();
 
-  // [PERBAIKAN] Bungkus runCommand dengan useCallback
+  //  Bungkus runCommand dengan useCallback
   const runCommand = useCallback(
     (callback: () => void) => {
       setOpen(false);
@@ -62,7 +63,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-    // [PERBAIKAN] Tambahkan runCommand ke dalam dependency array
+    // Tambahkan runCommand ke dalam dependency array
   }, [open, runCommand, setTheme]);
 
   return (

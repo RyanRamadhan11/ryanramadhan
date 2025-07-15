@@ -8,7 +8,6 @@ import Link from "next/link";
 import styles from "./LoginPage.module.css";
 import { FaUser, FaLock } from "react-icons/fa";
 
-// Ganti dengan path gambar keren milikmu
 const loginImageUrl = "/images/ryan.jpg";
 
 export default function LoginPage() {

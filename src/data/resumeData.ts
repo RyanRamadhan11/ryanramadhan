@@ -8,10 +8,10 @@ export interface ResumeItem {
   institution: string;
   duration: string;
   description: string[];
-  skills: string[]; // PERBARUAN: Menambahkan daftar skills
+  skills: string[];
 }
 
-// Data resume Anda
+// Data resume
 export const resumeData: ResumeItem[] = [
   {
     id: 1,

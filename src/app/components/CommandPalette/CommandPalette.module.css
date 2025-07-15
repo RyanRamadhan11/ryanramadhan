@@ -1,21 +1,21 @@
-/* Container flex yang memenuhi layar untuk centering */
+/* src/components/CommandPalette/CommandPalette.module.css */
+
 .dialogWrapper {
   position: fixed;
   inset: 0; /* Shorthand untuk top:0, right:0, bottom:0, left:0 */
   z-index: 9999;
   display: flex;
-  align-items: flex-start; /* [PERBAIKAN] Posisikan ke atas, bukan tengah */
+  align-items: flex-start; /* Posisikan ke atas, bukan tengah */
   justify-content: center;
   padding: 1rem;
 }
 
-/* [PERBAIKAN UTAMA] Desain Ulang Command Palette */
 .commandDialog {
   width: 100%; /* Lebar penuh di mobile, dibatasi oleh max-width */
   max-width: 640px;
   border-radius: 12px;
-  border: 1px solid var(--dialog-border-color); /* Menggunakan variabel baru */
-  background-color: var(--dialog-bg-color); /* Menggunakan variabel baru */
+  border: 1px solid var(--dialog-border-color);
+  background-color: var(--dialog-bg-color);
   transition: background-color 0.3s, border-color 0.3s;
 
   position: fixed;
@@ -46,12 +46,12 @@
 }
 
 [data-theme="dark"] .commandDialog {
-  /* [PERBAIKAN WARNA] Warna baru yang lebih solid dan modern untuk dark mode */
-  --dialog-bg-color: #1a1b26; /* Biru gelap keunguan */
-  --dialog-border-color: #2d2e3f; /* Border yang sedikit lebih terang */
+  /* Warna baru yang lebih solid dan modern untuk dark mode */
+  --dialog-bg-color: #1a1b26;
+  --dialog-border-color: #2d2e3f;
   --dialog-input-border-color: #2d2e3f;
-  --dialog-text-primary: #f0f0f0; /* Teks utama lebih cerah */
-  --dialog-text-secondary: #a0aec0; /* Teks sekunder (grup, ikon) */
+  --dialog-text-primary: #f0f0f0;
+  --dialog-text-secondary: #a0aec0;
   --dialog-item-hover-bg: rgba(
     74,
     85,
@@ -66,7 +66,7 @@
 .commandOverlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Sedikit lebih gelap */
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   z-index: 9998;
@@ -95,10 +95,9 @@
 
 /* List container */
 .commandList {
-  /* [PERBAIKAN PADDING] Padding horizontal diperlebar */
   max-height: 400px;
   overflow-y: auto;
-  padding: 0.75rem; /* Padding merata di semua sisi */
+  padding: 0.75rem;
 }
 
 /* Pesan saat tidak ada hasil */
@@ -110,7 +109,7 @@
 
 /* Judul Grup (Navigation, Theme, etc.) */
 .commandGroup[data-heading] {
-  padding: 0.75rem 0.875rem; /* Disesuaikan dengan padding item */
+  padding: 0.75rem 0.875rem;
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--dialog-text-secondary);
@@ -123,7 +122,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  /* [PERBAIKAN PADDING] Padding horizontal item lebih lebar */
   padding: 0.75rem 0.875rem;
   border-radius: 8px;
   cursor: pointer;

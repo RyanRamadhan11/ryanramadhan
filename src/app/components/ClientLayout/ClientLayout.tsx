@@ -7,13 +7,13 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import { ThemeProvider } from "../ThemeProvider";
 import Preloader from "../Preloader/Preloader";
-import { CommandPalette } from "../CommandPalette/CommandPalette"; // <-- 1. Import komponen baru
+import { CommandPalette } from "../CommandPalette/CommandPalette";
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const hideNavAndFooter = pathname === "/login" || pathname === "/register";
   const [isLoading, setIsLoading] = useState(true);
-  const [open, setOpen] = useState(false); // <-- 2. Tambahkan state untuk palette
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,7 +23,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     return () => clearTimeout(timer);
   }, []);
 
-  // 3. Tambahkan listener untuk keyboard shortcut
+  //  listener untuk keyboard shortcut
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -43,7 +43,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      {/* 4. Render Command Palette di sini */}
+      {/* Render Command Palette */}
       <CommandPalette open={open} setOpen={setOpen} />
 
       <AnimatePresence>

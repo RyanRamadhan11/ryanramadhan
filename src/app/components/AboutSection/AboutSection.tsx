@@ -1,3 +1,4 @@
+/* src/components/AboutSection/AboutSection.tsx */
 "use client";
 
 import React, { FC, useState, useRef } from "react";

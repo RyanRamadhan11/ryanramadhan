@@ -1,5 +1,4 @@
 // 📁 src/data/portfolioData.ts
-// (Versi Final dengan Ikon Lengkap & Deskripsi Profesional)
 
 import { IconType } from "react-icons";
 import {
@@ -42,7 +41,7 @@ import {
   SiJunit5,
   SiExpo,
   SiFramer,
-  SiApachenetbeanside, // <-- Ikon baru
+  SiApachenetbeanside,
 } from "react-icons/si";
 import {
   FaPython,
@@ -216,7 +215,7 @@ export const iconColors: { [key: string]: string } = {
   "Expert System": "#8E44AD",
 };
 
-// --- Data Portofolio Lengkap (dengan perbaikan) ---
+// --- Data Portofolio ---
 export const portofolios: Portofolio[] = [
   {
     id: 1,

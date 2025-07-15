@@ -1,6 +1,4 @@
 // 📁 src/components/ResumeSection/ResumeSection.tsx
-// Versi Lengkap dan Final
-
 "use client";
 
 import React, { FC, useState, useMemo } from "react";
@@ -14,7 +12,7 @@ import { FaGraduationCap, FaBriefcase, FaCode } from "react-icons/fa";
 import styles from "./ResumeSection.module.css";
 import { resumeData } from "@/data/resumeData";
 
-// --- Animated Title Component (VERSI BARU YANG DIPERBAIKI) ---
+// --- Animated Title Component  ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -34,7 +32,7 @@ interface AnimatedTitleProps {
   text: string;
 }
 
-// [PERBAIKAN UTAMA] Logika diubah untuk memproses per kata, bukan per huruf
+// + Logika diubah untuk memproses per kata, bukan per huruf
 const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   const words = text.split(" "); // -> ["My", "Resume"]
 

@@ -1,11 +1,12 @@
 // src/components/Footer/Footer.tsx
+
 import React, { FC } from "react";
 import styles from "./Footer.module.css";
 
-// 1. Import ikon yang dibutuhkan dari react-icons
+// import ikon yang dibutuhkan dari react-icons
 import { SiGithub, SiLinkedin, SiInstagram } from "react-icons/si";
 
-// 2. Buat array untuk data sosial media agar lebih rapi
+// Buat array untuk data sosial media
 const socialLinksData = [
   {
     name: "GitHub",
@@ -22,11 +23,6 @@ const socialLinksData = [
     href: "https://www.instagram.com/ryanrmdhans/",
     icon: SiInstagram,
   },
-  // {
-  //   name: "Medium",
-  //   href: "https://medium.com/@ryanramadhan",
-  //   icon: SiMedium,
-  // },
 ];
 
 const Footer: FC = () => {

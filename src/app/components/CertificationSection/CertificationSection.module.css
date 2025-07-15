@@ -1,4 +1,4 @@
-/* src/components/CertificationSection/CertificationSection.module.css (SUDAH DIPERBAIKI) */
+/* src/components/CertificationSection/CertificationSection.module.css  */
 
 .certificationSection {
   padding: 5rem 0;
@@ -47,9 +47,7 @@
   min-width: 0;
 }
 
-/* ============================================= */
 /* --- Animated Title --- */
-/* ============================================= */
 .animatedGradientTitle {
   font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
@@ -108,9 +106,7 @@
   margin-top: 2rem;
 }
 
-/* ============================================= */
 /* --- Sidebar & Controls --- */
-/* ============================================= */
 .controlsSidebar {
   flex: 0 0 260px;
   position: sticky;
@@ -254,9 +250,7 @@
     color-mix(in srgb, var(--hero-highlight-color), transparent 70%);
 }
 
-/* ======================================================= */
 /* --- Pagination --- */
-/* ======================================================= */
 .pagination {
   display: flex;
   justify-content: space-between;
@@ -365,9 +359,7 @@
   margin: 0;
 }
 
-/* ============================================= */
 /* --- Certification Grid & Card (Efek 3D) --- */
-/* ============================================= */
 .certificationGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -473,7 +465,7 @@
   color: var(--heading-color);
   line-height: 1.4;
   margin-bottom: 1rem;
-  min-height: 55px; /* Menjaga tinggi konsisten */
+  min-height: 55px;
 }
 .technologies {
   display: flex;
@@ -532,9 +524,7 @@
   transform: translateY(-2px);
 }
 
-/* ============================================= */
 /* --- Skeleton Loader Styles --- */
-/* ============================================= */
 .skeletonWrapper {
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
@@ -593,9 +583,7 @@
   height: 14px;
 }
 
-/* ============================================= */
 /* --- Modal & Responsive --- */
-/* ============================================= */
 .modalOverlay {
   position: fixed;
   inset: 0;

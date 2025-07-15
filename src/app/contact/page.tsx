@@ -1,5 +1,4 @@
 // src/app/contact/page.tsx
-// "use client"; // Jika ContactSection interaktif
 
 import ContactSection from "../components/ContactSection/ContactSection";
 

@@ -1,4 +1,5 @@
-/* General & Layout */
+/* src/components/AboutSection/AboutSection.module.css */
+
 .main {
   width: 100%;
 }
@@ -27,7 +28,6 @@
   font-family: var(--font-jetbrains, sans-serif);
   display: inline-block;
 
-  /* [PERBAIKAN] Gradasi Bergerak dengan warna langsung (Hardcoded) */
   background: linear-gradient(90deg, #c427c9 0%, #03dac6 50%, #c427c9 100%);
   background-size: 200% auto;
   color: #fff;
@@ -44,7 +44,7 @@
   display: block;
   width: 80px;
   height: 5px;
-  background: #c427c9; /* Warna underline juga di-hardcode */
+  background: #c427c9; 
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -105,7 +105,7 @@
   padding: 3px;
   background: linear-gradient(45deg, #d400ff, #ff0080, #ff8c00, #4affff);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  /* Tambahkan baris ini untuk kompatibilitas */
+  /* baris ini untuk kompatibilitas */
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   animation: gradientSpin 4s linear infinite;
@@ -155,7 +155,7 @@
     #c427c9 100%
   );
   background-size: 200% auto;
-  color: #1a1a2e; /* Warna gelap untuk kontras */
+  color: #1a1a2e; 
   transition: all 0.4s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   border: none;

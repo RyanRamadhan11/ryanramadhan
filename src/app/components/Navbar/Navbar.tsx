@@ -90,8 +90,6 @@ const Navbar: FC = () => {
               </Link>
             </li>
 
-            {/* [DIHAPUS] Menu "Service" dihilangkan dari daftar */}
-
             <li className={styles.navItem}>
               <Link
                 href="/certification"

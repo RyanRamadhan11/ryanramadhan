@@ -1,8 +1,7 @@
-/* src/components/Navbar/Navbar.module.css (SUDAH DIPERBAIKI) */
+/* src/components/Navbar/Navbar.module.css */
 
 .navbar {
   width: 100%;
-  /* [DIUBAH] Menggunakan variabel --surface-color yang lebih sesuai untuk latar */
   background-color: color-mix(in srgb, var(--surface-color), transparent 15%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -204,8 +203,6 @@
   }
 
   .navItem a.active {
-    /* [DIHAPUS] Latar belakang dihapus agar lebih bersih */
-    /* background-color: color-mix(in srgb, var(--accent-color), transparent 90%); */
     color: var(--accent-color);
   }
 

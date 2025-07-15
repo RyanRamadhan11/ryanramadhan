@@ -7,7 +7,7 @@
   min-height: 100vh;
   background: linear-gradient(45deg, #1f2022, #3a3d42);
   padding: 2rem;
-  font-family: "Poppins", sans-serif; /* Ganti dengan font favoritmu */
+  font-family: "Poppins", sans-serif;
 }
 
 .loginContainer {
@@ -25,7 +25,7 @@
 .imageSection {
   flex: 1;
   position: relative;
-  display: none; /* Sembunyikan di mobile */
+  display: none;
 }
 
 .imageOverlay {
@@ -84,7 +84,7 @@
 
 .inputGroup input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem; /* Padding untuk ikon */
+  padding: 1rem 1rem 1rem 3rem;
   background-color: #23272a;
   border: 1px solid #40444b;
   border-radius: 8px;
@@ -99,7 +99,7 @@
 
 .inputGroup input:focus {
   outline: none;
-  border-color: #ff6347; /* Tomato color */
+  border-color: #ff6347;
   box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.2);
 }
 
@@ -167,7 +167,7 @@
 /* --- Tampilan Responsif --- */
 @media (min-width: 768px) {
   .imageSection {
-    display: block; /* Tampilkan gambar di layar tablet ke atas */
+    display: block;
   }
 }
 

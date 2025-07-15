@@ -1,5 +1,4 @@
 // 📁 src/app/portofolio/[id]/page.tsx
-// (Versi Final Tanpa Video)
 
 "use client";
 
@@ -17,7 +16,6 @@ import { Navigation, Pagination, A11y } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-// ----------------------
 
 import {
   getPortfolioById,
@@ -54,7 +52,6 @@ const PortfolioDetailPage: React.FC = () => {
     liveUrl,
     githubUrl,
     keyFeatures,
-    // --- Data videoUrl dihapus dari sini ---
     challenges,
   } = portofolio;
 
@@ -139,7 +136,6 @@ const PortfolioDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Bagian Tantangan & Solusi tetap ada */}
             {challenges && (
               <motion.div
                 className={styles.challengesSection}
@@ -171,7 +167,7 @@ const PortfolioDetailPage: React.FC = () => {
 
           <div className={styles.rightColumn}>
             <div className={styles.previewContainer}>
-              {/* --- LOGIKA CAROUSEL DIKEMBALIKAN KE VERSI GAMBAR SAJA --- */}
+              {/* --- CAROUSEL --- */}
               {imageUrls.length > 1 ? (
                 <Swiper
                   modules={[Navigation, Pagination, A11y]}
@@ -194,7 +190,7 @@ const PortfolioDetailPage: React.FC = () => {
                   ))}
                 </Swiper>
               ) : (
-                // Fallback ke gambar tunggal jika hanya ada satu
+                // Fallback gambar tunggal jika hanya ada satu
                 <Image
                   src={imageUrls[0]}
                   alt={`${title} preview`}

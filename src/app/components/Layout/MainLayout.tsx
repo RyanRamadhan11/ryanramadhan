@@ -2,7 +2,7 @@
 import React, { FC, ReactNode } from "react";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-import styles from "./MainLayout.module.css"; // Buat file ini
+import styles from "./MainLayout.module.css";
 
 interface MainLayoutProps {
   children: ReactNode;

@@ -1,5 +1,4 @@
 // src/app/about/page.tsx
-// "use client"; // Jika AboutSection interaktif
 
 import AboutSection from "../components/AboutSection/AboutSection";
 

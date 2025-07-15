@@ -2,9 +2,8 @@
 "use client";
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import type { ComponentProps } from "react"; // Import ComponentProps dari React
+import type { ComponentProps } from "react"; 
 
-// Kita gunakan cara yang lebih aman untuk mendapatkan Tipe Props
 // Ini akan mengambil tipe props langsung dari komponennya, jadi akan selalu update
 type ThemeProviderProps = ComponentProps<typeof NextThemesProvider>;
 

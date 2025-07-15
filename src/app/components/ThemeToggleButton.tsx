@@ -36,14 +36,14 @@ export function ThemeToggleButton() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        overflow: "hidden", // Mencegah ikon "loncat" saat animasi
+        overflow: "hidden",
         position: "relative",
-        width: "44px", // Beri ukuran tetap
+        width: "44px",
         height: "44px",
       }}
       aria-label="Toggle Dark Mode"
     >
-      {/* AnimatePresence untuk menangani animasi exit (saat ikon menghilang) */}
+      {/* AnimatePresence saat ikon ganti */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.i
           // Key unik untuk setiap ikon agar AnimatePresence bisa mendeteksi perubahan

@@ -82,21 +82,20 @@ function Scene() {
     return () => observer.disconnect();
   }, []);
 
-  // [PERBAIKAN] Jumlah gelembung dikurangi agar tidak terlalu ramai
+  // Jumlah gelembung dikurangi agar tidak terlalu ramai
   const bubbles = useMemo(() => Array.from({ length: 80 }), []);
 
-  // [PERBAIKAN] Efek paralaks dibuat lebih halus dan kalem
+  //  Efek paralaks dibuat lebih halus dan kalem
   useFrame((state) => {
-    // Multiplier untuk mouse position dikurangi secara signifikan (misal: dari 2 ke 0.5)
     // agar pergerakan kamera jauh lebih subtil.
     state.camera.position.x = THREE.MathUtils.lerp(
       state.camera.position.x,
-      state.mouse.x * 0.5, // <<< Nilai ini diperkecil
+      state.mouse.x * 0.5, // Nilai ini diperkecil
       0.03 // Sedikit percepat lerp untuk respons yang lebih terasa tapi tetap halus
     );
     state.camera.position.y = THREE.MathUtils.lerp(
       state.camera.position.y,
-      state.mouse.y * 0.5, // <<< Nilai ini diperkecil
+      state.mouse.y * 0.5,
       0.03
     );
     state.camera.lookAt(0, 0, 0);
@@ -129,7 +128,6 @@ const Background3D = () => {
         camera={{ position: [0, 0, 25], fov: 75 }}
         gl={{ alpha: true }} // Membuat background canvas transparan
       >
-        {/* Tidak perlu lighting yang kompleks untuk efek ini */}
         <Scene />
       </Canvas>
     </div>
