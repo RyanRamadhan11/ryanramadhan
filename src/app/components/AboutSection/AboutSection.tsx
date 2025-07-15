@@ -1,3 +1,5 @@
+// src/components/AboutSection/AboutSection.tsx
+
 "use client";
 
 import React, { FC, useState, useRef } from "react";
@@ -17,7 +19,7 @@ import styles from "./AboutSection.module.css";
 import { FaQuestionCircle } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
 
-// [BARU] Impor semua data dari file terpisah
+// Impor semua data dari file terpisah
 import {
   masterTechData,
   iconColors,
