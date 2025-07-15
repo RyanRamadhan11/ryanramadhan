@@ -15,7 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./AboutSection.module.css";
 
-// Impor ikon yang HANYA digunakan di komponen ini
+// Impor ikon yang digunakan di komponen ini
 import { FaQuestionCircle } from "react-icons/fa";
 import { BsDownload } from "react-icons/bs";
 
@@ -27,7 +27,7 @@ import {
   accordionSkills,
 } from "@/data/aboutData";
 
-// --- Animated Title Component (tidak berubah) ---
+// --- Animated Title Component  ---
 const letterVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -67,7 +67,7 @@ const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ text }) => {
   );
 };
 
-// --- Accordion Component (tidak berubah) ---
+// --- Accordion Component  ---
 const AccordionItem: FC<{
   item: (typeof accordionSkills)[0];
   isOpen: boolean;
