@@ -5,6 +5,7 @@
 
 import React, { FC, useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import { IconType } from "react-icons";
 import Image from "next/image";
 import { FiExternalLink, FiXCircle, FiGrid, FiSearch } from "react-icons/fi";
 import {
@@ -53,7 +54,7 @@ import { certificationsData } from "@/data/certificationData";
 // --- Hapus 'interface Certification' dan 'const certificationsData' dari sini ---
 
 // --- Mapping Ikon (tidak ada perubahan) ---
-const techIconMap: { [key: string]: React.ElementType } = {
+const techIconMap: { [key: string]: IconType } = {
   React: DiReact,
   "React Native": DiReact,
   "Next.js": SiNextdotjs,

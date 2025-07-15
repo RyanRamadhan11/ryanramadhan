@@ -1,7 +1,7 @@
 // 📁 src/data/portfolioData.ts
 // (Versi Final dengan Ikon Lengkap & Deskripsi Profesional)
 
-import { motion } from "framer-motion";
+import { IconType } from "react-icons";
 import {
   DiReact,
   DiNodejs,
@@ -41,6 +41,7 @@ import {
   SiApachemaven,
   SiJunit5,
   SiExpo,
+  SiFramer,
   SiApachenetbeanside, // <-- Ikon baru
 } from "react-icons/si";
 import {
@@ -90,7 +91,7 @@ export interface Portofolio {
 }
 
 // --- Mapping Teknologi ke Ikon ---
-export const techIconMap: { [key: string]: React.ElementType } = {
+export const techIconMap: { [key: string]: IconType } = {
   React: DiReact,
   "React Native": DiReact,
   "Next.js": SiNextdotjs,
@@ -101,7 +102,7 @@ export const techIconMap: { [key: string]: React.ElementType } = {
   "Socket.IO": SiSocketdotio,
   Firebase: SiFirebase,
   TypeScript: SiTypescript,
-  "Framer Motion": motion.div,
+  "Framer Motion": SiFramer,
   "CSS Modules": DiCss3,
   Figma: SiFigma,
   Java: DiJava,
