@@ -1,6 +1,6 @@
 // src/app/contact/page.tsx
 
-import ContactSection from "../../components/ContactSection/ContactSection";
+import ContactSection from "@/components/ContactSection/ContactSection";
 
 export default function ContactPage() {
   return <ContactSection />;

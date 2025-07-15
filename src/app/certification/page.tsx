@@ -1,5 +1,5 @@
 // src/app/certification/page.tsx
-import CertificationSection from "../../components/CertificationSection/CertificationSection";
+import CertificationSection from "@/components/CertificationSection/CertificationSection";
 import type { Metadata } from "next";
 
 // Opsional: Untuk metadata SEO

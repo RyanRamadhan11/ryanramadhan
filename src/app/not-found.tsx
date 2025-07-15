@@ -1,4 +1,4 @@
-// 📁 app/not-found.tsx
+//app/not-found.tsx
 
 import Image from "next/image";
 import Link from "next/link";
