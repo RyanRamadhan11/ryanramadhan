@@ -54,7 +54,13 @@ const getFirebaseApp = () => {
   }
 };
 
-type Category = "All" | "Frontend" | "Backend" | "Mobile" | "Desktop";
+type Category =
+  | "All"
+  | "Fullstack"
+  | "Frontend"
+  | "Backend"
+  | "Mobile"
+  | "Desktop";
 
 // --- Komponen Judul Animasi ---
 const letterVariants: Variants = {
@@ -147,6 +153,7 @@ const ITEMS_PER_PAGE = 6;
 
 const filterCategories: Category[] = [
   "All",
+  "Fullstack",
   "Frontend",
   "Backend",
   "Mobile",
