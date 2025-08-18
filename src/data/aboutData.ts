@@ -33,6 +33,8 @@ import {
   SiFirebase,
   SiHostinger,
   SiGooglecloud,
+  SiTypescript,
+  SiTailwindcss,
 } from "react-icons/si";
 import { VscPackage, VscSourceControl } from "react-icons/vsc";
 import { AiOutlineSync } from "react-icons/ai";
@@ -43,6 +45,7 @@ import { TbBrandLaravel, TbBrandCSharp } from "react-icons/tb";
 export const masterTechData: { [key: string]: { icon: IconType } } = {
   PHP: { icon: DiPhp },
   Javascript: { icon: DiJavascript1 },
+  TypeScript: { icon: SiTypescript },
   Java: { icon: DiJava },
   "C#": { icon: TbBrandCSharp },
   Laravel: { icon: DiLaravel },
@@ -70,6 +73,7 @@ export const masterTechData: { [key: string]: { icon: IconType } } = {
   HTML5: { icon: DiHtml5 },
   CSS: { icon: DiCss3 },
   Bootstrap: { icon: DiBootstrap },
+  "Tailwind CSS": { icon: SiTailwindcss },
   AJAX: { icon: BsArrowLeftRight },
   "REST APIs": { icon: VscSourceControl },
   WebSockets: { icon: SiSocketdotio },
@@ -81,6 +85,7 @@ export const masterTechData: { [key: string]: { icon: IconType } } = {
 export const iconColors: { [key: string]: string } = {
   PHP: "#8892be",
   Javascript: "#f7df1e",
+  TypeScript: "#3178c6",
   Java: "#f89820",
   "C#": "#9b4f96",
   Laravel: "#fb503b",
@@ -108,6 +113,7 @@ export const iconColors: { [key: string]: string } = {
   HTML5: "#e34f26",
   CSS: "#264de4",
   Bootstrap: "#563d7c",
+  "Tailwind CSS": "#06b6d4",
   AJAX: "#007fff",
   "REST APIs": "#f58220",
   WebSockets: "#8c52ff",
@@ -120,7 +126,7 @@ export const iconColors: { [key: string]: string } = {
 export const techStack = [
   {
     category: "Programming Languages",
-    skills: ["PHP", "Javascript", "Java", "C#"],
+    skills: ["PHP", "Javascript", "TypeScript", "Java", "C#"],
     icon: "bi-braces",
   },
   {
@@ -166,6 +172,7 @@ export const techStack = [
       "HTML5",
       "CSS",
       "Bootstrap",
+      "Tailwind CSS",
       "AJAX",
       "REST APIs",
       "WebSockets",
