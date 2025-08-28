@@ -7,13 +7,13 @@ import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 import styles from "./ContactSection.module.css";
 
 // Deklarasi tipe global untuk window.grecaptcha
-declare global {
-  interface Window {
-    grecaptcha: {
-      reset: () => void;
-    };
-  }
-}
+// declare global {
+//   interface Window {
+//     grecaptcha: {
+//       reset: () => void;
+//     };
+//   }
+// }
 
 // --- Komponen Judul Animasi ---
 const letterVariants: Variants = {
@@ -88,9 +88,9 @@ const ContactSection: FC = () => {
       if (response.ok) {
         setStatus("success");
         setFormData({ name: "", email: "", message: "" });
-        if (window.grecaptcha) {
-          window.grecaptcha.reset();
-        }
+        // if (window.grecaptcha) {
+        //   window.grecaptcha.reset();
+        // }
       } else {
         setStatus("error");
       }

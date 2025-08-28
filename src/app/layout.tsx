@@ -35,10 +35,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ClientLayout>{children}</ClientLayout>
-        <Script
+        {/* <Script
           src="https://www.google.com/recaptcha/api.js"
           strategy="afterInteractive"
-        />
+        /> */}
       </body>
     </html>
   );
