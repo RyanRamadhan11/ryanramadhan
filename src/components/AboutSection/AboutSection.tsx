@@ -192,11 +192,14 @@ const AboutSection: FC = () => {
                   }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Link
+                  {/* <Link
                     href="/pdf/CV_RyanRamadhan_SoftwareEnginner.pdf"
                     download
                     className={styles.cvButton}
                   >
+                    <BsDownload size={20} /> Download My CV
+                  </Link> */}
+                  <Link href="/api/download-cv" className={styles.cvButton}>
                     <BsDownload size={20} /> Download My CV
                   </Link>
                 </motion.div>
