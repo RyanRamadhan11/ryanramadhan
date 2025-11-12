@@ -9,5 +9,4 @@ export const ryanKnowledge = {
   techStack: ["React", "Next.js", "Node.js", ".NET"],
 };
 
-// Data ini bisa lu kembangkan seluas mungkin
-// untuk menjawab pertanyaan yang lebih kompleks.
+// bisa diperluas untuk menjawab pertanyaan yang lebih kompleks.

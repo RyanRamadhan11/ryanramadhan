@@ -2,10 +2,8 @@
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Script from "next/script";
 import { ClientLayout } from "@/components/ClientLayout/ClientLayout";
 import "./globals.css";
-import { VoiceAssistantButton } from "@/components/VoiceAssistant/VoiceAssistantButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* [WAJIB] Tambahkan link untuk Bootstrap Icons di sini.
-        Ini akan membuat ikon matahari dan bulan muncul di tombol tema.
+      {/*  Bootstrap Icons di sini.
+        ikon matahari dan bulan muncul di tombol tema.
       */}
       <head>
         <link
@@ -36,7 +34,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ClientLayout>{children}</ClientLayout>
-        <VoiceAssistantButton />
+
         {/* <Script
           src="https://www.google.com/recaptcha/api.js"
           strategy="afterInteractive"

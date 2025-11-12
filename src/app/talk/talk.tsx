@@ -1,8 +1,7 @@
-//src/app/talk/page.tsx
+// src/app/talk/talk.tsx
 import dynamic from "next/dynamic";
 import React from "react";
 
-// load client-only component dynamically to avoid SSR issues with Web Speech API
 const VoiceAssistant = dynamic(
   () => import("../../components/VoiceAssistant/VoiceAssistantButton"),
   { ssr: false }

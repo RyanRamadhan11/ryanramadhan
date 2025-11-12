@@ -1,86 +1,102 @@
-// src/components/VoiceAssistant/VoiceAssistantButton.tsx
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { Phone, Loader2, PhoneOff } from "lucide-react";
+// Ini ngasih tahu TypeScript kalau 'window' itu punya
+// properti SpeechRecognition & webkitSpeechRecognition
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    SpeechRecognition?: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    webkitSpeechRecognition?: any;
+  }
+}
+
+import { useState, useRef, useEffect, useCallback } from "react";
+// Import icons yang kita butuhkan
+import { Phone, Loader2, PhoneOff, AlertTriangle } from "lucide-react";
+
+// Import CSS Module yang tadi kita buat
+import styles from "./VoiceAssistantButton.module.css";
 
 // Tipe untuk state panggilan
 type CallState = "idle" | "connecting" | "in-progress" | "error";
+type ErrorMessage = string | null;
 
-export function VoiceAssistantButton() {
+export default function VoiceAssistantButton() {
   const [callState, setCallState] = useState<CallState>("idle");
+  const [errorMsg, setErrorMsg] = useState<ErrorMessage>(null);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any | null>(null);
+
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
-  // Pesan selamat datang sesuai permintaan lu
   const welcomeMessage =
-    "Selamat datang di web portolio ryan ramadhan saya bot. apakah ada yang bisa saya bantu ?";
+    "Selamat datang di web portolio Ryan Ramadhan. Saya bot. Apakah ada yang bisa saya bantu?";
 
-  // Fungsi untuk Text-to-Speech (TTS)
-  const speak = (text: string) => {
+  // --- Logika (Speak, Process, Setup) ---
+  const speak = useCallback((text: string) => {
     if (!synthRef.current) return;
 
-    // Hentikan suara yang sedang diputar (jika ada)
     synthRef.current.cancel();
-
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "id-ID"; // Set bahasa ke Indonesia
+    utterance.lang = "id-ID"; // Set bahasa Indonesia
 
-    // Event ini akan trigger KETIKA bot selesai bicara
     utterance.onend = () => {
       console.log("Bot finished speaking, starting recognition...");
-      // Setelah bot selesai bicara, mulai dengarkan user
-      if (callState === "in-progress" && recognitionRef.current) {
-        try {
-          recognitionRef.current.start();
-        } catch (e) {
-          console.error("Recognition already started.", e);
+      setCallState((currentState) => {
+        if (currentState === "in-progress" && recognitionRef.current) {
+          try {
+            recognitionRef.current.start();
+          } catch (e) {
+            console.error("Recognition already started.", e);
+          }
         }
-      }
+        return currentState;
+      });
     };
 
     utterance.onerror = (e) => {
       console.error("Speech synthesis error:", e);
+      setErrorMsg("Error sintesis voice.");
       setCallState("error");
     };
 
     synthRef.current.speak(utterance);
-  };
+  }, []);
 
-  // Fungsi untuk memproses transkrip suara
-  const processSpeech = async (transcript: string) => {
-    console.log("User said:", transcript);
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: transcript }),
-      });
+  const processSpeech = useCallback(
+    async (transcript: string) => {
+      console.log("User said:", transcript);
+      try {
+        const response = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: transcript }),
+        });
 
-      if (!response.ok) {
-        throw new Error("API response not ok");
+        if (!response.ok) {
+          throw new Error("API response not ok");
+        }
+
+        const data = await response.json();
+        speak(data.reply);
+      } catch (error) {
+        console.error("Error processing speech:", error);
+        speak("Maaf, terjadi kesalahan. Silakan coba lagi.");
       }
+    },
+    [speak]
+  );
 
-      const data = await response.json();
-      // Bot membalas
-      speak(data.reply);
-    } catch (error) {
-      console.error("Error processing speech:", error);
-      speak("Maaf, terjadi kesalahan. Silakan coba lagi.");
-    }
-  };
-
-  const setupSpeechRecognition = () => {
+  const setupSpeechRecognition = useCallback(() => {
     const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+      window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
       console.error("Speech Recognition not supported in this browser.");
+      setErrorMsg("Speech API tidak didukung browser ini.");
       setCallState("error");
-      alert(
-        "Browser kamu tidak mendukung Speech Recognition. Coba gunakan Google Chrome atau Microsoft Edge."
-      );
       return;
     }
 
@@ -89,6 +105,7 @@ export function VoiceAssistantButton() {
     recognition.interimResults = false;
     recognition.continuous = false;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onresult = (event: any) => {
       const transcript = event.results[event.results.length - 1][0].transcript;
       processSpeech(transcript);
@@ -103,24 +120,24 @@ export function VoiceAssistantButton() {
       console.log("Recognition service ended.");
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onerror = (event: any) => {
-      console.error("Speech recognition error:", event?.error ?? event);
-      if ((event && event.error) !== "no-speech") {
+      console.error("Speech recognition error:", event.error);
+      if (event.error !== "no-speech") {
+        setErrorMsg(`Error mikrofon: ${event.error}`);
         setCallState("error");
       }
     };
 
     recognitionRef.current = recognition;
-  };
+  }, [processSpeech]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!window.speechSynthesis) {
         console.error("Speech Synthesis not supported in this browser.");
+        setErrorMsg("Speech Synthesis tidak didukung.");
         setCallState("error");
-        alert(
-          "Browser kamu tidak mendukung Speech Synthesis. Coba gunakan Google Chrome atau Microsoft Edge."
-        );
         return;
       }
 
@@ -130,90 +147,113 @@ export function VoiceAssistantButton() {
 
     return () => {
       synthRef.current?.cancel();
-      recognitionRef.current?.stop();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (recognitionRef.current as any)?.stop();
     };
-  }, [callState]);
+  }, [setupSpeechRecognition]);
 
   const handleButtonClick = () => {
     if (callState === "idle") {
+      if (synthRef.current) {
+        synthRef.current.cancel();
+        const primer = new SpeechSynthesisUtterance(" ");
+        primer.volume = 0;
+        synthRef.current.speak(primer);
+      } else {
+        setErrorMsg("Speech synthesis tidak siap.");
+        setCallState("error");
+        return;
+      }
+
       setCallState("connecting");
 
-      // Simulasi koneksi
       setTimeout(() => {
         setCallState("in-progress");
-        // Mulai panggilan dengan pesan selamat datang
         speak(welcomeMessage);
-      }, 1500); // 1.5 detik delay koneksi
+      }, 1500);
     } else if (callState === "in-progress") {
-      // End call
       setCallState("idle");
       synthRef.current?.cancel();
-      recognitionRef.current?.stop();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (recognitionRef.current as any)?.stop();
     }
   };
 
-  // --- Render UI ---
-  // Base style untuk semua button
-  const baseStyle =
-    "fixed bottom-8 left-8 z-50 flex items-center gap-3 px-4 py-3 rounded-lg border border-white/20 shadow-lg text-white transition-all duration-300";
+  return (
+    <>
+      {(() => {
+        switch (callState) {
+          case "connecting":
+            return (
+              <div
+                className={`${styles.voiceButton} ${styles.connectingState}`}
+              >
+                <div
+                  className={`${styles.iconWrapper} ${styles.connectingIcon}`}
+                >
+                  <Loader2 className={`${styles.spinner} h-6 w-6`} />
+                </div>
+                <div className={styles.textWrapper}>
+                  <p className={styles.textMain}>Connecting...</p>
+                  <p className={styles.textSub}>Please wait</p>
+                </div>
+              </div>
+            );
 
-  // Style untuk background (sedikit transparan dengan blur)
-  const backgroundStyle = "bg-gray-900/50 backdrop-blur-md";
+          case "in-progress":
+            return (
+              <button
+                onClick={handleButtonClick}
+                className={`${styles.voiceButton} ${styles.inProgressState}`}
+              >
+                <div
+                  className={`${styles.iconWrapper} ${styles.inProgressIcon}`}
+                >
+                  {/* Ini dia icon dengan animasi getar "vibratingIcon" */}
+                  <PhoneOff className={`${styles.vibratingIcon} h-5 w-5`} />
+                </div>
+                <div className={styles.textWrapper}>
+                  <p className={styles.textMain}>Call in progress</p>
+                  <p className={styles.textSub}>Click to end call</p>
+                </div>
+              </button>
+            );
 
-  switch (callState) {
-    case "connecting":
-      return (
-        <div className={`${baseStyle} ${backgroundStyle} animate-pulse`}>
-          <Loader2 className="h-5 w-5 animate-spin text-red-500" />
-          <div>
-            <p className="font-semibold">Connecting...</p>
-            <p className="text-xs text-gray-300">Please wait</p>
-          </div>
-        </div>
-      );
+          case "error":
+            return (
+              <div className={`${styles.voiceButton} ${styles.errorState}`}>
+                <div className={`${styles.iconWrapper} ${styles.errorIcon}`}>
+                  <AlertTriangle className="h-5 w-5" />
+                </div>
+                <div className={styles.textWrapper}>
+                  <p className={`${styles.textMain} ${styles.errorTextMain}`}>
+                    Call Error
+                  </p>
+                  <p className={styles.textSub}>
+                    {errorMsg || "Terjadi error. Coba refresh."}
+                  </p>
+                </div>
+              </div>
+            );
 
-    case "in-progress":
-      return (
-        <button
-          onClick={handleButtonClick}
-          className={`${baseStyle} ${backgroundStyle} hover:bg-gray-800/70`}
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-600 p-1">
-            <PhoneOff className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <p className="text-left font-semibold">Call in progress</p>
-            <p className="text-left text-xs text-gray-300">End call</p>
-          </div>
-        </button>
-      );
-
-    case "error":
-      return (
-        <div className={`${baseStyle} bg-red-800/80 backdrop-blur-md`}>
-          <p className="text-sm">
-            Speech API not supported. Please use Chrome or Edge.
-          </p>
-        </div>
-      );
-
-    case "idle":
-    default:
-      return (
-        <button
-          onClick={handleButtonClick}
-          className={`${baseStyle} ${backgroundStyle} hover:bg-gray-800/70`}
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-600 p-1">
-            <Phone className="h-5 w-5 text-white" />
-          </div>
-          <div>
-            <p className="text-left font-semibold">Need Help?</p>
-            <p className="text-left text-xs text-gray-300">
-              Talk with our AI assistant
-            </p>
-          </div>
-        </button>
-      );
-  }
+          case "idle":
+          default:
+            return (
+              <button
+                onClick={handleButtonClick}
+                className={`${styles.voiceButton} ${styles.idleState}`}
+              >
+                <div className={`${styles.iconWrapper} ${styles.idleIcon}`}>
+                  <Phone className="h-5 w-5" />
+                </div>
+                <div className={styles.textWrapper}>
+                  <p className={styles.textMain}>Need Help?</p>
+                  <p className={styles.textSub}>Talk with our AI assistant</p>
+                </div>
+              </button>
+            );
+        }
+      })()}
+    </>
+  );
 }

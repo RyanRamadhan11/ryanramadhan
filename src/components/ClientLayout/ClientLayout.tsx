@@ -9,6 +9,8 @@ import { ThemeProvider } from "../ThemeProvider";
 import Preloader from "../Preloader/Preloader";
 import { CommandPalette } from "../CommandPalette/CommandPalette";
 
+import VoiceAssistantButton from "@/components/VoiceAssistant/VoiceAssistantButton";
+
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const hideNavAndFooter = pathname === "/login" || pathname === "/register";
@@ -71,6 +73,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           {!hideNavAndFooter && <Footer />}
         </motion.div>
       )}
+      <VoiceAssistantButton />
     </ThemeProvider>
   );
 }
