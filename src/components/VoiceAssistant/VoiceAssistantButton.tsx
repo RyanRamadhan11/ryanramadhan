@@ -123,10 +123,17 @@ export default function VoiceAssistantButton() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onerror = (event: any) => {
       console.error("Speech recognition error:", event.error);
-      if (event.error !== "no-speech") {
-        setErrorMsg(`Error mikrofon: ${event.error}`);
-        setCallState("error");
+
+      // JANGAN set error jika itu 'no-speech' (user diam)
+      // ATAU 'aborted' (karena kita klik end call manual)
+      if (event.error === "no-speech" || event.error === "aborted") {
+        console.log("Recognition stopped or aborted, not a fatal error.");
+        return;
       }
+
+      // Hanya set error jika itu error beneran (cth: 'not-allowed', 'network')
+      setErrorMsg(`Error mikrofon: ${event.error}`);
+      setCallState("error");
     };
 
     recognitionRef.current = recognition;
@@ -156,6 +163,7 @@ export default function VoiceAssistantButton() {
     if (callState === "idle") {
       if (synthRef.current) {
         synthRef.current.cancel();
+        // "Primer" untuk "bangunin" speech synthesis di beberapa browser
         const primer = new SpeechSynthesisUtterance(" ");
         primer.volume = 0;
         synthRef.current.speak(primer);
@@ -170,7 +178,7 @@ export default function VoiceAssistantButton() {
       setTimeout(() => {
         setCallState("in-progress");
         speak(welcomeMessage);
-      }, 1500);
+      }, 1500); // Waktu 'connecting'
     } else if (callState === "in-progress") {
       setCallState("idle");
       synthRef.current?.cancel();
