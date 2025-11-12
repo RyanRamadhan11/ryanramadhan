@@ -1,6 +1,5 @@
 /* src/components/VoiceAssistant/VoiceAssistantButton.module.css */
 
-/* --- Base button style --- */
 .voiceButton {
   position: fixed;
   bottom: 2.5rem;
