@@ -32,7 +32,7 @@ export default function VoiceAssistantButton() {
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
   const welcomeMessage =
-    "Selamat datang di web portolio Ryan Ramadhan. Saya bot. Apakah ada yang bisa saya bantu?";
+    "Selamat datang di web portofolio Ryan Ramadhan. Saya AI Assistant. Apakah ada yang bisa saya bantu?";
 
   // --- Logika (Speak, Process, Setup) ---
   const speak = useCallback((text: string) => {

@@ -12,7 +12,7 @@ function generateReply(message: string): string {
     lowerMessage.includes("siapa kamu") ||
     lowerMessage.includes("ini siapa")
   ) {
-    return "Saya adalah asisten bot yang dirancang untuk membantu Anda mengenal Ryan Ramadhan dan portofolionya.";
+    return "Saya adalah AI Assistant. yang dirancang untuk membantu Anda mengenal Ryan Ramadhan dan portofolionya.";
   }
 
   // Keyword: 'siapa ryan' / 'tentang ryan'
