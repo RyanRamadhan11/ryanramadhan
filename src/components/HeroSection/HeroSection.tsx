@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { FC, useState, useEffect, useRef } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   motion,
@@ -12,7 +12,6 @@ import {
   useTransform,
 } from "framer-motion";
 import Link from "next/link";
-// Ikon untuk Tombol & Framework
 import { FiArrowRight, FiLink } from "react-icons/fi";
 import {
   SiNextdotjs,
@@ -24,7 +23,6 @@ import {
 import styles from "./HeroSection.module.css";
 import Background3D from "./Background3D";
 
-// Data untuk teks animasi
 const roles = [
   "Software Engineer",
   "Web Developer",
@@ -32,7 +30,6 @@ const roles = [
   "Tech Enthusiast",
 ];
 
-// Data untuk highlight framework dengan ikon baru
 const frameworks = [
   { name: "Laravel", icon: SiLaravel, color: "#FF2D20" },
   { name: "React JS", icon: SiReact, color: "#61DAFB" },
@@ -42,7 +39,6 @@ const frameworks = [
   { name: ".NET", icon: SiDotnet, color: "#512BD4" },
 ];
 
-// Komponen untuk Kartu Statistik dengan Animasi Angka
 interface AnimatedStatCardProps {
   value: number;
   label: string;
@@ -92,7 +88,6 @@ const HeroSection: FC = () => {
   const [displayedText, setDisplayedText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // --- Logika untuk Animasi Mengetik Teks Peran ---
   useEffect(() => {
     const typingSpeed = 100,
       deletingSpeed = 70,
@@ -120,14 +115,13 @@ const HeroSection: FC = () => {
         ? delayAfterTyping
         : deletingSpeed
       : displayedText === ""
-      ? delayAfterDeleting
-      : typingSpeed;
+        ? delayAfterDeleting
+        : typingSpeed;
 
     const typer = setTimeout(handleTyping, timeoutSpeed);
     return () => clearTimeout(typer);
   }, [displayedText, isDeleting, currentRoleIndex]);
 
-  // --- Logika untuk Efek 3D Tilt Interaktif ---
   const heroRef = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -151,7 +145,6 @@ const HeroSection: FC = () => {
   };
 
   return (
-    // .hero sekarang menjadi container full-width untuk background
     <section
       ref={heroRef}
       className={styles.hero}
@@ -160,31 +153,43 @@ const HeroSection: FC = () => {
     >
       <Background3D />
 
-      {/* .heroInner membungkus semua konten agar tetap di tengah */}
       <div className={styles.heroInner}>
         <div className={styles.heroContent}>
-          {/* --- Blok Teks Perkenalan --- */}
+          {/* Greeting badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className={styles.greetingBadge}>
+              <span className={styles.wave}>&#128075;</span>
+              Hello, I&apos;m
+            </span>
+          </motion.div>
+
+          {/* Name */}
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
           >
-            <span className={styles.hello}>Hello, I&apos;m </span>
-            <br />
             <span className={styles.highlight}>Ryan Ramadhan</span>.
           </motion.h1>
 
+          {/* Role typing */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.25 }}
             className={styles.roleLine}
           >
-            Crafting digital experiences as a <br />
+            Crafting digital experiences as a
+            <br />
             <span className={styles.animatedRole}>{displayedText}</span>
             <span className={styles.cursor}>|</span>
           </motion.p>
 
+          {/* Tagline */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -194,11 +199,11 @@ const HeroSection: FC = () => {
             Building innovative solutions, one line of code at a time.
           </motion.p>
 
-          {/* --- Blok Statistik dengan Kartu Animasi --- */}
+          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.55 }}
             className={styles.statsContainer}
           >
             <AnimatedStatCard
@@ -209,18 +214,18 @@ const HeroSection: FC = () => {
             <AnimatedStatCard
               value={3}
               suffix="+ Years"
-              label="Professional Experience"
+              label="Experience"
             />
           </motion.div>
 
-          {/* --- Blok Framework Highlight --- */}
+          {/* Framework highlight */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
             className={styles.frameworkHighlight}
           >
-            <h4 className={styles.highlightTitle}>My Go-To Tech:</h4>
+            <h4 className={styles.highlightTitle}>Tech Stack</h4>
             <div className={styles.frameworkIcons}>
               {frameworks.map((fw) => (
                 <div
@@ -235,11 +240,11 @@ const HeroSection: FC = () => {
             </div>
           </motion.div>
 
-          {/* --- Blok Tombol Call to Action --- */}
+          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.0 }}
+            transition={{ duration: 0.8, delay: 0.85 }}
             className={styles.callToAction}
           >
             <Link href="/portofolio" className={styles.button}>
@@ -251,7 +256,7 @@ const HeroSection: FC = () => {
           </motion.div>
         </div>
 
-        {/* --- Blok Foto Profil dengan Efek 3D --- */}
+        {/* Profile Image with 3D tilt */}
         <motion.div
           className={styles.profileImageWrapper}
           style={{
@@ -267,10 +272,11 @@ const HeroSection: FC = () => {
             className={styles.windowControls}
             style={{ transform: "translateZ(40px)" }}
           >
-            <span className={`${styles.dot} ${styles.red}`}></span>
-            <span className={`${styles.dot} ${styles.yellow}`}></span>
-            <span className={`${styles.dot} ${styles.green}`}></span>
+            <span className={`${styles.dot} ${styles.red}`} />
+            <span className={`${styles.dot} ${styles.yellow}`} />
+            <span className={`${styles.dot} ${styles.green}`} />
           </div>
+
           <Image
             src="/images/ryan.jpg"
             alt="Ryan Ramadhan Profile Picture"
@@ -280,14 +286,37 @@ const HeroSection: FC = () => {
             priority
             style={{ transform: "translateZ(20px)" }}
           />
+
           <div
             className={styles.macbookLogo}
             style={{ transform: "translateZ(40px)" }}
           >
-            <i className="bi bi-code-slash"></i>
+            <i className="bi bi-code-slash" />
+          </div>
+
+          {/* Available for work badge */}
+          <div
+            className={styles.statusBadge}
+            style={{ transform: "translateZ(30px)" }}
+          >
+            <span className={styles.statusDot} />
+            Available for work
           </div>
         </motion.div>
       </div>
+
+      {/* Scroll down indicator */}
+      <motion.div
+        className={styles.scrollIndicator}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+      >
+        <div className={styles.scrollMouse}>
+          <div className={styles.scrollDot} />
+        </div>
+        <span className={styles.scrollText}>Scroll Down</span>
+      </motion.div>
     </section>
   );
 };

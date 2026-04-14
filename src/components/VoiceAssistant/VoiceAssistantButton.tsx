@@ -1,7 +1,5 @@
 "use client";
 
-// Ini ngasih tahu TypeScript kalau 'window' itu punya
-// properti SpeechRecognition & webkitSpeechRecognition
 declare global {
   interface Window {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,13 +10,9 @@ declare global {
 }
 
 import { useState, useRef, useEffect, useCallback } from "react";
-// Import icons yang kita butuhkan
 import { Phone, Loader2, PhoneOff, AlertTriangle } from "lucide-react";
-
-// Import CSS Module yang tadi kita buat
 import styles from "./VoiceAssistantButton.module.css";
 
-// Tipe untuk state panggilan
 type CallState = "idle" | "connecting" | "in-progress" | "error";
 type ErrorMessage = string | null;
 
@@ -28,7 +22,6 @@ export default function VoiceAssistantButton() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any | null>(null);
-
   const synthRef = useRef<SpeechSynthesis | null>(null);
 
   const welcomeMessage =
@@ -40,10 +33,9 @@ export default function VoiceAssistantButton() {
 
     synthRef.current.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "id-ID"; // Set bahasa Indonesia
+    utterance.lang = "id-ID";
 
     utterance.onend = () => {
-      console.log("Bot finished speaking, starting recognition...");
       setCallState((currentState) => {
         if (currentState === "in-progress" && recognitionRef.current) {
           try {
@@ -56,8 +48,10 @@ export default function VoiceAssistantButton() {
       });
     };
 
-    utterance.onerror = (e) => {
-      console.error("Speech synthesis error:", e);
+    utterance.onerror = (e: SpeechSynthesisErrorEvent) => {
+      // cancel() triggers "interrupted"/"canceled" — bukan error beneran
+      if (e.error === "interrupted" || e.error === "canceled") return;
+      console.error("Speech synthesis error:", e.error);
       setErrorMsg("Error sintesis voice.");
       setCallState("error");
     };
@@ -67,7 +61,6 @@ export default function VoiceAssistantButton() {
 
   const processSpeech = useCallback(
     async (transcript: string) => {
-      console.log("User said:", transcript);
       try {
         const response = await fetch("/api/chat", {
           method: "POST",
@@ -75,9 +68,7 @@ export default function VoiceAssistantButton() {
           body: JSON.stringify({ message: transcript }),
         });
 
-        if (!response.ok) {
-          throw new Error("API response not ok");
-        }
+        if (!response.ok) throw new Error("API response not ok");
 
         const data = await response.json();
         speak(data.reply);
@@ -94,7 +85,6 @@ export default function VoiceAssistantButton() {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognition) {
-      console.error("Speech Recognition not supported in this browser.");
       setErrorMsg("Speech API tidak didukung browser ini.");
       setCallState("error");
       return;
@@ -111,27 +101,12 @@ export default function VoiceAssistantButton() {
       processSpeech(transcript);
     };
 
-    recognition.onspeechend = () => {
-      console.log("User speech ended.");
-      recognition.stop();
-    };
-
-    recognition.onend = () => {
-      console.log("Recognition service ended.");
-    };
+    recognition.onspeechend = () => recognition.stop();
+    recognition.onend = () => {};
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onerror = (event: any) => {
-      console.error("Speech recognition error:", event.error);
-
-      // JANGAN set error jika itu 'no-speech' (user diam)
-      // ATAU 'aborted' (karena kita klik end call manual)
-      if (event.error === "no-speech" || event.error === "aborted") {
-        console.log("Recognition stopped or aborted, not a fatal error.");
-        return;
-      }
-
-      // Hanya set error jika itu error beneran (cth: 'not-allowed', 'network')
+      if (event.error === "no-speech" || event.error === "aborted") return;
       setErrorMsg(`Error mikrofon: ${event.error}`);
       setCallState("error");
     };
@@ -142,7 +117,6 @@ export default function VoiceAssistantButton() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!window.speechSynthesis) {
-        console.error("Speech Synthesis not supported in this browser.");
         setErrorMsg("Speech Synthesis tidak didukung.");
         setCallState("error");
         return;
@@ -163,7 +137,6 @@ export default function VoiceAssistantButton() {
     if (callState === "idle") {
       if (synthRef.current) {
         synthRef.current.cancel();
-        // "Primer" untuk "bangunin" speech synthesis di beberapa browser
         const primer = new SpeechSynthesisUtterance(" ");
         primer.volume = 0;
         synthRef.current.speak(primer);
@@ -178,7 +151,7 @@ export default function VoiceAssistantButton() {
       setTimeout(() => {
         setCallState("in-progress");
         speak(welcomeMessage);
-      }, 1500); // Waktu 'connecting'
+      }, 1500);
     } else if (callState === "in-progress") {
       setCallState("idle");
       synthRef.current?.cancel();
@@ -188,7 +161,15 @@ export default function VoiceAssistantButton() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
+      {/* Pulse rings — only visible on idle */}
+      {callState === "idle" && (
+        <>
+          <span className={`${styles.pulseRing} ${styles.ring1}`} />
+          <span className={`${styles.pulseRing} ${styles.ring2}`} />
+        </>
+      )}
+
       {(() => {
         switch (callState) {
           case "connecting":
@@ -199,11 +180,16 @@ export default function VoiceAssistantButton() {
                 <div
                   className={`${styles.iconWrapper} ${styles.connectingIcon}`}
                 >
-                  <Loader2 className={`${styles.spinner} h-6 w-6`} />
+                  <Loader2 className={`${styles.spinner}`} size={20} />
                 </div>
                 <div className={styles.textWrapper}>
                   <p className={styles.textMain}>Connecting...</p>
-                  <p className={styles.textSub}>Please wait</p>
+                  <div className={styles.statusRow}>
+                    <span
+                      className={`${styles.statusDot} ${styles.statusDotConnecting}`}
+                    />
+                    <p className={styles.textSub}>Setting up voice</p>
+                  </div>
                 </div>
               </div>
             );
@@ -217,12 +203,22 @@ export default function VoiceAssistantButton() {
                 <div
                   className={`${styles.iconWrapper} ${styles.inProgressIcon}`}
                 >
-                  {/* Ini dia icon dengan animasi getar "vibratingIcon" */}
-                  <PhoneOff className={`${styles.vibratingIcon} h-5 w-5`} />
+                  <PhoneOff className={styles.vibratingIcon} size={18} />
                 </div>
                 <div className={styles.textWrapper}>
-                  <p className={styles.textMain}>Call in progress</p>
-                  <p className={styles.textSub}>Click to end call</p>
+                  <div className={styles.statusRow}>
+                    <span
+                      className={`${styles.statusDot} ${styles.statusDotActive}`}
+                    />
+                    <p className={styles.textMain}>Call Active</p>
+                  </div>
+                  <div className={styles.soundWave}>
+                    <span className={styles.soundBar} />
+                    <span className={styles.soundBar} />
+                    <span className={styles.soundBar} />
+                    <span className={styles.soundBar} />
+                    <span className={styles.soundBar} />
+                  </div>
                 </div>
               </button>
             );
@@ -231,7 +227,7 @@ export default function VoiceAssistantButton() {
             return (
               <div className={`${styles.voiceButton} ${styles.errorState}`}>
                 <div className={`${styles.iconWrapper} ${styles.errorIcon}`}>
-                  <AlertTriangle className="h-5 w-5" />
+                  <AlertTriangle size={18} />
                 </div>
                 <div className={styles.textWrapper}>
                   <p className={`${styles.textMain} ${styles.errorTextMain}`}>
@@ -252,7 +248,7 @@ export default function VoiceAssistantButton() {
                 className={`${styles.voiceButton} ${styles.idleState}`}
               >
                 <div className={`${styles.iconWrapper} ${styles.idleIcon}`}>
-                  <Phone className="h-5 w-5" />
+                  <Phone size={20} />
                 </div>
                 <div className={styles.textWrapper}>
                   <p className={styles.textMain}>Need Help?</p>
@@ -262,6 +258,6 @@ export default function VoiceAssistantButton() {
             );
         }
       })()}
-    </>
+    </div>
   );
 }

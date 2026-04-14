@@ -1,206 +1,364 @@
 /* src/components/VoiceAssistant/VoiceAssistantButton.module.css */
 
-.voiceButton {
+/* ================================================================
+   CONTAINER — holds button + pulse rings
+   ================================================================ */
+.container {
   position: fixed;
   bottom: 2.5rem;
-  left: 2.5rem;
+  right: 2.5rem;
   z-index: 50;
+}
+
+/* ================================================================
+   PULSE RINGS — idle attention-grabbing animation
+   ================================================================ */
+.pulseRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  border: 2px solid var(--accent-color, #03dac6);
+  opacity: 0;
+  pointer-events: none;
+}
+.ring1 {
+  animation: pulseExpand 2.5s ease-out infinite;
+}
+.ring2 {
+  animation: pulseExpand 2.5s ease-out 1.2s infinite;
+}
+@keyframes pulseExpand {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+/* ================================================================
+   VOICE BUTTON — base style (glassmorphism)
+   ================================================================ */
+.voiceButton {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0 1rem 0 1rem;
-  border-radius: 0.9rem;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(230, 230, 230, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  gap: 0.85rem;
+  padding: 0.6rem 1.1rem 0.6rem 0.6rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--accent-color, #03dac6), transparent 80%);
   cursor: pointer;
-  transform-origin: bottom left;
-  transition: all 0.35s ease;
+  transform-origin: bottom right;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  background: color-mix(in srgb, var(--bg-color, #ffffff), transparent 10%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.08),
+    0 0 0 1px color-mix(in srgb, var(--accent-color, #03dac6), transparent 90%) inset;
 }
 
 .voiceButton:hover {
-  transform: scale(1.06) translateY(-3px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 0 20px color-mix(in srgb, var(--accent-color, #03dac6), transparent 75%);
+  border-color: color-mix(in srgb, var(--accent-color, #03dac6), transparent 50%);
 }
 
-/* --- Icon wrapper --- */
+.voiceButton:active {
+  transform: translateY(-1px) scale(0.98);
+  transition-duration: 0.1s;
+}
+
+/* ================================================================
+   ICON WRAPPER
+   ================================================================ */
 .iconWrapper {
-  display: grid; /* Pakai grid biar icon pas di tengah */
+  position: relative;
+  display: grid;
   place-items: center;
-  width: 2.25rem; /* 36px */
-  height: 2.25rem; /* 36px */
-  border-radius: 0.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
   color: white;
   flex-shrink: 0;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  overflow: hidden;
 }
 
+/* Shimmer overlay on icon */
+.iconWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: -200% 0;
+  }
+}
+
+/* ================================================================
+   TEXT
+   ================================================================ */
 .textWrapper {
+  display: flex;
   flex-direction: column;
   text-align: left;
+  gap: 0.1rem;
 }
 
 .textMain {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  color: var(--text-color, #1a1a1a);
+  line-height: 1.2;
 }
 
 .textSub {
-  font-size: 0.75rem;
-  color: #555;
+  font-size: 0.72rem;
+  color: var(--text-secondary-color, #666);
+  line-height: 1.2;
 }
 
-/* --- STATE EFFECTS --- */
+/* ================================================================
+   SOUND WAVE — in-progress audio visualization
+   ================================================================ */
+.soundWave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+  margin-top: 3px;
+}
+.soundBar {
+  width: 3px;
+  border-radius: 3px;
+  background: var(--accent-color, #03dac6);
+  animation: soundBounce 1s ease-in-out infinite;
+}
+.soundBar:nth-child(1) { height: 40%; animation-delay: 0s; }
+.soundBar:nth-child(2) { height: 70%; animation-delay: 0.15s; }
+.soundBar:nth-child(3) { height: 50%; animation-delay: 0.3s; }
+.soundBar:nth-child(4) { height: 80%; animation-delay: 0.45s; }
+.soundBar:nth-child(5) { height: 35%; animation-delay: 0.6s; }
 
-/* IDLE (Need Help) */
+@keyframes soundBounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+/* ================================================================
+   STATUS DOT — small indicator dot next to text
+   ================================================================ */
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.statusDotActive {
+  background-color: #22c55e;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+.statusDotConnecting {
+  background-color: #f59e0b;
+  animation: dotPulse 0.8s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ================================================================
+   STATE: IDLE
+   ================================================================ */
 .idleState {
-  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.15), 0 0 20px rgba(255, 45, 45, 0.3);
-  animation: softGlow 3s ease-in-out infinite alternate;
+  animation: idleFloat 4s ease-in-out infinite;
 }
 .idleIcon {
-  background: linear-gradient(135deg, #028d58, #08b602);
+  background: linear-gradient(135deg, #059669, #10b981);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
-/* CONNECTING */
+@keyframes idleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ================================================================
+   STATE: CONNECTING
+   ================================================================ */
 .connectingState {
   cursor: default;
-  box-shadow: 0 4px 20px rgba(255, 80, 80, 0.3), 0 0 25px rgba(255, 20, 20, 0.4);
-  animation: pulseGlow 1.5s ease-in-out infinite alternate;
+  animation: connectPulse 2s ease-in-out infinite;
 }
 .connectingIcon {
-  background: linear-gradient(135deg, #035c77, #098a9b);
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes connectPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
 }
+
 .spinner {
   animation: spin 1s linear infinite;
 }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
-/* IN-PROGRESS (Call Active) */
+/* ================================================================
+   STATE: IN-PROGRESS
+   ================================================================ */
 .inProgressState {
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3),
-    0 0 25px rgba(16, 185, 129, 0.4);
-  animation: softGlowGreen 3s ease-in-out infinite alternate;
+  border-color: color-mix(in srgb, #10b981, transparent 60%);
+  box-shadow:
+    0 4px 24px rgba(16, 185, 129, 0.15),
+    0 0 30px rgba(16, 185, 129, 0.1);
+}
+.inProgressState:hover {
+  box-shadow:
+    0 8px 32px rgba(16, 185, 129, 0.25),
+    0 0 40px rgba(16, 185, 129, 0.15);
 }
 .inProgressIcon {
-  background: linear-gradient(135deg, #16a34a, #059669);
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
 }
 
-@keyframes callVibrate {
-  0% {
-    transform: translate(0);
-  }
-  25% {
-    transform: translate(-1px, 1px);
-  }
-  50% {
-    transform: translate(1px, -1px);
-  }
-  75% {
-    transform: translate(-1px, -1px);
-  }
-  100% {
-    transform: translate(0);
-  }
-}
 .vibratingIcon {
-  animation: callVibrate 0.4s linear infinite;
+  animation: gentleShake 2s ease-in-out infinite;
+}
+@keyframes gentleShake {
+  0%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(-8deg); }
+  20% { transform: rotate(8deg); }
+  30% { transform: rotate(-5deg); }
+  40% { transform: rotate(5deg); }
+  50%, 100% { transform: rotate(0deg); }
 }
 
-/* ERROR */
+/* ================================================================
+   STATE: ERROR
+   ================================================================ */
 .errorState {
-  background: #fff5f5;
-  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.25), 0 0 20px rgba(255, 0, 0, 0.25);
-  animation: pulseError 2s ease-in-out infinite alternate;
+  border-color: color-mix(in srgb, #ef4444, transparent 60%);
+  background: color-mix(in srgb, #fef2f2, transparent 10%);
+  box-shadow: 0 4px 24px rgba(239, 68, 68, 0.15);
+  cursor: default;
+  animation: errorShake 0.5s ease-in-out;
 }
 .errorIcon {
-  background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
 }
 .errorTextMain {
-  color: #a91a1a;
+  color: #dc2626;
   font-weight: 700;
 }
-.errorTextSub {
-  color: #661616;
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
 }
 
-/* --- ANIMASI GLOW --- */
-@keyframes softGlow {
-  from {
-    box-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
-  }
-  to {
-    box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
-  }
-}
-
-@keyframes softGlowGreen {
-  from {
-    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
-  }
-  to {
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.5);
-  }
-}
-
-@keyframes pulseGlow {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes pulseError {
-  from {
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-  }
-  to {
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.5);
-  }
-}
-
-/* --- PERBAIKAN RESPONSIVE (Mobile jadi FAB) --- */
+/* ================================================================
+   RESPONSIVE — Mobile FAB
+   ================================================================ */
 @media (max-width: 640px) {
-  .voiceButton {
-    /* Pindah ke kanan bawah, standar UX mobile */
+  .container {
     left: auto;
-    right: 1.5rem;
-    bottom: 1.5rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
+  }
 
-    /* Jadi lingkaran (FAB) */
-    width: 3.5rem; /* 56px */
-    height: 3.5rem; /* 56px */
+  .pulseRing {
     border-radius: 50%;
+  }
 
-    /* Hapus padding & gap, tengahkan icon */
+  .voiceButton {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
     padding: 0;
     gap: 0;
     justify-content: center;
-    transform-origin: bottom right; /* Sesuaikan transform origin */
+    transform-origin: bottom right;
   }
 
-  /* Sembunyikan teks di mobile */
+  .voiceButton:hover {
+    transform: translateY(-2px) scale(1.08);
+  }
+
   .textWrapper {
     display: none;
   }
 
-  /* Pastikan icon wrapper pas di tengah FAB */
   .iconWrapper {
     width: 2.25rem;
     height: 2.25rem;
-    border-radius: 0.5rem;
+    border-radius: 50%;
   }
+
+  @keyframes idleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+}
+
+/* ================================================================
+   DARK MODE OVERRIDES
+   ================================================================ */
+[data-theme="dark"] .voiceButton,
+:global([data-theme="dark"]) .voiceButton {
+  background: color-mix(in srgb, var(--bg-color, #121212), transparent 20%);
+  border-color: color-mix(in srgb, var(--accent-color, #03dac6), transparent 75%);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 0 0 1px color-mix(in srgb, var(--accent-color, #03dac6), transparent 85%) inset;
+}
+[data-theme="dark"] .voiceButton:hover,
+:global([data-theme="dark"]) .voiceButton:hover {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 25px color-mix(in srgb, var(--accent-color, #03dac6), transparent 70%);
+}
+[data-theme="dark"] .textMain,
+:global([data-theme="dark"]) .textMain {
+  color: #e0e0e0;
+}
+[data-theme="dark"] .textSub,
+:global([data-theme="dark"]) .textSub {
+  color: #a0a0a0;
+}
+[data-theme="dark"] .errorState,
+:global([data-theme="dark"]) .errorState {
+  background: color-mix(in srgb, #2d1212, transparent 20%);
 }

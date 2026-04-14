@@ -48,6 +48,8 @@ const Footer: FC = () => {
           })}
         </div>
 
+        <hr className={styles.divider} />
+
         {/* Motto/Slogan */}
         <p className={styles.motto}>Innovate. Create. Inspire.</p>
 

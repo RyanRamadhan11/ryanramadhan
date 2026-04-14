@@ -1,103 +1,195 @@
 /* src/components/Footer/Footer.module.css */
 
+/* ================================================================
+   FOOTER BASE
+   ================================================================ */
 .footer {
   width: 100%;
-  padding: 3rem 1rem;
+  padding: 3.5rem 1.5rem 2.5rem;
   background-color: var(--contrast-color);
   color: var(--default-color);
   text-align: center;
   margin-top: 6rem;
-  /* [DIUBAH] Shadow dan border yang adaptif */
-  box-shadow: 0 -5px 20px color-mix(in srgb, var(--heading-color), transparent
-        95%);
-  border-top: 1px solid
-    color-mix(in srgb, var(--heading-color), transparent 90%);
   position: relative;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow: hidden;
 }
 
+/* Animated gradient top border */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-color),
+    var(--hero-accent-color, var(--accent-color)),
+    var(--hero-highlight-color, var(--accent-color)),
+    var(--accent-color)
+  );
+  background-size: 300% 100%;
+  animation: gradientFlow 6s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ================================================================
+   FOOTER CONTENT
+   ================================================================ */
 .footerContent {
-  max-width: 1200px;
+  max-width: var(--content-max-width, 1200px);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.25rem;
 }
 
-/* Social Links Styling */
+/* ================================================================
+   SOCIAL LINKS — Glassmorphism hover
+   ================================================================ */
 .socialLinks {
   margin-bottom: 1.5rem;
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .socialLinks a {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  /* Border adaptif */
-  border: 2px solid color-mix(in srgb, var(--default-color), transparent 80%);
-  font-size: 1.5rem;
-  transition: all 0.3s ease;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  font-size: 1.3rem;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   text-decoration: none;
   color: var(--default-color);
+  background: transparent;
+  position: relative;
 }
 
 .socialLinks a:hover {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--contrast-color);
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px
-    color-mix(in srgb, var(--accent-color), transparent 60%);
+  color: white;
+  border-color: transparent;
+  transform: translateY(-4px);
 }
 
-/* Motto/Slogan Styling */
+/* Per-icon gradient backgrounds on hover */
+.socialLinks a:nth-child(1):hover {
+  background: linear-gradient(135deg, #333, #6e5494);
+  box-shadow: 0 8px 24px rgba(110, 84, 148, 0.35);
+}
+.socialLinks a:nth-child(2):hover {
+  background: linear-gradient(135deg, #0077b5, #00a0dc);
+  box-shadow: 0 8px 24px rgba(0, 119, 181, 0.35);
+}
+.socialLinks a:nth-child(3):hover {
+  background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  box-shadow: 0 8px 24px rgba(225, 48, 108, 0.35);
+}
+
+/* ================================================================
+   DIVIDER
+   ================================================================ */
+.divider {
+  width: 60px;
+  height: 2px;
+  border: none;
+  margin: 0.75rem 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-color),
+    transparent
+  );
+  opacity: 0.5;
+}
+
+/* ================================================================
+   MOTTO — Gradient text
+   ================================================================ */
 .motto {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  color: var(--hero-accent-color);
-  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   line-height: 1.5;
-  text-shadow: 0 0 10px
-    color-mix(in srgb, var(--hero-accent-color), transparent 70%);
+  background: linear-gradient(
+    135deg,
+    var(--hero-accent-color, var(--accent-color)),
+    var(--accent-color),
+    var(--hero-highlight-color, var(--accent-color))
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientText 4s ease infinite;
 }
 
-/* Copyright Styling */
+@keyframes gradientText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ================================================================
+   COPYRIGHT
+   ================================================================ */
 .copyright {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   color: var(--hero-text-color-secondary);
   line-height: 1.5;
+  letter-spacing: 0.02em;
 }
 
-/* Responsivitas */
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
 @media (min-width: 768px) {
   .footer {
-    padding: 3rem 2rem;
+    padding: 4rem 2rem 3rem;
   }
   .socialLinks {
+    gap: 1.25rem;
     margin-bottom: 2rem;
+  }
+  .socialLinks a {
+    width: 48px;
+    height: 48px;
   }
 }
 
 @media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 1rem 2rem;
+    margin-top: 4rem;
+  }
   .socialLinks {
-    gap: 1rem;
+    gap: 0.75rem;
   }
   .socialLinks a {
-    width: 40px;
-    height: 40px;
-    font-size: 1.3rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.2rem;
+    border-radius: 10px;
   }
   .motto {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
   }
   .copyright {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
 }

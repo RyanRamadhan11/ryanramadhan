@@ -2,7 +2,7 @@
 
 "use client";
 
-import React, { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -11,6 +11,7 @@ import { ThemeToggleButton } from "../ThemeToggleButton";
 
 const Navbar: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   const handleNavLinkClick = () => {
@@ -20,117 +21,133 @@ const Navbar: FC = () => {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 992) {
-        // Breakpoint disamakan dengan CSS
         setIsMenuOpen(false);
       }
     };
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navbarContentWrapper}>
-        <div className={styles.brand}>
-          <Link
-            href="/"
-            className={`${styles.logo} logo d-flex align-items-center me-auto me-xl-0`}
-            onClick={handleNavLinkClick}
-          >
-            {/* [DIUBAH] Ukuran logo diperbesar menjadi 60x60px */}
-            <Image
-              src="/images/logo-ryns.png"
-              alt="Ryan Ramadhan Logo"
-              width={100}
-              height={100}
-              priority
-              className={styles.brandLogoImage}
-            />
-          </Link>
-        </div>
-
-        <div className={styles.navContainer}>
-          <ul
-            className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ""}`}
-          >
-            <li className={styles.navItem}>
-              <Link
-                href="/"
-                onClick={handleNavLinkClick}
-                className={pathname === "/" ? styles.active : ""}
-              >
-                Home
-              </Link>
-            </li>
-            <li className={styles.navItem}>
-              <Link
-                href="/about"
-                onClick={handleNavLinkClick}
-                className={pathname === "/about" ? styles.active : ""}
-              >
-                About
-              </Link>
-            </li>
-            <li className={styles.navItem}>
-              <Link
-                href="/resume"
-                onClick={handleNavLinkClick}
-                className={pathname === "/resume" ? styles.active : ""}
-              >
-                Resume
-              </Link>
-            </li>
-            <li className={styles.navItem}>
-              <Link
-                href="/portofolio"
-                onClick={handleNavLinkClick}
-                className={pathname === "/portofolio" ? styles.active : ""}
-              >
-                Portofolio
-              </Link>
-            </li>
-
-            <li className={styles.navItem}>
-              <Link
-                href="/certification"
-                onClick={handleNavLinkClick}
-                className={pathname === "/certification" ? styles.active : ""}
-              >
-                Certification
-              </Link>
-            </li>
-            <li className={styles.navItem}>
-              <Link
-                href="/contact"
-                onClick={handleNavLinkClick}
-                className={pathname === "/contact" ? styles.active : ""}
-              >
-                Contact
-              </Link>
-            </li>
-
-            <li className={`${styles.navItem} ${styles.themeToggleMobile}`}>
-              <p>Switch Theme</p>
-              <ThemeToggleButton />
-            </li>
-          </ul>
-
-          <div className={styles.themeToggleDesktop}>
-            <ThemeToggleButton />
+    <>
+      <nav
+        className={`${styles.navbar} ${isScrolled ? styles.scrolled : ""}`}
+      >
+        <div className={styles.navbarContentWrapper}>
+          <div className={styles.brand}>
+            <Link
+              href="/"
+              className={`${styles.logo} logo d-flex align-items-center me-auto me-xl-0`}
+              onClick={handleNavLinkClick}
+            >
+              <Image
+                src="/images/logo-ryns.png"
+                alt="Ryan Ramadhan Logo"
+                width={100}
+                height={100}
+                priority
+                className={styles.brandLogoImage}
+              />
+            </Link>
           </div>
 
-          <button
-            className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle navigation"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
+          <div className={styles.navContainer}>
+            <ul
+              className={`${styles.navList} ${isMenuOpen ? styles.menuOpen : ""}`}
+            >
+              <li className={styles.navItem}>
+                <Link
+                  href="/"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/" ? styles.active : ""}
+                >
+                  Home
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link
+                  href="/about"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/about" ? styles.active : ""}
+                >
+                  About
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link
+                  href="/resume"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/resume" ? styles.active : ""}
+                >
+                  Resume
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link
+                  href="/portofolio"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/portofolio" ? styles.active : ""}
+                >
+                  Portofolio
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link
+                  href="/certification"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/certification" ? styles.active : ""}
+                >
+                  Certification
+                </Link>
+              </li>
+              <li className={styles.navItem}>
+                <Link
+                  href="/contact"
+                  onClick={handleNavLinkClick}
+                  className={pathname === "/contact" ? styles.active : ""}
+                >
+                  Contact
+                </Link>
+              </li>
+
+              <li className={`${styles.navItem} ${styles.themeToggleMobile}`}>
+                <p>Switch Theme</p>
+                <ThemeToggleButton />
+              </li>
+            </ul>
+
+            <div className={styles.themeToggleDesktop}>
+              <ThemeToggleButton />
+            </div>
+
+            <button
+              className={`${styles.hamburger} ${isMenuOpen ? styles.open : ""}`}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* Overlay backdrop for mobile menu */}
+      <div
+        className={`${styles.overlay} ${isMenuOpen ? styles.overlayVisible : ""}`}
+        onClick={() => setIsMenuOpen(false)}
+      />
+    </>
   );
 };
 

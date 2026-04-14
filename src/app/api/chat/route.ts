@@ -99,6 +99,7 @@ function generateReply(message: string): string {
   }
 
   // --- LOGIC KONTAK & KERJASAMA ---
+
   if (
     lowerMessage.includes("kontak") ||
     lowerMessage.includes("hubungi") ||
@@ -149,7 +150,7 @@ export async function POST(req: NextRequest) {
     console.error("API Chat Error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
